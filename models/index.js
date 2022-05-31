@@ -8,12 +8,10 @@ const Manager = require('./Manager.js');
 // create associations
 
 // One(User) to Many(Resumes) - fk on hasMany
-User.hasMany(Resume, {
-  foreignKey: 'user_id',
-});
+User.hasMany(Resume, {});
 
 // Many(Resumes) to One(User)
-Resume.belongsTo(User);
+Resume.belongsTo(User, {});
 
 //One(User) to Many(Applications) - fk on hasMany
 User.hasMany(Application, {
@@ -50,10 +48,16 @@ Position.belongsTo(Company);
 //One (Company) to Many (Mangers) - fk on hasMany
 Company.hasMany(Manager, {
   foreignKey: 'company_id',
+  onDelete: 'NO ACTION',
+  onUpdate: 'NO ACTION',
 });
 
 //Many (Managers) to One (Company)
-Manager.belongsTo(Company);
+Manager.belongsTo(Company, {
+  foreignKey: 'company_id',
+  onDelete: 'NO ACTION',
+  onUpdate: 'NO ACTION',
+});
 
 //One(Manager) to Many(Positions) - fk on hasMany
 Manager.hasMany(Position, {
