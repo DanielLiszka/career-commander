@@ -27,5 +27,8 @@
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
   }
 }
