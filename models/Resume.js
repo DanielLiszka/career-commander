@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, NOW } = require('sequelize');
 
 const sequelize = require('../config/connection');
 
@@ -30,13 +30,11 @@ Resume.init(
     },
 
     created_at: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
+      type: DataTypes.NOW,
     },
 
     updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
+      type: DataTypes.NOW,
     },
   },
   {

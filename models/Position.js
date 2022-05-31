@@ -47,13 +47,11 @@ Position.init(
     },
 
     created_at: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
+      type: DataTypes.NOW,
     },
 
     updated_at: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
+      type: DataTypes.NOW,
     },
   },
   {
