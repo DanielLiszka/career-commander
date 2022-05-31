@@ -62,9 +62,15 @@ Manager.belongsTo(Company, {
 //One(Manager) to Many(Positions) - fk on hasMany
 Manager.hasMany(Position, {
   foreignKey: 'manager_id',
+  onDelete: 'NO ACTION',
+  onUpdate: 'NO ACTION',
 });
 
 //Many(Positions) to One(Manager)
-Position.belongsTo(Manager);
+Position.belongsTo(Manager, {
+  foreignKey: 'manager_id',
+  onDelete: 'NO ACTION',
+  onUpdate: 'NO ACTION',
+});
 
 module.exports = { User, Resume, Application, Position, Company, Manager };
