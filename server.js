@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const path = require('path');
+const models = require('./models');
 
 const express = require('express');
 

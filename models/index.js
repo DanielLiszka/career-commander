@@ -1,14 +1,9 @@
-const User = require('./User');
-
-const Resume = require('./Resume');
-
-const Application = require('./Application');
-
-const Position = require('./Position');
-
-const Company = require('./Company');
-
-const Manager = require('./Manager');
+const User = require('./User.js');
+const Resume = require('./Resume.js');
+const Application = require('./Application.js');
+const Position = require('./Position.js');
+const Company = require('./Company.js');
+const Manager = require('./Manager.js');
 
 // create associations
 

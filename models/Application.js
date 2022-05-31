@@ -59,14 +59,27 @@ Application.init(
         key: 'id',
       },
     },
-  },
 
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: new Date(),
+    },
+
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: new Date(),
+    },
+  },
   {
     //TABLE CONFIGURATION OPTIONS GO HERE
 
     // pass in our imported sequelize connection
 
     sequelize,
+
+    // Want automatically created created_at/updated_at
+
+    timestamps: true,
 
     // don't pluralize name of database table
 
