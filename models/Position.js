@@ -1,3 +1,4 @@
+const { now } = require('lodash');
 const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
@@ -36,6 +37,24 @@ Position.init(
         key: 'id',
       },
     },
+
+    manager_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'manager',
+        key: 'id',
+      },
+    },
+
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: new Date(),
+    },
+
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: new Date(),
+    },
   },
   {
     //TABLE CONFIGURATION OPTIONS GO HERE
@@ -43,6 +62,10 @@ Position.init(
     // pass in our imported sequelize connection
 
     sequelize,
+
+    // Want automatically created created_at/updated_at
+
+    timestamps: true,
 
     // don't pluralize name of database table
 
