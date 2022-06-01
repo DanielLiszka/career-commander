@@ -1,7 +1,8 @@
 // This file is for all the resume routes
 const router = require('express').Router();
 const { Resume, User } = require('../../models');
-// insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
+/* Insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
+   This will insure that a user is logged in before accessing this route  */
 const withAuth = require('../../utils/auth');
 
 // Get all the resumes with the user info
@@ -21,6 +22,33 @@ router.get('/', (req, res) => {
       res.status(500).json(err);
     });
 });
+
+/* Proposed code to get all the resumes for the logged in user.
+Would apply this to all the routes */
+// router.get('/', async (req, res) => {
+//   try {
+//     // check for loggedIn user
+//     if (req.session.loggedIn){
+//       const resumeData = await Resume.findAll({
+//         where: {
+//           user_id: req.session.user_id
+//         },
+//         attributes: ['id', 'name', 'description', 'created_at'],
+//         include: {
+//           model: User,
+//           attributes: ['first_name', 'last_name'],
+//           order: [['last_name', 'DESC']],
+//         },
+//       })
+//        res.json(resumeData);
+//     }
+
+//   }
+//   catch(err) {
+//       console.log(err);
+//       res.status(500).json(err);
+//   };
+// });
 
 // Get just one resume with user info
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
