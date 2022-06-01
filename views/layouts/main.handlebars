@@ -35,7 +35,10 @@
             </li>
             <li class='nav-item'>
               <a class='nav-link' href='/'
-                >Login/Logoff <span class='sr-only'></span></a>
+                >Login/Signup <span class='sr-only'></span></a>
+            </li>
+            <li class='nav-item'>
+              <a class='nav-link' href='/'> Logout</a>
             </li>
           </ul>
         </div>
@@ -43,7 +46,7 @@
 
     <!-- Main Content Will Go Here --> 
     <div class='container'>
-      {{ body }}
+      {{{ body }}}
     </div>
 
     <!-- Footer --> 
@@ -53,7 +56,7 @@
 
     <!-- JQuery Ajax -->
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
-    
+    <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
     <!-- Bootstrap -->
     <script
       src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js'
@@ -70,17 +73,8 @@
 
 </body>
 
-<!-- Will be moved later --> 
-<script>
-    $(document).ready(function(){
-      var date_input=$('input[name="date"]'); 
-      var container=$('.container_fluid form').length>0 ? $('.container_fluid form').parent() : 'body';
-      var options={
-        format: 'mm/dd/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-      };
-      date_input.datepicker(options);
-    })
-</script>
+<script src="/js/application.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/resume.js"></script>
+<script src="/js/login.js"></script>
+<script src="/js/signup.js"></script>
