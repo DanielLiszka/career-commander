@@ -39,11 +39,11 @@ router.get('/', (req, res) => {
       },
       {
         model: Position,
-        attributes: ['name', 'close_date'],
+        attributes: ['name', 'location', 'close_date'],
       },
       {
         model: Resume,
-        attributes: ['name'],
+        attributes: ['name', 'description'],
       },
       {
         model: User,
@@ -90,11 +90,11 @@ Would apply this to all the routes */
 //                   },
 //                   {
 //                     model: Position,
-//                     attributes: ['name', 'close_date'],
+//                     attributes: ['name', 'location', 'close_date'],
 //                   },
 //                   {
 //                     model: Resume,
-//                     attributes: ['name'],
+//                     attributes: ['name', 'description'],
 //                   },
 //                   {
 //                     model: User,
@@ -141,11 +141,11 @@ router.get('/:id', (req, res) => {
       },
       {
         model: Position,
-        attributes: ['name', 'close_date'],
+        attributes: ['name', 'location', 'close_date'],
       },
       {
         model: Resume,
-        attributes: ['name'],
+        attributes: ['name', 'description'],
       },
       {
         model: User,
@@ -188,6 +188,31 @@ router.post('/', (req, res) => {
     user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
     // user_id: req.session.user_id,
+    // Code below was an attempt to save an entire screen of data in one route.
+    // Can't figure out how to get the foreign keys.
+    // company: {
+    //   name: req.body.company_name,
+    // },
+    // position: {
+    //   name: req.body.postion_name,
+    //   description: req.body.position_description,
+    //   location: req.body.position_location,
+    //   close_date: req.body.position_close_date,
+    //   company_id: req.body.company_id,
+    //   manager_id: req.body.manager_id,
+    // },
+    // manager: {
+    //   first_name: req.body.manager_first_name,
+    //   last_name: req.body.manager_last_name,
+    //   email: req.body.manager_email,
+    //   phone: req.body.manager_phone,
+    //   company_id: req.body.company_id,
+    // },
+    // resume: {
+    //   name: req.body.resume_name,
+    //   description: req.body.resume_description,
+    //   user_id: req.body.user_id,
+    // },
   })
     .then((dbApplicationData) => res.json(dbApplicationData))
     .catch((err) => {
