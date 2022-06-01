@@ -1,11 +1,11 @@
-// ********* This is just a template for the User routes.   It needs to be finished. **********
-
+// This file handles all the user routes including logon and logoff
 const router = require('express').Router();
 const { User } = require('../../models');
 
 router.get('/', (req, res) => {
   User.findAll({
     attributes: { exclude: ['password'] },
+    // attributes: ['id', 'first_name', 'last_name', 'email', 'password'],
   })
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   User.findOne({
     attributes: { exclude: ['password'] },
+    // attributes: ['id', 'first_name', 'last_name', 'email', 'password'],
     where: {
       id: req.params.id,
     },
@@ -36,13 +37,16 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   User.create({
-    username: req.body.username,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
     password: req.body.password,
   })
     .then((dbUserData) => {
+      // create a session and save variables to a cookie
       req.session.save(() => {
         req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
+        req.session.username = dbUserData.email;
         req.session.loggedIn = true;
 
         res.json(dbUserData);
@@ -58,7 +62,7 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
   User.findOne({
     where: {
-      username: req.body.username,
+      email: req.body.email,
     },
   }).then((dbUserData) => {
     if (!dbUserData) {
@@ -76,9 +80,9 @@ router.post('/login', (req, res) => {
 
     // create a session
     req.session.save(() => {
-      // declare session variables
+      // declare session variables - save to cookie
       req.session.user_id = dbUserData.id;
-      req.session.username = dbUserData.username;
+      req.session.username = dbUserData.email;
       req.session.loggedIn = true;
 
       res.json({ user: dbUserData, message: 'You are now logged in!' });

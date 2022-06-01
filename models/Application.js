@@ -60,6 +60,22 @@ Application.init(
       },
     },
 
+    company_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'company',
+        key: 'id',
+      },
+    },
+
+    manager_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'manager',
+        key: 'id',
+      },
+    },
+
     created_at: {
       type: DataTypes.NOW,
     },

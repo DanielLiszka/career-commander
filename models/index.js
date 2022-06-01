@@ -7,70 +7,58 @@ const Manager = require('./Manager.js');
 
 // create associations
 
-// One(User) to Many(Resumes) - fk on hasMany
-User.hasMany(Resume, {});
+// One(User) to Many(Resumes)
+User.hasMany(Resume);
 
 // Many(Resumes) to One(User)
-Resume.belongsTo(User, {});
+Resume.belongsTo(User);
 
-//One(User) to Many(Applications) - fk on hasMany
-User.hasMany(Application, {
-  foreignKey: 'user_id',
-});
+//One(User) to Many(Applications)
+User.hasMany(Application);
 
 //Many(Applications) to one(User)
 Application.belongsTo(User);
 
-//One(Postion) to One(Application) - fk on hasOne
-Position.hasOne(Application, {
-  foreignKey: 'position_id',
-});
+//One(Postion) to One(Application)
+Position.hasOne(Application);
 
 //One(Application) to One(Position)
 Application.belongsTo(Position);
 
-//One (Application) to One (Resume) - fk on hasOne
-Resume.hasOne(Application, {
-  foreignKey: 'resume_id',
-});
+//One (Application) to One (Resume)
+Resume.hasOne(Application);
 
 //One (Application) to One (Resume)
 Application.belongsTo(Resume);
 
-//One (Company) to Many (Postions) - fk on hasMany
-Company.hasMany(Position, {
-  foreignKey: 'company_id',
-});
+//One (Company) to Many (Postions)
+Company.hasMany(Position);
 
 //Many (Positions) to One (Company)
 Position.belongsTo(Company);
 
-//One (Company) to Many (Mangers) - fk on hasMany
-Company.hasMany(Manager, {
-  foreignKey: 'company_id',
-  onDelete: 'NO ACTION',
-  onUpdate: 'NO ACTION',
-});
+//One (Company) to Many (Mangers)
+Company.hasMany(Manager);
 
 //Many (Managers) to One (Company)
-Manager.belongsTo(Company, {
-  foreignKey: 'company_id',
-  onDelete: 'NO ACTION',
-  onUpdate: 'NO ACTION',
-});
+Manager.belongsTo(Company);
 
-//One(Manager) to Many(Positions) - fk on hasMany
-Manager.hasMany(Position, {
-  foreignKey: 'manager_id',
-  onDelete: 'NO ACTION',
-  onUpdate: 'NO ACTION',
-});
+//One(Manager) to Many(Positions)
+Manager.hasMany(Position);
 
 //Many(Positions) to One(Manager)
-Position.belongsTo(Manager, {
-  foreignKey: 'manager_id',
-  onDelete: 'NO ACTION',
-  onUpdate: 'NO ACTION',
-});
+Position.belongsTo(Manager);
+
+//Many(Applications) to One(Company)
+Application.belongsTo(Company);
+
+//One(Company) to Many(Applications)
+Company.hasMany(Application);
+
+//Many(Applications) to One(Manager)
+Application.belongsTo(Manager);
+
+//One(Manager) to Many (Applications)
+Manager.hasMany(Application);
 
 module.exports = { User, Resume, Application, Position, Company, Manager };
