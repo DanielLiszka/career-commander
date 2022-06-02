@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   function AddResume(resume_name, resume_description) {
-    $.post('/api/resume/', {
+    $.post('/api/resumes/', {
       resume_name: resume_name,
       resume_description: resume_description,
     })
