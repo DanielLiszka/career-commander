@@ -40,6 +40,7 @@ router.get('/', (req, res) => {
 // Need to add code/helper to check that the user logged in owns the position being accessed/created/updated/deleted.
 router.post('/', (req, res) => {
   Position.create({
+    // Please note the JSON field name that this route is expecting, i.e. position_name instead of just name
     name: req.body.position_name,
     description: req.body.position_description,
     location: req.body.position_location,
@@ -58,6 +59,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   Position.update(
     {
+      // Please note the JSON field name that this route is expecting, i.e. position_name instead of just name
       name: req.body.position_name,
       description: req.body.position_description,
       location: req.body.position_location,

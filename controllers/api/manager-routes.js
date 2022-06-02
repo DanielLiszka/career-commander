@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
 // Create a new manager
 router.post('/', (req, res) => {
   Manager.create({
+    // Please note the JSON field name that this route is expecting, i.e. manager_first_name instead of just first_name
     first_name: req.body.manager_first_name,
     last_name: req.body.manager_last_name,
     email: req.body.manager_email,
@@ -48,6 +49,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   Manager.update(
     {
+      // Please note the JSON field name that this route is expecting, i.e. manager_first_name instead of just first_name
       first_name: req.body.manager_first_name,
       last_name: req.body.manager_last_name,
       email: req.body.manager_email,

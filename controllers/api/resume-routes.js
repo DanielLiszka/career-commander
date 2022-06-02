@@ -82,8 +82,9 @@ router.get('/:id', (req, res) => {
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
 router.post('/', (req, res) => {
   Resume.create({
-    name: req.body.name,
-    description: req.body.description,
+    // Please note the JSON field name that this route is expecting, i.e. resume_name instead of just name
+    name: req.body.resume_name,
+    description: req.body.resume_description,
     // comment the next line out once the front-end is working
     user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
@@ -101,8 +102,9 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   Resume.update(
     {
-      name: req.body.name,
-      description: req.body.description,
+      // Please note the JSON field name that this route is expecting, i.e. resume_name instead of just name
+      name: req.body.resume_name,
+      description: req.body.resume_description,
       // comment the next line out once the front-end is working
       user_id: req.body.user_id,
       // pulling user_id from cookie - commented out for back-end testing
