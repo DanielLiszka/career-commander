@@ -7,7 +7,7 @@ const withAuth = require('../../utils/auth');
 
 // Get all the resumes with the user info
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
-router.get('/', withAuth, (req, res) => {
+router.get('/', (req, res) => {
   Resume.findAll({
     attributes: ['id', 'name', 'description', 'created_at'],
     include: {
@@ -80,14 +80,15 @@ router.get('/:id', (req, res) => {
 
 // Create a new resume - need to get user id from cookie
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
   Resume.create({
-    name: req.body.name,
-    description: req.body.description,
+    // Please note the JSON field name that this route is expecting, i.e. resume_name instead of just name
+    name: req.body.resume_name,
+    description: req.body.resume_description,
     // comment the next line out once the front-end is working
-    //user_id: req.body.user_id,
+    user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
-    user_id: req.session.user_id,
+    // user_id: req.session.user_id,
   })
     .then((dbResumeData) => res.json(dbResumeData))
     .catch((err) => {
@@ -101,8 +102,9 @@ router.post('/', withAuth, (req, res) => {
 router.put('/:id', (req, res) => {
   Resume.update(
     {
-      name: req.body.name,
-      description: req.body.description,
+      // Please note the JSON field name that this route is expecting, i.e. resume_name instead of just name
+      name: req.body.resume_name,
+      description: req.body.resume_description,
       // comment the next line out once the front-end is working
       user_id: req.body.user_id,
       // pulling user_id from cookie - commented out for back-end testing
