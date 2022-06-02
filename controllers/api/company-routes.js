@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // Create a new company
 router.post('/', (req, res) => {
   Company.create({
-    name: req.body.name,
+    name: req.body.company_name,
   })
     .then((dbCompanyData) => res.json(dbCompanyData))
     .catch((err) => {
