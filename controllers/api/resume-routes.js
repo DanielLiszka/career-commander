@@ -7,7 +7,7 @@ const withAuth = require('../../utils/auth');
 
 // Get all the resumes with the user info
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
   Resume.findAll({
     attributes: ['id', 'name', 'description', 'created_at'],
     include: {
@@ -80,14 +80,14 @@ router.get('/:id', (req, res) => {
 
 // Create a new resume - need to get user id from cookie
 // Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   Resume.create({
     name: req.body.name,
     description: req.body.description,
     // comment the next line out once the front-end is working
-    user_id: req.body.user_id,
+    //user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
-    // user_id: req.session.user_id,
+    user_id: req.session.user_id,
   })
     .then((dbResumeData) => res.json(dbResumeData))
     .catch((err) => {
