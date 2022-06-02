@@ -185,9 +185,9 @@ router.post('/', (req, res) => {
     company_id: req.body.company_id,
     manager_id: req.body.manager_id,
     // comment the next line out once the front-end is working
-    user_id: req.body.user_id,
+    //user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
-    // user_id: req.session.user_id,
+    user_id: req.session.user_id,
     // Code below was an attempt to save an entire screen of data in one route.
     // Can't figure out how to get the foreign keys.
     // company: {
