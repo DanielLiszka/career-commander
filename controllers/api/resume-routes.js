@@ -86,9 +86,9 @@ router.post('/', (req, res) => {
     name: req.body.resume_name,
     description: req.body.resume_description,
     // comment the next line out once the front-end is working
-    user_id: req.body.user_id,
+    //user_id: req.body.user_id,
     // pulling user_id from cookie - commented out for back-end testing
-    // user_id: req.session.user_id,
+    user_id: req.session.user_id,
   })
     .then((dbResumeData) => res.json(dbResumeData))
     .catch((err) => {

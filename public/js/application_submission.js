@@ -1,4 +1,3 @@
-// Not functioning yet
 $(document).ready(function () {
   //Use bootstrap datepicker script
   var date_input = $('input[name="date"]');
@@ -84,14 +83,21 @@ $(document).ready(function () {
     interview3_date,
     interview4_date
   ) {
-    $.post('/api/applications', {
+    var plain_object = {
       offer: offer,
       accepted: accepted,
       interview1_date: interview1_date,
       interview2_date: interview2_date,
       interview3_date: interview3_date,
       interview4_date: interview4_date,
-    })
+    };
+    Object.keys(plain_object).forEach(function (key) {
+      var item = plain_object[key];
+      if (item === '') {
+        delete plain_object[key];
+      }
+    });
+    $.post('/api/applications', plain_object)
       .then(function () {
         window.location.replace('/application');
       })
