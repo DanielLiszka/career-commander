@@ -6,22 +6,22 @@ $(document).ready(function () {
   new_resume.on('submit', function (event) {
     event.preventDefault();
     var userData = {
-      name: resumeName.val().trim(),
-      description: resumeDescription.val().trim(),
+      resume_name: resumeName.val().trim(),
+      resume_description: resumeDescription.val().trim(),
     };
-    if (!userData.name || !userData.description) {
+    if (!userData.resume_name || !userData.resume_description) {
       return;
     }
 
-    AddResume(userData.name, userData.description);
+    AddResume(userData.resume_name, userData.resume_description);
     resumeName.val('');
     resumeDescription.val('');
   });
 
-  function AddResume(name, description) {
+  function AddResume(resume_name, resume_description) {
     $.post('/api/resume/', {
-      name: name,
-      description: description,
+      resume_name: resume_name,
+      resume_description: resume_description,
     })
       .then(function () {
         window.location.replace('/resume');
