@@ -1,6 +1,7 @@
 // These are the routes to handle delivering/creating/updating and deleting job application information
 const router = require('express').Router();
 const { application } = require('express');
+const { nextTick } = require('process');
 const {
   Application,
   Company,
@@ -14,54 +15,54 @@ const {
 router.get('/', async (req, res) => {
   try {
     //check if logged in
-    if (req.session.loggedIn) {
-      const applicationData = await Application.findAll({
-        // only pull back applications matching the logged-in user
-        where: {
-          user_id: req.session.user_id,
+    // if (req.session.loggedIn) {
+    const applicationData = await Application.findAll({
+      // only pull back applications matching the logged-in user
+      // where: {
+      //   user_id: req.session.user_id,
+      // },
+      attributes: [
+        'id',
+        'created_at',
+        'offer',
+        'accepted',
+        'interview1_date',
+        'interview2_date',
+        'interview3_date',
+        'interview4_date',
+      ],
+      order: [['created_at', 'DESC']],
+      include: [
+        {
+          model: Company,
+          attributes: ['name'],
         },
-        attributes: [
-          'id',
-          'created_at',
-          'offer',
-          'accepted',
-          'interview1_date',
-          'interview2_date',
-          'interview3_date',
-          'interview4_date',
-        ],
-        order: [['created_at', 'DESC']],
-        include: [
-          {
-            model: Company,
-            attributes: ['name'],
-          },
-          {
-            model: Manager,
-            attributes: ['first_name', 'last_name', 'email', 'phone'],
-          },
-          {
-            model: Position,
-            attributes: ['name', 'location', 'close_date'],
-          },
-          {
-            model: Resume,
-            attributes: ['name', 'description'],
-          },
-          {
-            model: User,
-            attributes: ['first_name', 'last_name'],
-            order: [['last_name', 'DESC']],
-          },
-        ],
-      });
-      res.json(applicationData);
-    } else {
-      // if not logged-in, send a msg to the client and redirect to the homepage/login screen
-      res.json({ message: 'A user must be logged in.' });
-      res.redirect('/');
-      return;
-    }
+        {
+          model: Manager,
+          attributes: ['first_name', 'last_name', 'email', 'phone'],
+        },
+        {
+          model: Position,
+          attributes: ['name', 'location', 'close_date'],
+        },
+        {
+          model: Resume,
+          attributes: ['name', 'description'],
+        },
+        {
+          model: User,
+          attributes: ['first_name', 'last_name'],
+          order: [['last_name', 'DESC']],
+        },
+      ],
+    });
+    res.json(applicationData);
+    // } else {
+    //   // if not logged-in, send a msg to the client and redirect to the homepage/login screen
+    //   res.json({ message: 'A user must be logged in.' });
+    //   res.redirect('/');
+    //   return;
+    // }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -207,11 +208,110 @@ router.delete('/:id', async (req, res) => {
   try {
     // check if user logged-in
     if (req.session.loggedIn) {
+      //get application foreign keys
+      const applicationForeignKeys = await Application.findOne({
+        // get relavent foreign keys for the passed id and logged-in user
+        where: {
+          id: req.params.id,
+          user_id: req.session.user_id,
+        },
+        attributes: ['position_id', 'manager_id', 'company_id'],
+      });
+      //**** NOTE - Could not refactor the following "check" routines into a separate function because the left side of the "where" option would not take a variable. ****
+      //check position_id
+      const applicationArrayP = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          position_id: applicationForeignKeys.position_id,
+        },
+      });
+      if (applicationArrayP.length > 1) {
+        console.log(
+          'postion_id ' +
+            applicationForeignKeys.position_id +
+            ' was not deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      } else {
+        const positionData = await Position.destroy({
+          where: {
+            id: applicationForeignKeys.position_id,
+          },
+        });
+        console.log(
+          'postion_id ' +
+            applicationForeignKeys.position_id +
+            ' was deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      }
+      //check manager_id
+      const applicationArrayM = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          manager_id: applicationForeignKeys.manager_id,
+        },
+      });
+      if (applicationArrayM.length > 1) {
+        console.log(
+          'manager_id ' +
+            applicationForeignKeys.manager_id +
+            ' was not deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      } else {
+        const managerData = await Manager.destroy({
+          where: {
+            id: applicationForeignKeys.manager_id,
+          },
+        });
+        console.log(
+          'manager_id ' +
+            applicationForeignKeys.manager_id +
+            ' was deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      }
+      //check company_id
+      const applicationArrayC = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          company_id: applicationForeignKeys.company_id,
+        },
+      });
+      if (applicationArrayC.length > 1) {
+        console.log(
+          'company_id ' +
+            applicationForeignKeys.company_id +
+            ' was not deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      } else {
+        const companyData = await Company.destroy({
+          where: {
+            id: applicationForeignKeys.company_id,
+          },
+        });
+        console.log(
+          'company_id ' +
+            applicationForeignKeys.company_id +
+            ' was deleted on application id ' +
+            req.params.id +
+            ' delete'
+        );
+      }
+
+      // delete application
       const applicationData = await Application.destroy({
         // Will only delete an appliation if the passed id matches and the logged-in user matches
         where: {
           id: req.params.id,
-          user_id: req.session.user_id,
+          // user_id: req.session.user_id,
         },
       });
       res.json(applicationData);
@@ -226,21 +326,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// need to check field name (i.e. position_id) value see it is being used in more than one application
-async function checkForDuplicate(fieldName, value) {
-  const applicationArray = await Application.findAll({
-    attributes: ['id'],
-    where: {
-      fieldName: value,
-    },
-  });
-  console.log('checkForDuplicate application array:  ' + applicationArray);
-  if (applicationArray.length > 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 module.exports = router;
