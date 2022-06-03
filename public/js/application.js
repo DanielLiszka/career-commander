@@ -106,8 +106,21 @@ $(document).ready(function () {
       return;
     }
 
+    submitCompany(userData.company_name);
+    submitManager(
+      userData.manager_first_name,
+      userData.manager_last_name,
+      userData.manager_email,
+      userData.manager_phone_number
+    );
+    console.log(manager_data);
+    submitPosition(
+      userData.position_name,
+      userData.position_description,
+      userData.position_location,
+      userData.position_closing_date
+    );
     submitResume(userData.resume_name, userData.resume_description);
-
     submitApplication(
       userData.offer,
       userData.accepted,
@@ -128,6 +141,45 @@ $(document).ready(function () {
     hiringManagerPhoneNumber.val('');
     companyName.val('');
   });
+
+  function submitManager(first_name, last_name, email, phone) {
+    $.post('/api/managers/', {
+      manager_first_name: first_name,
+      manager_last_name: last_name,
+      manager_email: email,
+      manager_phone: phone,
+    })
+      .then(function (msg) {
+        res.json({
+          code: 1,
+          Desc: Success,
+          data: msg,
+        });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+
+  function submitPosition(name, description, location, close_date) {
+    $.post('/api/positions/', {
+      position_name: name,
+      position_description: description,
+      position_location: location,
+      position_closing_date: close_date,
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+
+  function submitResume(resume_name, resume_description) {
+    $.post('/api/resumes/', {
+      resume_name: resume_name,
+      resume_description: resume_description,
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
 
   function submitApplication(
     offer,
@@ -178,16 +230,6 @@ $(document).ready(function () {
   //     }
   //   }
   // };
-
-  function submitResume(resume_name, resume_description) {
-    $.post('/api/resumes/', {
-      resume_name: resume_name,
-      resume_description: resume_description,
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
-
   // const editApplication = async (event) => {};
 
   // var delete_buttons = document.querySelectorAll('#deleteResume');
