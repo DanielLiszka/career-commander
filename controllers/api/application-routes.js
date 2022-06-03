@@ -305,13 +305,12 @@ router.delete('/:id', async (req, res) => {
             ' delete'
         );
       }
-
       // delete application
       const applicationData = await Application.destroy({
         // Will only delete an appliation if the passed id matches and the logged-in user matches
         where: {
           id: req.params.id,
-          // user_id: req.session.user_id,
+          user_id: req.session.user_id,
         },
       });
       res.json(applicationData);
