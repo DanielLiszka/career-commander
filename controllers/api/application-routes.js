@@ -1,5 +1,6 @@
 // These are the routes to handle delivering/creating/updating and deleting job application information
 const router = require('express').Router();
+const { application } = require('express');
 const {
   Application,
   Company,
@@ -225,5 +226,21 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// need to check field name (i.e. position_id) value see it is being used in more than one application
+async function checkForDuplicate(fieldName, value) {
+  const applicationArray = await Application.findAll({
+    attributes: ['id'],
+    where: {
+      fieldName: value,
+    },
+  });
+  console.log('checkForDuplicate application array:  ' + applicationArray);
+  if (applicationArray.length > 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 module.exports = router;
