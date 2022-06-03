@@ -1,1 +1,87 @@
- 
+<!-- stored user applications with ability to edit or delete entries WIP-->
+{{#if applications.length}}
+  <div class='container'>
+    <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
+    <div class='row d-flex justify-content-center'>
+      {{#each applications as |application|}}
+        <div
+          class='card border-secondary m-3 text-center col-md-4 col-lg-3'
+          id='spawnedCards'
+        >
+          <div class='card-body border-bottom'>
+            <div class='card-title border-bottom'>
+              <h4 id='application_id'>{{application.id}}</h4>
+            </div>
+            <p
+              class='card-text'
+              id='application_acceptance'
+            >{{application.acceptance}}</p>
+            <p class='card-text' id='application_offer'>{{application.offer}}
+            </p>
+          </div>
+          <div class='btn-group justify-content-center'>
+            <div class='py-2 p-2' id='card-footer'>
+              <a
+                id='editApplication'
+                href=''
+                data-id={{application.id}}
+                class='btn btn-primary btn-sm'
+              >Edit</a>
+            </div>
+            <div class='py-2 p-2' id='card-footer'>
+              <a
+                id='deleteApplication'
+                href=''
+                data-id={{application.id}}
+                class='btn btn-success btn-sm'
+              >Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+<!-- stored user resumes with ability to edit or delete entries.-->
+{{#if resumes.length}}
+  <div class='container'>
+    <h2 class='border-bottom pb-2 text-center'>Saved Resumes</h2>
+    <div class='row d-flex justify-content-center'>
+      {{#each resumes as |resume|}}
+        <div
+          class='card border-secondary m-3 text-center col-md-4 col-lg-3'
+          id='spawnedCards'
+        >
+          <div class='card-body border-bottom'>
+            <div class='card-title border-bottom'>
+              <h4 id='resume_name'>{{resume.name}}</h4>
+            </div>
+            <p
+              class='card-text'
+              id='resume_description'
+            >{{resume.description}}</p>
+          </div>
+          <div class='btn-group justify-content-center'>
+            <div class='py-2 p-2' id='card-footer'>
+              <a
+                id='editResume'
+                href=''
+                data-id={{resume.id}}
+                class='btn btn-primary btn-sm'
+              >Edit</a>
+            </div>
+            <div class='py-2 p-2' id='card-footer'>
+              <a
+                id='deleteResume'
+                href=''
+                data-id={{resume.id}}
+                class='btn btn-success btn-sm'
+              >Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}

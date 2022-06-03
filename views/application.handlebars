@@ -1,55 +1,268 @@
-<!-- stored user applications with ability to edit or delete entries WIP-->
-{{#if applications.length}}
-  <div class='container'>
-    <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
-    <div class='row d-flex justify-content-center'>
-      {{#each applications as |application|}}
-        <div
-          class='card border-secondary m-3 text-center col-md-4 col-lg-3'
-          id='spawnedCards'
-        >
-          <div class='card-body border-bottom'>
-            <div class='card-title border-bottom'>
-              <h4 id='application_id'>{{application.id}}</h4>
-            </div>
-            <p
-              class='card-text'
-              id='application_acceptance'
-            >{{application.acceptance}}</p>
-            <p class='card-text' id='application_offer'>{{application.offer}}
-            </p>
+<div class='container-fluid p-5'>
+  <h2 class="text-center"> Application </h3>
+  <form class="row needs-validation" novalidate>
+    <div class='row mt-4 mb-4'> 
+    <!-- Position Location required--> 
+    <div class='col-lg-3 col-md-3 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='location'>Location</label>
+          <input
+            type='text'
+            class='form-control'
+            id='position_location-input'
+            placeholder='' 
+          required>
+          <div class="invalid-feedback">
+            Provide a location.
           </div>
-          <div class='btn-group justify-content-center'>
-            <div class='py-2 p-2' id='card-footer'>
-              <a
-                id='editApplication'
-                href=''
-                data-id={{application.id}}
-                class='btn btn-primary btn-sm'
-              >Edit</a>
-            </div>
-            <div class='py-2 p-2' id='card-footer'>
-              <a
-                id='deleteApplication'
-                href=''
-                data-id={{application.id}}
-                class='btn btn-success btn-sm'
-              >Delete</a>
-            </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div> 
+      </div>
+      <!-- Position Name required--> 
+    <div class='col-lg-2 col-md-2 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='position'>Position</label>
+          <input
+            type='text'
+            class='form-control'
+            id='position_name-input'
+            placeholder=''
+          required>
+          <div class="invalid-feedback">
+            Provide a position name.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
           </div>
         </div>
-      {{/each}}
+    </div>
+    <!-- Company Name required-->
+      <div class='col-lg-2 col-md-3 col-sm-6 col-xs-12'>  
+        <div class='form-group text-center'>
+          <label for='company'>Company</label>
+          <input
+            type='text'
+            class='form-control'
+            id='company_name-input'
+            placeholder=''
+          required>
+          <div class="invalid-feedback">
+            Provide a company name.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+      </div>
+      <!-- Position Closing Date required-->
+      <div class='col-lg-3 col-md-3 col-sm-6 col-xs-12'>
+        <form>
+          <div class='form-group text-center'> <!-- Date input -->
+            <label class='control-label' for='date'>Closing Date</label>
+            <input class='form-control' id='position_closing_date-input' name='date' placeholder='MM/DD/YYYY' type='text' required>
+          <div class="invalid-feedback">
+            Select a date.
+           </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          </div>
+        </form>
+      </div>
+      <!-- Resume Name required required--> 
+      <div class='col-lg-2 col-md-2 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='resume_name'>Resume Name</label>
+          <input
+            type='text'
+            class='form-control'
+            id='resume_name-input'
+            placeholder=''
+          required>
+          <div class="invalid-feedback">
+              Enter a resume name.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+      </div>
+    <!-- Position Description required-->
+    <div class='form-group text-center mt-4'>
+      <label for='position_description'>Position Description</label>
+      <textarea
+        class='form-control form-control-lg'
+        id='position_description-input'
+        rows='2'
+      required></textarea>
+        <div class="invalid-feedback">
+          Enter a position description.
+        </div>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+    </div>
+    <!-- Resume Description required -->
+      <div class='form-group mt-4 text-center'>
+        <label for='resume_description'>Resume Description</label>
+        <textarea
+          class='form-control form-control-lg'
+          id='resume_description-input'
+          rows='5'
+        required></textarea>
+        <div class="invalid-feedback">
+          Enter a resume description.
+        </div>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    <h4 class='text-center mt-4 mb-4'> Hiring Manger</h4>
+    <div class='row'>
+    <!-- Hiring Manager First Name required--> 
+    <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='hiring_manager_first_name'>First Name</label>
+          <input
+            type='text'
+            class='form-control'
+            id='hiring_manager_first_name-input'
+            placeholder='First Name'
+          required>
+          <div class="invalid-feedback">
+            Enter the hiring manager's first name.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+    </div>
+    <!-- Hiring Manager Last Name required--> 
+    <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='hiring_manager_last_name'>Last Name</label>
+          <input
+            type='text'
+            class='form-control'
+            id='hiring_manager_last_name-input'
+            placeholder='Last Name'
+          required>
+        <div class="invalid-feedback">
+          Enter the hiring manager's last name.
+        </div>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        </div>
+    </div>
+    <!-- Hiring Manager Email required--> 
+    <div class='col-md-3 col-sm-6 col-xs-12'>
+      <div class='form-group text-center'>
+        <label for='hiring_manager_email'>Email</label>
+        <input
+          type='email'
+          class='form-control'
+          id='hiring_manager_email-input'
+          placeholder='Email'
+        required>
+        <div class="invalid-feedback">
+          Enter a valid email address.
+        </div>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+    <!-- Hiring Manager Phone # required--> 
+    <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='form-group text-center'>
+          <label for='phone_number'>Phone #</label>
+          <input
+            type='text'
+            class='form-control'
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            id='hiring_manager_phone_number-input'
+            placeholder='###-###-####'
+          required>
+          <div class="invalid-feedback">
+            Enter a valid phone number.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+    </div>
+    </div>  
+    <h4 class='text-center mt-4 mb-4'> Interviews </h4>
+    <div class='row'> 
+      <!-- Interview 1st Date Input not required-->
+       <div class='col-md-3 col-sm-6 col-xs-12'>
+          <form method='post'>
+            <div class='form-group text-center'>
+              <label class='control-label' for='date'>1st</label>
+              <input class='form-control' id='1st_date' name='date' placeholder='MM/DD/YYYY' type='text'>
+            </div>
+          </form>
+       </div>
+      <!-- Interview 2nd Date Input not required--> 
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+          <form method='post'>
+            <div class='form-group text-center'>
+              <label class='control-label' for='date'>2nd</label>
+              <input class='form-control' id='2nd_date' name='date' placeholder='MM/DD/YYYY' type='text'/>
+            </div>
+          </form>
+       </div>
+       <!-- Interview 3rd Date Input not required-->
+        <div class='col-md-3 col-sm-6 col-xs-12'>
+          <form method='post'>
+            <div class='form-group text-center'>
+              <label class='control-label' for='date'>3rd</label>
+              <input class='form-control' id='3rd_date' name='date' placeholder='MM/DD/YYYY' type='text'/>
+            </div>
+          </form>
+        </div>
+      <!-- Interview 4th Date Input not required-->
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+        <form method='post'>
+          <div class='form-group text-center'>
+            <label class='control-label' for='date'>4th</label>
+            <input class='form-control' id='4th_date' name='date' placeholder='MM/DD/YYYY' type='text'/>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class='row mt-5 mb-5 d-flex justify-content-center'>
+      <!-- Offer Checkbox not required-->
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+          <input class='form-check-input' type='checkbox' value='' id='offer_check'/>
+          <label class='form-check-label' for='offer_check'>
+            Offer
+          </label>
+      </div>
+      <!-- Acceptance Checkbox not required--> 
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+          <input class='form-check-input' type='checkbox' value='' id='acceptance_check'/>
+          <label class='form-check-label' for='acceptance_check'>
+            Accepted
+          </label>
+      </div> 
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+        <button  type='submit' class='btn btn-primary' id="application_submission">Submit Application</button>
+      </div>
+      <div class='col-md-3 col-sm-6 col-xs-12'>
+        <button
+          onclick= location.href='/dashboard'
+          type='button'
+          class='btn-danger'
+        >
+          Go Back
+        </button>
+      </div>
     </div>
   </div>
-{{/if}}
-
-<!-- Add a new user application -->
-<div class='justify-content-center text-center'>
-  <button
-    onclick="location.href='/application_submission'"
-    type='button'
-    class='btn-primary mt-2 mb-2'
-  >
-    Add an Application
-  </button>
+</form>
 </div>
+
