@@ -180,7 +180,7 @@ router.post('/', (req, res) => {
     interview2_date: req.body.interview2_date,
     interview3_date: req.body.interview3_date,
     interview4_date: req.body.interview4_date,
-    postion_id: req.body.position_id,
+    position_id: req.body.position_id,
     resume_id: req.body.resume_id,
     company_id: req.body.company_id,
     manager_id: req.body.manager_id,
@@ -214,7 +214,10 @@ router.post('/', (req, res) => {
     //   user_id: req.body.user_id,
     // },
   })
-    .then((dbApplicationData) => res.json(dbApplicationData))
+    .then((dbApplicationData) => {
+      console.log(dbApplicationData);
+      res.json(dbApplicationData);
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -232,7 +235,7 @@ router.put('/:id', (req, res) => {
       interview2_date: req.body.interview2_date,
       interview3_date: req.body.interview3_date,
       interview4_date: req.body.interview4_date,
-      postion_id: req.body.position_id,
+      position_id: req.body.position_id,
       resume_id: req.body.resume_id,
       company_id: req.body.company_id,
       manager_id: req.body.manager_id,
@@ -252,6 +255,7 @@ router.put('/:id', (req, res) => {
         res.status(404).json({ message: 'No resume was found with that id.' });
         return;
       } else {
+        console.log(dbApplicationData);
         res.json(dbApplicationData);
       }
     })
