@@ -26,27 +26,53 @@ router.get('/signup', function (req, res) {
   }
 });
 
-router.get('/dashboard', withAuth, function (req, res) {
-  res.render('dashboard', { js: ['dashboard.js'] });
-});
-
-//Uses Mark's proposed route to obtain all resumes for user.
-router.get('/resume', withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    const resume_data = await Resume.findAll({
+    const application_data = await Application.findAll({
+      // only pull back applications matching the logged-in user
       where: {
         user_id: req.session.user_id,
       },
-      attributes: ['id', 'name', 'description', 'created_at'],
-      include: {
-        model: User,
-        attributes: ['first_name', 'last_name'],
-        order: [['last_name', 'DESC']],
-      },
+      attributes: [
+        'id',
+        'created_at',
+        'offer',
+        'accepted',
+        'interview1_date',
+        'interview2_date',
+        'interview3_date',
+        'interview4_date',
+      ],
+      order: [['created_at', 'DESC']],
+      include: [
+        {
+          model: Company,
+          attributes: ['name'],
+        },
+        {
+          model: Manager,
+          attributes: ['first_name', 'last_name', 'email', 'phone'],
+        },
+        {
+          model: Position,
+          attributes: ['name', 'location', 'close_date', 'description'],
+        },
+        {
+          model: Resume,
+          attributes: ['name', 'description'],
+        },
+        {
+          model: User,
+          attributes: ['first_name', 'last_name'],
+          order: [['last_name', 'DESC']],
+        },
+      ],
     });
 
-    const resumes = resume_data.map((resume) => resume.get({ plain: true }));
-    res.render('resume', { js: ['resume.js'], resumes });
+    const applications = application_data.map((application) =>
+      application.get({ plain: true })
+    );
+    res.render('dashboard', { js: ['dashboard.js'], applications });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
