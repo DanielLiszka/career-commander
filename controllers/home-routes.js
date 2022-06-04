@@ -26,43 +26,86 @@ router.get('/signup', function (req, res) {
   }
 });
 
-router.get('/dashboard', withAuth, function (req, res) {
-  res.render('dashboard', { js: ['dashboard.js'] });
-});
-
-//Uses Mark's proposed route to obtain all resumes for user.
-router.get('/resume', withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    const resume_data = await Resume.findAll({
+    // Get user first and last name for welcome message.
+    const user_data = await User.findOne({
+      //attributes: { exclude: ['password'] },
+      attributes: ['id', 'first_name', 'last_name'],
       where: {
-        user_id: req.session.user_id,
-      },
-      attributes: ['id', 'name', 'description', 'created_at'],
-      include: {
-        model: User,
-        attributes: ['first_name', 'last_name'],
-        order: [['last_name', 'DESC']],
+        id: req.session.user_id,
       },
     });
 
-    const resumes = resume_data.map((resume) => resume.get({ plain: true }));
-    res.render('resume', { js: ['resume.js'], resumes });
+    const user = user_data.get({ plain: true });
+
+    const application_data = await Application.findAll({
+      // only pull back applications matching the logged-in user
+      where: {
+        user_id: req.session.user_id,
+      },
+      attributes: [
+        'id',
+        'created_at',
+        'offer',
+        'accepted',
+        'interview1_date',
+        'interview2_date',
+        'interview3_date',
+        'interview4_date',
+      ],
+      order: [['created_at', 'DESC']],
+      include: [
+        {
+          model: Company,
+          attributes: ['name'],
+        },
+        {
+          model: Manager,
+          attributes: ['first_name', 'last_name', 'email', 'phone'],
+        },
+        {
+          model: Position,
+          attributes: ['name', 'location', 'close_date', 'description'],
+        },
+        {
+          model: Resume,
+          attributes: ['name', 'description'],
+        },
+        {
+          model: User,
+          attributes: ['first_name', 'last_name'],
+          order: [['last_name', 'DESC']],
+        },
+      ],
+    });
+
+    const applications = application_data.map((application) =>
+      application.get({ plain: true })
+    );
+    res.render('dashboard', { js: ['dashboard.js'], applications, user });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-router.get('/resume_submission', withAuth, function (req, res) {
-  res.render('resume_submission', { js: ['resume_submission.js'] });
-});
+router.get('/application', withAuth, async (req, res) => {
+  try {
+    // Get user first and last name for welcome message.
+    const user_data = await User.findOne({
+      //attributes: { exclude: ['password'] },
+      attributes: ['id', 'first_name', 'last_name'],
+      where: {
+        id: req.session.user_id,
+      },
+    });
 
-router.get('/application', withAuth, function (req, res) {
-  res.render('application', { js: ['application.js'] });
-});
-
-router.get('/application_submission', withAuth, function (req, res) {
-  res.render('application_submission', { js: ['application_submission.js'] });
+    const user = user_data.get({ plain: true });
+    res.render('application', { js: ['application.js'], user });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

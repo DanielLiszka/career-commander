@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
         },
         {
           model: Position,
-          attributes: ['name', 'location', 'close_date'],
+          attributes: ['name', 'location', 'close_date', 'description'],
         },
         {
           model: Resume,

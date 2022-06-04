@@ -2,6 +2,19 @@
 $(document).ready(function () {
   var logOut = $('#logout');
 
+  setInterval(function () {
+    var hours = new dayjs().hour();
+    $('.hours').html((hours < 10 ? '0' : '') + hours);
+  }, 1000);
+  setInterval(function () {
+    var minutes = new dayjs().minute();
+    $('.minutes').html((minutes < 10 ? '0' : '') + minutes);
+  }, 1000);
+  setInterval(function () {
+    var seconds = new dayjs().second();
+    $('.seconds').html((seconds < 10 ? '0' : '') + seconds);
+  }, 1000);
+
   logOut.on('click', function (event) {
     event.preventDefault();
     $.post('/api/users/logout', {})

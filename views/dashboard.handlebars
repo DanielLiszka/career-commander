@@ -1,1 +1,214 @@
- 
+<!-- stored user applications with ability to edit or delete entries WIP-->
+{{#if applications.length}}
+  <div class='container w-100'>
+    <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
+    <div class='row d-flex justify-content-center'>
+      {{#each applications as |application|}}
+        <div
+          class='card border-secondary m-3 text-center col-sm-6 col-md-4 col-lg-3'
+          id='spawnedCards'
+        >
+          <div class='card-body border-bottom'>
+            <div class='card-title border-bottom'>
+              <h4 id='application_id'>Application # {{application.id}}</h4>
+            </div>
+                <h4 class='text-center mt-3'> Position </h4>
+                <div class='row mt-0 mb-4 gx-0'> 
+                <!-- Position Name--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Location--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Location </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.location}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Description-->
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Description </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.description}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Closing Date-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Closing Date </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.close_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Company Name-->
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Company Name </strong></label>
+                        <p class='card-text text-wrap  mt-2'
+                            id='position_location'>
+                            {{application.company.name}}
+                        </p>
+                    </div> 
+                </div>
+                <h4 class='text-center mt-4 mb-4'> Resume</h4>
+                <div class='row gx-0'>
+                <!-- Resume Name--> 
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Resume Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.resume.name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Resume Description -->
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Resume Description </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.resume.description}}
+                        </p>
+                    </div> 
+                </div>
+                </div>
+                <h4 class='text-center mt-4 mb-4'> Hiring Manger</h4>
+                <div class='row gx-0'>
+                <!-- Hiring Manager's First Name--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong> Hiring Manager's First Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.first_name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Hiring Manager's Last Name--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Hiring Manager's Last Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.last_name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Hiring Manager Email--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Hiring Manager Email </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.email}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Hiring Manager Phone # --> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Hiring Manager Phone # </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.phone}}
+                        </p>
+                    </div> 
+                </div>
+                </div>  
+                <h4 class='text-center mt-4 mb-4'> Interviews </h4>
+                <div class='row gx-0'> 
+                <!-- Interview 1st Date-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>1st Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview4_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 2nd Date Input--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>2nd Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview3_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 3rd Date Input-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>3rd Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview2_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 4th Date Input-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>4th Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview1_date}}
+                        </p>
+                    </div> 
+                </div>
+                </div>
+                <div class='row mt-3 mb-0 d-flex justify-content-center gx-0'>
+                    <!-- Offer Checkbox-->
+                    <div class='col-md-6 col-sm-6 col-xs-12'>
+                        <input class='form-check-input' type='checkbox' onclick="return false;" value='' id='offer_check' {{#if application.offer}} checked {{/if}}/>
+                        <label class='form-check-label' for='offer_check'>
+                            Offered
+                        </label>
+                    </div>
+                    <!-- Acceptance Checkbox--> 
+                    <div class='col-md-6 col-sm-6 col-xs-12'>
+                        <input class='form-check-input' type='checkbox' value='' onclick="return false;" id='acceptance_check' {{#if application.accepted}} checked {{/if}}/>
+                        <label class='form-check-label' for='acceptance_check'>
+                            Accepted
+                        </label>
+                    </div> 
+                </div>
+            </div>
+          </div>
+          <div class='btn-group d-flex justify-content-center'>
+            <div class='py-2 p-2' id='card-footer'>
+              <a
+                id='editApplication'
+                href=''
+                data-id={{application.id}}
+                class='btn btn-success btn-sm'
+              >Edit</a>
+              <a
+                id='deleteApplication'
+                href=''
+                data-id={{application.id}}
+                class='btn btn-danger btn-sm'
+              >Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
