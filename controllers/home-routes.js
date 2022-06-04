@@ -83,7 +83,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const applications = application_data.map((application) =>
       application.get({ plain: true })
     );
-    res.render('dashboard', { js: ['dashboard.js'], applications, user });
+    res.render('dashboard', {
+      js: ['dashboard.js', 'application.js'],
+      applications,
+      user,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

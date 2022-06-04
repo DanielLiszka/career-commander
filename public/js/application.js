@@ -205,6 +205,6 @@ $(document).ready(function () {
       .catch(function (err) {
         console.log(err);
       });
-    console.log(application_data);
+    //console.log(application_data);
   }
 });
