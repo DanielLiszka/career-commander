@@ -84,7 +84,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const applications = application_data.map((application) =>
       application.get({ plain: true })
     );
-
+    
     // This reformats the application close date and interview dates to a more readable MM/DD/YYYY
     const reformated_applications = applications.map((application) => {
       if (application.position.close_date !== null) {
@@ -118,7 +118,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     console.log(reformated_applications);
 
     res.render('dashboard', {
-      js: ['dashboard.js'],
+      js: ['dashboard.js', 'application.js'],
       reformated_applications,
       user,
     });

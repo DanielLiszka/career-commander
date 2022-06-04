@@ -1,7 +1,9 @@
 //execute "/logout" user route when "Logout" is clicked and redirect to login page.
 $(document).ready(function () {
   var logOut = $('#logout');
+  var current_date = new Date().toLocaleString().split(',')[0];
 
+  $('.date').html(current_date);
   setInterval(function () {
     var hours = new dayjs().hour();
     $('.hours').html((hours < 10 ? '0' : '') + hours);

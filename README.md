@@ -17,7 +17,8 @@ This project will be running on Heroku. So, no real installation will be require
 
 ## Usage
 
-This application will be run from Heroku at the following URL: https://warm-chamber-02188.herokuapp.com/. The database may be empty when you first run the application. If that is the case, you will need to create a new login. Click on Login and and enter a new username and password. Passwords must be at least 8 characters.
+This application will be run from Heroku at the following URL: https://career-commander.herokuapp.com/
+. The database may be empty when you first run the application. If that is the case, you will need to create a new login. Click on Login and and enter a new username and password. Passwords must be at least 8 characters.
 
 To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
 
