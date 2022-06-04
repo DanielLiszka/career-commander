@@ -53,16 +53,8 @@ router.get('/resume', withAuth, async (req, res) => {
   }
 });
 
-router.get('/resume_submission', withAuth, function (req, res) {
-  res.render('resume_submission', { js: ['resume_submission.js'] });
-});
-
 router.get('/application', withAuth, function (req, res) {
   res.render('application', { js: ['application.js'] });
-});
-
-router.get('/application_submission', withAuth, function (req, res) {
-  res.render('application_submission', { js: ['application_submission.js'] });
 });
 
 module.exports = router;

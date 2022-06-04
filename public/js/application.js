@@ -42,7 +42,7 @@ $(document).ready(function () {
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms).forEach(function (form) {
       form.addEventListener(
-        'submit',
+        'click',
         function (event) {
           if (!form.checkValidity()) {
             event.preventDefault();
@@ -56,21 +56,21 @@ $(document).ready(function () {
     });
   })();
 
-  submissionForm.on('submit', function (event) {
+  submissionForm.on('click', function (event) {
     event.preventDefault();
 
     var userData = {
-      hiring_manager_phone_number: hiringManagerPhoneNumber.val().trim(),
-      hiring_manager_email: hiringManagerEmail.val().trim(),
-      hiring_manager_last_name: hiringManagerLastName.val().trim(),
-      hiring_manager_first_name: hiringManagerFirstName.val().trim(),
+      manager_phone_number: hiringManagerPhoneNumber.val().trim(),
+      manager_email: hiringManagerEmail.val().trim(),
+      manager_last_name: hiringManagerLastName.val().trim(),
+      manager_first_name: hiringManagerFirstName.val().trim(),
+      position_name: positionName.val().trim(),
+      position_location: positionLocation.val().trim(),
       position_description: positionDescription.val().trim(),
       position_closing_date: positionClosingDate
         .data('datepicker')
         .getFormattedDate('yyyy-mm-dd'),
       company_name: companyName.val().trim(),
-      position_name: positionName.val().trim(),
-      position_location: positionLocation.val().trim(),
       resume_name: resumeName.val().trim(),
       resume_description: resumeDescription.val().trim(),
       offer: offer_check.is(':checked'),
@@ -93,10 +93,10 @@ $(document).ready(function () {
     if (
       !userData.resume_name ||
       !userData.resume_description ||
-      !userData.hiring_manager_email ||
-      !userData.hiring_manager_first_name ||
-      !userData.hiring_manager_last_name ||
-      !userData.hiring_manager_phone_number ||
+      !userData.manager_email ||
+      !userData.manager_first_name ||
+      !userData.manager_last_name ||
+      !userData.manager_phone_number ||
       !userData.position_description ||
       !userData.position_location ||
       !userData.company_name ||
@@ -105,30 +105,6 @@ $(document).ready(function () {
     ) {
       return;
     }
-
-    submitCompany(userData.company_name);
-    submitManager(
-      userData.manager_first_name,
-      userData.manager_last_name,
-      userData.manager_email,
-      userData.manager_phone_number
-    );
-    console.log(manager_data);
-    submitPosition(
-      userData.position_name,
-      userData.position_description,
-      userData.position_location,
-      userData.position_closing_date
-    );
-    submitResume(userData.resume_name, userData.resume_description);
-    submitApplication(
-      userData.offer,
-      userData.accepted,
-      userData.interview1_date,
-      userData.interview2_date,
-      userData.interview3_date,
-      userData.interview4_date
-    );
 
     resumeName.val('');
     resumeDescription.val('');
@@ -140,73 +116,9 @@ $(document).ready(function () {
     hiringManagerEmail.val('');
     hiringManagerPhoneNumber.val('');
     companyName.val('');
+
+    submitApplication(userData);
   });
-
-  function submitManager(first_name, last_name, email, phone) {
-    $.post('/api/managers/', {
-      manager_first_name: first_name,
-      manager_last_name: last_name,
-      manager_email: email,
-      manager_phone: phone,
-    })
-      .then(function (msg) {
-        res.json({
-          code: 1,
-          Desc: Success,
-          data: msg,
-        });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
-
-  function submitPosition(name, description, location, close_date) {
-    $.post('/api/positions/', {
-      position_name: name,
-      position_description: description,
-      position_location: location,
-      position_closing_date: close_date,
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
-
-  function submitResume(resume_name, resume_description) {
-    $.post('/api/resumes/', {
-      resume_name: resume_name,
-      resume_description: resume_description,
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
-
-  function submitApplication(
-    offer,
-    accepted,
-    interview1_date,
-    interview2_date,
-    interview3_date,
-    interview4_date
-  ) {
-    var plain_object = {
-      offer: offer,
-      accepted: accepted,
-      interview1_date: interview1_date,
-      interview2_date: interview2_date,
-      interview3_date: interview3_date,
-      interview4_date: interview4_date,
-    };
-    Object.keys(plain_object).forEach(function (key) {
-      var item = plain_object[key];
-      if (item === '') {
-        delete plain_object[key];
-      }
-    });
-    $.post('/api/applications', plain_object).catch(function (err) {
-      console.log(err);
-    });
-  }
 
   // var delete_buttons = document.querySelectorAll('#deleteApplication');
   // for (var i = 0, len = delete_buttons.length; i < len; i++)
@@ -257,4 +169,92 @@ $(document).ready(function () {
 
   //WIP
   //const editResume = async (event) => {};
+
+  async function submitApplication(userData) {
+    userData.company_name;
+
+    userData.manager_first_name,
+      userData.manager_last_name,
+      userData.manager_email,
+      userData.manager_phone_number;
+
+    userData.position_name,
+      userData.position_description,
+      userData.position_location,
+      userData.position_closing_date;
+
+    userData.resume_name, userData.resume_description;
+
+    userData.offer,
+      userData.accepted,
+      userData.interview1_date,
+      userData.interview2_date,
+      userData.interview3_date,
+      userData.interview4_date;
+
+    const company_data = await $.post('/api/companies/', {
+      company_name: userData.company_name,
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //console.log(company_data);
+
+    const manager_data = await $.post('/api/managers/', {
+      manager_first_name: userData.manager_first_name,
+      manager_last_name: userData.manager_last_name,
+      manager_email: userData.manager_email,
+      manager_phone: userData.manager_phone_number,
+      company_id: company_data.id,
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //console.log(manager_data);
+
+    const position_data = await $.post('/api/positions/', {
+      position_name: userData.position_name,
+      position_description: userData.position_description,
+      position_location: userData.position_location,
+      position_close_date: userData.position_closing_date,
+      company_id: manager_data.company_id,
+      manager_id: manager_data.id,
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //console.log(position_data);
+
+    const resume_data = await $.post('/api/resumes/', {
+      resume_name: userData.resume_name,
+      resume_description: userData.resume_description,
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //console.log(resume_data);
+
+    var plain_object = {
+      offer: userData.offer,
+      accepted: userData.accepted,
+      interview1_date: userData.interview1_date,
+      interview2_date: userData.interview2_date,
+      interview3_date: userData.interview3_date,
+      interview4_date: userData.interview4_date,
+      position_id: position_data.id,
+      resume_id: resume_data.id,
+      company_id: company_data.id,
+      manager_id: manager_data.id,
+    };
+    Object.keys(plain_object).forEach(function (key) {
+      var item = plain_object[key];
+      if (item === '') {
+        delete plain_object[key];
+      }
+    });
+    const application_data = await $.post('/api/applications', plain_object)
+      .then(function () {
+        window.location.replace('/dashboard');
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    //console.log(application_data);
+  }
 });
