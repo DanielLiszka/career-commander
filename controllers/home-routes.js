@@ -28,6 +28,17 @@ router.get('/signup', function (req, res) {
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
+    // Get user first and last name for welcome message.
+    const user_data = await User.findOne({
+      //attributes: { exclude: ['password'] },
+      attributes: ['id', 'first_name', 'last_name'],
+      where: {
+        id: req.session.user_id,
+      },
+    });
+
+    const user = user_data.get({ plain: true });
+
     const application_data = await Application.findAll({
       // only pull back applications matching the logged-in user
       where: {
@@ -72,15 +83,29 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const applications = application_data.map((application) =>
       application.get({ plain: true })
     );
-    res.render('dashboard', { js: ['dashboard.js'], applications });
+    res.render('dashboard', { js: ['dashboard.js'], applications, user });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-router.get('/application', withAuth, function (req, res) {
-  res.render('application', { js: ['application.js'] });
+router.get('/application', withAuth, async (req, res) => {
+  try {
+    // Get user first and last name for welcome message.
+    const user_data = await User.findOne({
+      //attributes: { exclude: ['password'] },
+      attributes: ['id', 'first_name', 'last_name'],
+      where: {
+        id: req.session.user_id,
+      },
+    });
+
+    const user = user_data.get({ plain: true });
+    res.render('application', { js: ['application.js'], user });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

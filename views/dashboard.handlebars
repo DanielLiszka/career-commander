@@ -1,6 +1,6 @@
 <!-- stored user applications with ability to edit or delete entries WIP-->
 {{#if applications.length}}
-  <div class='container'>
+  <div class='container w-100'>
     <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
     <div class='row d-flex justify-content-center'>
       {{#each applications as |application|}}
@@ -18,7 +18,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Position Name </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.position.name}}
                         </p>
@@ -28,7 +28,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Position Location </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.position.location}}
                         </p>
@@ -38,7 +38,7 @@
                 <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Position Description </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.position.description}}
                         </p>
@@ -48,7 +48,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Position Closing Date </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.position.close_date}}
                         </p>
@@ -58,7 +58,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Company Name </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap  mt-2'
                             id='position_location'>
                             {{application.company.name}}
                         </p>
@@ -70,7 +70,7 @@
                 <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Resume Name </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.resume.name}}
                         </p>
@@ -80,7 +80,7 @@
                 <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Resume Description </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.resume.description}}
                         </p>
@@ -93,7 +93,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong> Hiring Manager's First Name </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.manager.first_name}}
                         </p>
@@ -103,7 +103,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Hiring Manager's Last Name </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.manager.last_name}}
                         </p>
@@ -113,7 +113,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Hiring Manager Email </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.manager.email}}
                         </p>
@@ -123,7 +123,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>Hiring Manager Phone # </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.manager.phone}}
                         </p>
@@ -136,7 +136,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>1st Interview </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.interview4_date}}
                         </p>
@@ -146,7 +146,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>2nd Interview </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.interview3_date}}
                         </p>
@@ -156,7 +156,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>3rd Interview </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.interview2_date}}
                         </p>
@@ -166,7 +166,7 @@
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
                         <label><strong>4th Interview </strong></label>
-                        <p class='card-text mt-2'
+                        <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.interview1_date}}
                         </p>

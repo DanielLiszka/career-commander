@@ -21,7 +21,8 @@
 </header>
 <body> 
     <!-- Navigation Bar-->
-    <nav class='navbar navbar-expand-md bg-light'>
+    <nav class='navbar navbar-expand-md nav-fill w-100 bg-light'>
+        <div class='align-middle'> Welcome {{user.first_name}} {{user.last_name}} </div>
         <div class='navigator mx-auto' id='navbarNav'>
           <ul class='navbar-nav'>
             <li class='nav-item'>
@@ -34,6 +35,11 @@
               <a class='nav-link' href='/' id="logout"> Logout</a>
             </li>
           </ul>
+        </div>
+        <div class="text-black">
+          <a><span class="hours"></span></a> :
+          <a><span class="minutes"></span></a> :
+          <a><span class="seconds"></span></a>
         </div>
     </nav>
 
