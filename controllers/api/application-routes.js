@@ -1,7 +1,5 @@
 // These are the routes to handle delivering/creating/updating and deleting job application information
 const router = require('express').Router();
-const { application } = require('express');
-const { nextTick } = require('process');
 const {
   Application,
   Company,
