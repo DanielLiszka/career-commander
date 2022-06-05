@@ -2,13 +2,6 @@
 {{#if reformated_applications.length}}
   <div class='container w-100'>
     <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
-    <a
-    id='deleteAllApplications'
-    href=''
-    type="submit"
-    onsubmit="return false"
-    class='btn btn-danger btn-sm'
-    >Delete All Applications</a>
     <div class='row d-flex justify-content-center'>
       {{#each reformated_applications as |application|}}
         <div
@@ -284,8 +277,8 @@
                                     id='position_closing_date-input' 
                                     name='date' 
                                     placeholder='MM/DD/YYYY' 
-                                    value={{application.position.close_date}}
-                                    type='text' required>
+                                    type='text' required
+                                    value={{application.position.close_date}}>
                                 <div class="invalid-feedback">
                                     Select a date.
                                 </div>
@@ -411,9 +404,7 @@
                                     id='1st_date' 
                                     name='date' 
                                     placeholder='MM/DD/YYYY' 
-                                    value= {{#if application.interview1_date}} {{application.interview1_date}} {{/if}}
-                                    {{#else}} '' {{/else}}
-                                    type='text'>
+                                    type='text' value= {{application.interview1_date}}>
                                     <div class="valid-feedback">
                                         Optional
                                     </div>
@@ -429,9 +420,7 @@
                                     id='2nd_date' 
                                     name='date' 
                                     placeholder='MM/DD/YYYY' 
-                                    value= {{#if application.interview2_date}} {{application.interview2_date}} {{/if}}
-                                    {{#else}} '' {{/else}}
-                                    type='text'/>
+                                    type='text' value= {{application.interview2_date}}>
                                     <div class="valid-feedback">
                                         Optional
                                     </div>
@@ -447,9 +436,7 @@
                                 id='3rd_date' 
                                 name='date' 
                                 placeholder='MM/DD/YYYY' 
-                                value= {{#if application.interview3_date}} {{application.interview3_date}} {{/if}}
-                                {{#else}} '' {{/else}}
-                                type='text'/>
+                                type='text' value={{application.interview3_date}}>
                                 <div class="valid-feedback">
                                     Optional
                                 </div>
@@ -465,9 +452,7 @@
                                     id='4th_date' 
                                     name='date' 
                                     placeholder='MM/DD/YYYY' 
-                                    vlue={{#if application.interview4_date}} {{application.interview4_date}} {{/if}} 
-                                    {{#else}} '' {{/else}}
-                                    type='text'/>
+                                    type='text' value={{application.interview4_date}} >
                                     <div class="valid-feedback">
                                     Optional
                                     </div>
