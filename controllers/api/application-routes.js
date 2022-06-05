@@ -89,22 +89,23 @@ router.get('/:id', async (req, res) => {
           'interview4_date',
         ],
         order: [['created_at', 'DESC']],
+        // also include company, manager, position, and resume IDs to make put requests easier.
         include: [
           {
             model: Company,
-            attributes: ['name'],
+            attributes: ['id', 'name'],
           },
           {
             model: Manager,
-            attributes: ['first_name', 'last_name', 'email', 'phone'],
+            attributes: ['id', 'first_name', 'last_name', 'email', 'phone'],
           },
           {
             model: Position,
-            attributes: ['name', 'location', 'close_date'],
+            attributes: ['id', 'name', 'location', 'close_date'],
           },
           {
             model: Resume,
-            attributes: ['name', 'description'],
+            attributes: ['id', 'name', 'description'],
           },
           {
             model: User,
@@ -112,6 +113,8 @@ router.get('/:id', async (req, res) => {
             order: [['last_name', 'DESC']],
           },
         ],
+        raw: true,
+        nest: true,
       });
       res.json(applicationData);
     } else {

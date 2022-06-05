@@ -106,6 +106,7 @@ $(document).ready(function () {
       return;
     }
 
+    //reset input fields
     resumeName.val('');
     resumeDescription.val('');
     positionLocation.val('');
@@ -121,27 +122,6 @@ $(document).ready(function () {
   });
 
   async function submitApplication(userData) {
-    userData.company_name;
-
-    userData.manager_first_name,
-      userData.manager_last_name,
-      userData.manager_email,
-      userData.manager_phone_number;
-
-    userData.position_name,
-      userData.position_description,
-      userData.position_location,
-      userData.position_closing_date;
-
-    userData.resume_name, userData.resume_description;
-
-    userData.offer,
-      userData.accepted,
-      userData.interview1_date,
-      userData.interview2_date,
-      userData.interview3_date,
-      userData.interview4_date;
-
     const company_data = await $.post('/api/companies/', {
       company_name: userData.company_name,
     }).catch(function (err) {
