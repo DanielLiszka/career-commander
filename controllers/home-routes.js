@@ -115,8 +115,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
       return application;
     });
 
-    console.log(reformated_applications);
-
     res.render('dashboard', {
       js: ['dashboard.js', 'application.js'],
       reformated_applications,
