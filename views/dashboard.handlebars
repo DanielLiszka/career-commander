@@ -1,5 +1,5 @@
 <!-- stored user applications with ability to edit or delete entries WIP-->
-{{#if applications.length}}
+{{#if reformated_applications.length}}
   <div class='container w-100'>
     <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
     <a
@@ -10,9 +10,9 @@
     class='btn btn-danger btn-sm'
     >Delete All Applications</a>
     <div class='row d-flex justify-content-center'>
-      {{#each applications as |application|}}
+      {{#each reformated_applications as |application|}}
         <div
-          class='card border-secondary m-3 text-center col-sm-6 col-md-4 col-lg-3'
+          class='card border-secondary m-3 text-center col-12 col-lg-6 col-xl-4'
           id='spawnedCards'
         >
           <div class='card-body border-bottom'>
@@ -96,23 +96,13 @@
                 </div>
                 <h4 class='text-center mt-4 mb-4'> Hiring Manger</h4>
                 <div class='row gx-0'>
-                <!-- Hiring Manager's First Name--> 
-                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                <!-- Hiring Manager's Name--> 
+                <div class=' col-12 p-3'>
                     <div class='text-center'>
-                        <label><strong> Hiring Manager's First Name </strong></label>
+                        <label><strong> Hiring Manager's Name </strong></label>
                         <p class='card-text text-wrap mt-2'
                             id='position_location'>
-                            {{application.manager.first_name}}
-                        </p>
-                    </div> 
-                </div>
-                <!-- Hiring Manager's Last Name--> 
-                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
-                    <div class='text-center'>
-                        <label><strong>Hiring Manager's Last Name </strong></label>
-                        <p class='card-text text-wrap mt-2'
-                            id='position_location'>
-                            {{application.manager.last_name}}
+                            {{application.manager.first_name}} {{application.manager.last_name}}
                         </p>
                     </div> 
                 </div>
