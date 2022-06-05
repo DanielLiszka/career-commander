@@ -1,0 +1,35 @@
+{
+  "name": "career-commander",
+  "version": "1.0.0",
+  "description": "A fullstack job application tracking application",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielLiszka/career-commander.git"
+  },
+  "author": "Harrison Daniel, Mark Elliott, Daniel Liszka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DanielLiszka/career-commander/issues"
+  },
+  "homepage": "https://github.com/DanielLiszka/career-commander#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-session-sequelize": "^7.1.4",
+    "dayjs": "^1.11.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "mysql2": "^2.3.3",
+    "passport": "^0.6.0",
+    "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
+}
