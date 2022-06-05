@@ -87,16 +87,15 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     // This reformats the application close date and interview dates to a more readable MM/DD/YYYY
     const reformated_applications = applications.map((application) => {
-      let dateVariableArray = [
+      const dateVariableArray = [
         application.position.close_date,
         application.interview1_date,
         application.interview2_date,
         application.interview3_date,
         application.interview4_date,
       ];
-      const newFormatArray = [];
       for (let i = 0; i < dateVariableArray.length; i++) {
-        if (dateVariableArray[i] !== null) {
+        if (dateVariableArray[i]) {
           dateVariableArray[i] = dayjs(dateVariableArray[i]).format(
             'MM/DD/YYYY'
           );
