@@ -11,7 +11,7 @@ $(document).ready(function () {
       email: emailInput.val().trim().toLowerCase(),
       password: passwordInput.val().trim(),
     };
-    console.log(userData.password);
+
     if (!userData.email || !userData.password) {
       return;
     }
