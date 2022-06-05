@@ -87,31 +87,48 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     // This reformats the application close date and interview dates to a more readable MM/DD/YYYY
     const reformated_applications = applications.map((application) => {
-      if (application.position.close_date !== null) {
-        application.position.close_date = dayjs(
-          application.position.close_date
-        ).format('MM/DD/YYYY');
+      const dateVariableArray = [
+        application.position.close_date,
+        application.interview1_date,
+        application.interview2_date,
+        application.interview3_date,
+        application.interview4_date,
+      ];
+
+      for (i = 0; i < dateVariableArray.length; i++) {
+        let dateVariable = dateVariableArray[i];
+        console.log(dateVariable);
+        if (dateVariable !== null) {
+          dateVariable = dayjs(dateVariable).format('MM/DD/YYYY');
+          console.log(dateVariable);
+        }
       }
-      if (application.interview1_date !== null) {
-        application.interview1_date = dayjs(application.interview1_date).format(
-          'MM/DD/YYYY'
-        );
-      }
-      if (application.interview2_date !== null) {
-        application.interview2_date = dayjs(application.interview2_date).format(
-          'MM/DD/YYYY'
-        );
-      }
-      if (application.interview3_date !== null) {
-        application.interview3_date = dayjs(application.interview3_date).format(
-          'MM/DD/YYYY'
-        );
-      }
-      if (application.interview4_date !== null) {
-        application.interview4_date = dayjs(application.interview4_date).format(
-          'MM/DD/YYYY'
-        );
-      }
+      // if (application.position.close_date !== null) {
+      //   application.position.close_date = dayjs(
+      //     application.position.close_date
+      //   ).format('MM/DD/YYYY');
+      // }
+      // if (application.interview1_date !== null) {
+      //   application.interview1_date = dayjs(application.interview1_date).format(
+      //     'MM/DD/YYYY'
+      //   );
+      // }
+      // if (application.interview2_date !== null) {
+      //   application.interview2_date = dayjs(application.interview2_date).format(
+      //     'MM/DD/YYYY'
+      //   );
+      // }
+      // if (application.interview3_date !== null) {
+      //   application.interview3_date = dayjs(application.interview3_date).format(
+      //     'MM/DD/YYYY'
+      //   );
+      // }
+      // if (application.interview4_date !== null) {
+      //   application.interview4_date = dayjs(application.interview4_date).format(
+      //     'MM/DD/YYYY'
+      //   );
+      // }
+      console.log(application);
       return application;
     });
 
