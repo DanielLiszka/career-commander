@@ -84,7 +84,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const applications = application_data.map((application) =>
       application.get({ plain: true })
     );
-    
+
     // This reformats the application close date and interview dates to a more readable MM/DD/YYYY
     const reformated_applications = applications.map((application) => {
       if (application.position.close_date !== null) {
@@ -98,17 +98,17 @@ router.get('/dashboard', withAuth, async (req, res) => {
         );
       }
       if (application.interview2_date !== null) {
-        application.interview1_date = dayjs(application.interview1_date).format(
+        application.interview2_date = dayjs(application.interview2_date).format(
           'MM/DD/YYYY'
         );
       }
       if (application.interview3_date !== null) {
-        application.interview1_date = dayjs(application.interview1_date).format(
+        application.interview3_date = dayjs(application.interview3_date).format(
           'MM/DD/YYYY'
         );
       }
       if (application.interview4_date !== null) {
-        application.interview1_date = dayjs(application.interview1_date).format(
+        application.interview4_date = dayjs(application.interview4_date).format(
           'MM/DD/YYYY'
         );
       }

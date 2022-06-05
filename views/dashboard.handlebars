@@ -216,8 +216,8 @@
  
 <!-- Application Modal for editing. Saved data should be automatically entered into the input fields.-->
 <!-- Need to fix Interview Dates -->
-{{#if applications.length}}
-    {{#each applications as |application|}}
+{{#if reformated_applications.length}}
+    {{#each reformated_applications as |application|}}
         <div class="modal modal-name fade" id="editApplicationModal-{{application.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
