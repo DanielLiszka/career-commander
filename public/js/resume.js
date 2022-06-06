@@ -1,8 +1,10 @@
 $(document).ready(function () {
+  // listen for click on delete buttons
   var delete_buttons = document.querySelectorAll('#deleteResume');
   for (var i = 0; i < delete_buttons.length; i++)
     delete_buttons[i].onclick = deleteResume;
 
+  // listen for click on save button
   var submissionForm = $('.save-resume');
 
   submissionForm.on('click', function (event) {
@@ -17,11 +19,12 @@ $(document).ready(function () {
       description: resumeDescription.val().trim(),
     };
     console.log(resumeData);
+    console.log(resumeData.name);
+    console.log(resumeData.description);
     //Ensure that required fields have data
-    if (!resumeData.resume_name || !resumeData.resume_description) {
+    if (!resumeData.name || !resumeData.description) {
       return;
     }
-
     editResume(resumeData);
   });
 });
@@ -30,8 +33,7 @@ $(document).ready(function () {
 const deleteResume = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
-    console.log('A delete has been triggerd on id ' + id);
-    const response = await fetch(`/api/resume/${id}`, {
+    const response = await fetch(`/api/resumes/${id}`, {
       method: 'DELETE',
     });
     if (response.ok) {
@@ -46,13 +48,15 @@ const deleteResume = async (event) => {
 async function editResume(resumeData) {
   var id = resumeData.id;
   console.log(id);
-  var resume_info = await $.get(`/api/resume/${id}`, {}).catch(function (err) {
+  var resume_info = await $.get(`/api/resumes/${id}`, {}).catch(function (err) {
     console.log(err);
   });
 
   var resume_name = resumeData.name;
   var resume_description = resumeData.description;
   var resume_id = resumeData.id;
+
+  console.log(resume_id);
 
   const resume_data = await $.ajax({
     type: 'PUT',
@@ -62,4 +66,7 @@ async function editResume(resumeData) {
   }).catch(function (err) {
     console.log(err);
   });
+
+  // Reload page after saving changes
+  window.location.reload();
 }

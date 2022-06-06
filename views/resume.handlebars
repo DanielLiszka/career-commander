@@ -2,8 +2,8 @@
 {{#if resumes.length}}
   <div class='container w-100'>
     <h2 class='border-bottom pb-2 text-center'>Saved Resumes</h2>
-    <div class='row d-flex justify-content-center'>
       {{#each resumes }}
+        <div class='row d-flex justify-content-center'>
         <div
           class='card border-secondary m-3 text-center col-12 col-lg-6 col-xl-4'
           id='spawnedCards'
@@ -55,25 +55,23 @@
             </div>
           </div>
         </div>
-      {{/each}}
     </div>
+   {{/each}}
   </div>
 {{/if}}
 
 <!-- Remume Modal for editing. Saved data should be automatically entered into the input fields.-->
-<!-- Need to fix Interview Dates -->
 {{#if resumes.length}}
     {{#each resumes}}
         <div class="modal modal-name fade" id="editResumeModal-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                    <!-- Present stored applications in a card format -->
+                    <!-- Present stored resumes in a card format -->
                         <div class='container-fluid mt-5 mb-5 p-5 border border-secondary'>
                             <h4 class="text-center"> Resume # {{id}}</h4>
                             <form class="row gx-0 needs-validation" novalidate>
                             <div class='row mt-3 mb-3'> 
-                    
                             <!-- Resume Name required required--> 
                             <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                                 <div class='form-group text-center'>
@@ -81,9 +79,9 @@
                                 <input
                                     type='text'
                                     class='form-control'
-                                    id='resume_name-edit-{{application.id}}'
+                                    id='resume_name-edit-{{id}}'
                                     placeholder=''
-                                    value={{application.resume.name}} 
+                                    value={{name}} 
                                 required>
                                 <div class="invalid-feedback">
                                     Enter a resume name.
@@ -110,7 +108,7 @@
                                 <button type="button" class="btn btn-secondary btn-small" data-id={{id}} id="close-resume" data-bs-dismiss="modal">Close</button>
                             </div>
                             <div class='col-md-6 col-sm-6 col-xs-12'>
-                                <button type="button" class="save-application btn btn-primary btn-small" data-id={{id}} id="save-resume">Save</button>
+                                <button type="button" class="save-resume btn btn-primary btn-small" data-id={{id}} id="save-resume">Save</button>
                             </div>
                         </div>
                         </div>
