@@ -1,4 +1,12 @@
 $(document).ready(function () {
+  var main_header = document.querySelectorAll('#resume_id_header');
+  var modal_header = document.querySelectorAll('#resume_id_modal_header');
+  i;
+  for (let i = 1; i < main_header.length + 1; i++) {
+    main_header[i - 1].innerHTML = 'resume # ' + (main_header.length + 1 - i);
+    modal_header[i - 1].innerHTML = 'resume # ' + (modal_header.length + 1 - i);
+  }
+
   // listen for click on delete buttons
   var delete_buttons = document.querySelectorAll('#deleteResume');
   for (var i = 0; i < delete_buttons.length; i++)

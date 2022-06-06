@@ -2,9 +2,25 @@ $(document).ready(function () {
   var delete_buttons = document.querySelectorAll('#deleteApplication');
   for (var i = 0, len = delete_buttons.length; i < len; i++)
     delete_buttons[i].onclick = deleteApplication;
-  // var edit_buttons = document.querySelectorAll('#editApplication');
-  // for (var i = 0, len = edit_buttons.length; i < len; i++)
-  //   edit_buttons[i].onclick = openModal;
+
+  var searchButtton = $('#searchApplication');
+  // Hides all parent cards with a string not matching the search query
+  searchButtton.on('click', function (event) {
+    //var top_header = $('#top_header');
+    var searchQuery = $('#searchinput').val().trim().toLowerCase();
+    var text = searchQuery;
+    //Finds string inside children elements and hides the parent div if no match.
+    var search = $('div#child_card_div').filter(function () {
+      //reset search
+      $(this).show();
+      top_header.innerHTML = 'Saved Applications';
+      //If no match then hide parent div
+      if (!($(this).text().indexOf(text.toLowerCase()) >= 0)) {
+        top_header.innerHTML = 'Saved Applications Search Results';
+        $(this).hide();
+      }
+    });
+  });
   // Select all child cards and change the Application # to descending order numbering.
   var main_header = document.querySelectorAll('#application_id_header');
   var modal_header = document.querySelectorAll('#application_id_modal_header');

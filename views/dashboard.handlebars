@@ -1,12 +1,26 @@
 <!-- stored user applications with ability to edit or delete entries WIP-->
 {{#if reformated_applications.length}}
   <div class='container w-100'>
-    <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
-    <div class='row d-flex justify-content-center'>
+    <h2 class='border-bottom pb-2 text-center' id='top_header'>Saved Applications</h2>
+        <div class="row d-flex justify-content-center"> 
+        <a
+        id='searchApplication'
+        type='button'
+        class='btn btn-danger btn-sm text-center col-1'
+        >Search</a>
+        <input
+            id="searchinput"
+            name="search"
+            class="input text-center col-3"
+            type="text"
+            placeholder="Search for applications"
+        />
+        </div>
+    <div class='row d-flex justify-content-center' id="parent_card_div">
       {{#each reformated_applications as |application|}}
         <div
           class='card border-secondary m-3 text-center col-12 col-lg-6 col-xl-4'
-          id='spawnedCards'
+          id='child_card_div'
         >
           <div class='card-body border-bottom'>
             <div class='card-title border-bottom'>
