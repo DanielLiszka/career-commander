@@ -1,3 +1,6 @@
+/* This is the application model - it has foreign keys that point to all the other 
+tables so that we can retrieve all that information together */
+
 const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
@@ -59,6 +62,25 @@ Application.init(
         key: 'id',
       },
     },
+
+    company_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'company',
+        key: 'id',
+      },
+    },
+
+    manager_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'manager',
+        key: 'id',
+      },
+    },
+
+    /* Had to add the following two fields in order to be able to seed the database from the MySQL shell
+   - they are populated automatically when records are added.  */
 
     created_at: {
       type: DataTypes.NOW,

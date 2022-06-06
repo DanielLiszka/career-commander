@@ -1,0 +1,496 @@
+<!-- stored user applications with ability to edit or delete entries WIP-->
+{{#if reformated_applications.length}}
+  <div class='container w-100'>
+    <h2 class='border-bottom pb-2 text-center'>Saved Applications</h2>
+    <div class='row d-flex justify-content-center'>
+      {{#each reformated_applications as |application|}}
+        <div
+          class='card border-secondary m-3 text-center col-12 col-lg-6 col-xl-4'
+          id='spawnedCards'
+        >
+          <div class='card-body border-bottom'>
+            <div class='card-title border-bottom'>
+              <h4 id='application_id'>Application # {{application.id}}</h4> 
+            </div>
+                <h4 class='text-center mt-3'> Position </h4>
+                <div class='row mt-0 mb-4 gx-0'> 
+                <!-- Position Name--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Location--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Location </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.location}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Description-->
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Description </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.description}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Position Closing Date-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Position Closing Date </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.position.close_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Company Name-->
+                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Company Name </strong></label>
+                        <p class='card-text text-wrap  mt-2'
+                            id='position_location'>
+                            {{application.company.name}}
+                        </p>
+                    </div> 
+                </div>
+                <h4 class='text-center mt-4 mb-4'> Resume</h4>
+                <div class='row gx-0'>
+                <!-- Resume Name--> 
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Resume Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.resume.name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Resume Description -->
+                <div class='col-lg-12 col-md-12 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Resume Description </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.resume.description}}
+                        </p>
+                    </div> 
+                </div>
+                </div>
+                <h4 class='text-center mt-4 mb-4'> Hiring Manger</h4>
+                <div class='row gx-0'>
+                <!-- Hiring Manager's Name--> 
+                <div class=' col-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong> Hiring Manager's Name </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.first_name}} {{application.manager.last_name}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Hiring Manager Email--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Hiring Manager Email </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.email}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Hiring Manager Phone # --> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>Hiring Manager Phone # </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.manager.phone}}
+                        </p>
+                    </div> 
+                </div>
+                </div>  
+                <h4 class='text-center mt-4 mb-4'> Interviews </h4>
+                <div class='row gx-0'> 
+                <!-- Interview 1st Date-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>1st Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview1_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 2nd Date Input--> 
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>2nd Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview2_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 3rd Date Input-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>3rd Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview3_date}}
+                        </p>
+                    </div> 
+                </div>
+                <!-- Interview 4th Date Input-->
+                <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
+                    <div class='text-center'>
+                        <label><strong>4th Interview </strong></label>
+                        <p class='card-text text-wrap mt-2'
+                            id='position_location'>
+                            {{application.interview4_date}}
+                        </p>
+                    </div> 
+                </div>
+                </div>
+                <div class='row mt-3 mb-0 d-flex justify-content-center gx-0'>
+                    <!-- Offer Checkbox-->
+                    <div class='col-md-6 col-sm-6 col-xs-12'>
+                        <input class='form-check-input' type='checkbox' onclick="return false;" value='' id='offer_check' {{#if application.offer}} checked {{/if}}/>
+                        <label class='form-check-label' for='offer_check'>
+                            Offered
+                        </label>
+                    </div>
+                    <!-- Acceptance Checkbox--> 
+                    <div class='col-md-6 col-sm-6 col-xs-12'>
+                        <input class='form-check-input' type='checkbox' value='' onclick="return false;" id='acceptance_check' {{#if application.accepted}} checked {{/if}}/>
+                        <label class='form-check-label' for='acceptance_check'>
+                            Accepted
+                        </label>
+                    </div> 
+                </div>
+            </div>
+          </div>
+          <div class='btn-group d-flex justify-content-center'>
+            <div class='py-2 p-2' id='card-footer'>
+                <!-- Button trigger modal -->
+                <a 
+                type="button" 
+                class="btn btn-primary btn-sm" 
+                data-bs-toggle="modal"
+                data-bs-target="#editApplicationModal-{{application.id}}">
+                    Edit
+                </a>
+              <a
+                id='deleteApplication'
+                href=''
+                data-id={{application.id}}
+                class='btn btn-danger btn-sm'
+              >Delete</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+
+ 
+<!-- Application Modal for editing. Saved data should be automatically entered into the input fields.-->
+<!-- Need to fix Interview Dates -->
+{{#if reformated_applications.length}}
+    {{#each reformated_applications as |application|}}
+        <div class="modal modal-name fade" id="editApplicationModal-{{application.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    <!-- Present stored applications in a card format -->
+                        <div class='container-fluid mt-5 mb-5 p-5 border border-secondary'>
+                            <h4 class="text-center"> Application # {{application.id}}</h4>
+                            <form class="row gx-0 needs-validation" novalidate>
+                            <div class='row mt-3 mb-3'> 
+                            <!-- Position Location required--> 
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='location'>Location</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='position_location-edit-{{application.id}}'
+                                    placeholder='' 
+                                    value={{application.position.location}}
+                                required>
+                                <div class="invalid-feedback">
+                                    Provide a location.
+                                </div>
+                                </div> 
+                            </div>
+                            <!-- Position Name required--> 
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='position'>Position</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='position_name-edit-{{application.id}}'
+                                    value={{application.position.name}}
+                                    placeholder=''
+                                required>
+                                <div class="invalid-feedback">
+                                    Enter a position name.
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Company Name required-->
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='company'>Company</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='company_name-edit-{{application.id}}'
+                                    placeholder=''
+                                    value={{application.company.name}}
+                                required>
+                                <div class="invalid-feedback">
+                                    Enter a company name.
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Position Closing Date required-->
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <form>
+                                <div class='form-group text-center'> <!-- Date input -->
+                                    <label class='control-label' for='date'>Closing Date</label>
+                                    <input class='form-control' 
+                                    id='position_closing_date-edit-{{application.id}}' 
+                                    name='date' 
+                                    placeholder='MM/DD/YYYY' 
+                                    type='text' required
+                                    value={{application.position.close_date}}>
+                                <div class="invalid-feedback">
+                                    Select a date.
+                                </div>
+                                </div>
+                                </form>
+                            </div>
+                            <!-- Resume Name required required--> 
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='resume_name'>Resume Name</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='resume_name-edit-{{application.id}}'
+                                    placeholder=''
+                                    value={{application.resume.name}} 
+                                required>
+                                <div class="invalid-feedback">
+                                    Enter a resume name.
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Position Description required-->
+                            <div class='form-group text-center mt-4'>
+                            <label for='position_description'>Position Description</label>
+                            <textarea
+                                class='form-control form-control-lg'
+                                id='position_description-edit-{{application.id}}'
+                                rows='2'
+                            required>{{application.position.description}}</textarea>
+                                <div class="invalid-feedback">
+                                Enter a position description.
+                                </div>
+                            </div>
+                            <!-- Resume Description required -->
+                            <div class='form-group mt-4 text-center'>
+                                <label for='resume_description'>Resume Description</label>
+                                <textarea
+                                class='form-control form-control-lg'
+                                id='resume_description-edit-{{application.id}}'
+                                rows='5'
+                                required>{{application.resume.description}}</textarea>
+                                <div class="invalid-feedback">
+                                Enter a resume description.
+                                </div>
+                            </div>
+                            <h4 class='text-center mt-4 mb-4'> Hiring Manger</h4>
+                            <div class='row'>
+                            <!-- Hiring Manager First Name required--> 
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='hiring_manager_first_name'>First Name</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='hiring_manager_first_name-edit-{{application.id}}'
+                                    placeholder='First Name'
+                                    value={{application.manager.first_name}}
+                                required>
+                                <div class="invalid-feedback">
+                                    Enter the hiring manager's first name.
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Hiring Manager Last Name required--> 
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                                <div class='form-group text-center'>
+                                <label for='hiring_manager_last_name'>Last Name</label>
+                                <input
+                                    type='text'
+                                    class='form-control'
+                                    id='hiring_manager_last_name-edit-{{application.id}}'
+                                    placeholder='Last Name'
+                                    value={{application.manager.last_name}}
+                                required>
+                                <div class="invalid-feedback">
+                                Enter the hiring manager's last name.
+                                </div>
+                                </div>
+                            </div>
+                            <!-- Hiring Manager Email required--> 
+                            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group text-center'>
+                                <label for='hiring_manager_email'>Email</label>
+                                <input
+                                type='email'
+                                class='form-control'
+                                id='hiring_manager_email-edit-{{application.id}}'
+                                placeholder='Email'
+                                value={{application.manager.email}}
+                                required>
+                                <div class="invalid-feedback">
+                                Enter a valid email address.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hiring Manager Phone # required--> 
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <div class='form-group text-center'>
+                            <label for='phone_number'>Phone #</label>
+                            <input
+                                type='text'
+                                class='form-control'
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                id='hiring_manager_phone_number-edit-{{application.id}}'
+                                placeholder='###-###-####'
+                                value={{application.manager.phone}}
+                            required>
+                            <div class="invalid-feedback">
+                                Enter a valid phone number.
+                            </div>
+                            </div>
+                        </div>
+                        </div>  
+                        <h4 class='text-center mt-4 mb-4'> Interviews </h4>
+                        <div class='row'> 
+                        <!-- Interview 1st Date Input not required-->
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <form method='post'>
+                                <div class='form-group text-center'>
+                                    <label class='control-label' for='date'>1st</label>
+                                    <input class='form-control' 
+                                    id='1st_date_edit-{{application.id}}' 
+                                    name='date' 
+                                    placeholder='MM/DD/YYYY' 
+                                    type='text' value= {{application.interview1_date}}>
+                                    <div class="valid-feedback">
+                                        Optional
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Interview 2nd Date Input not required--> 
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <form method='post'>
+                                <div class='form-group text-center'>
+                                    <label class='control-label' for='date'>2nd</label>
+                                    <input class='form-control' 
+                                    id='2nd_date_edit-{{application.id}}' 
+                                    name='date' 
+                                    placeholder='MM/DD/YYYY' 
+                                    type='text' value= {{application.interview2_date}}>
+                                    <div class="valid-feedback">
+                                        Optional
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Interview 3rd Date Input not required-->
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                        <form method='post'>
+                            <div class='form-group text-center'>
+                                <label class='control-label' for='date'>3rd</label>
+                                <input class='form-control' 
+                                id='3rd_date_edit-{{application.id}}' 
+                                name='date' 
+                                placeholder='MM/DD/YYYY' 
+                                type='text' value={{application.interview3_date}}>
+                                <div class="valid-feedback">
+                                    Optional
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                        <!-- Interview 4th Date Input not required-->
+                        <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
+                            <form method='post'>
+                                <div class='form-group text-center'>
+                                    <label class='control-label' for='date'>4th</label>
+                                    <input class='form-control' 
+                                    id='4th_date_edit-{{application.id}}' 
+                                    name='date' 
+                                    placeholder='MM/DD/YYYY' 
+                                    type='text' value={{application.interview4_date}} >
+                                    <div class="valid-feedback">
+                                    Optional
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class='row mt-4 mb-4 d-flex justify-content-center text-center'>
+                        <!-- Offer Checkbox not required-->
+                        <div class='col-md-6 col-sm-6 col-xs-12'>
+                            <input class='form-check-input' type='checkbox' id='offer_check_edit-{{application.id}}' {{#if application.offer}} checked {{/if}}/>
+                            <label class='form-check-label' for='offer_check'>
+                                Offer
+                            </label>
+                        </div>
+                        <!-- Acceptance Checkbox not required--> 
+                        <div class='col-md-6 col-sm-6 col-xs-12'>
+                            <input class='form-check-input' type='checkbox' id='acceptance_check_edit-{{application.id}}' {{#if application.accepted}} checked {{/if}} />
+                            <label class='form-check-label' for='acceptance_check'>
+                                Accepted
+                            </label>
+                        </div> 
+                        <div class='row mt-4 mb-4 d-flex justify-content-center text-center'>
+                            <div class='col-md-6 col-sm-6 col-xs-12'>
+                                <button type="button" class="btn btn-secondary btn-small" data-id={{application.id}} id="close-application" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class='col-md-6 col-sm-6 col-xs-12'>
+                                <button type="button" class="save-application btn btn-primary btn-small" data-id={{application.id}} id="save-application">Save</button>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                    </div>
+
+                </div>
+              </div>
+          </div>
+      </div>
+  {{/each}}
+{{/if}}

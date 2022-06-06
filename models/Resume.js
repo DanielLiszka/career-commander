@@ -16,9 +16,9 @@ Resume.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-
+    // Increase maximum string length
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
     },
 
     user_id: {
