@@ -188,3 +188,47 @@ $(document).ready(function () {
     //console.log(application_data);
   }
 });
+
+// get resume selection and display the description
+async function checkResumes() {
+  // get the selected resume id
+  var selectedResumeId = $('#selected-resume').val();
+
+  // is a resume has been selected, get all the resume data
+  if (selectedResumeId) {
+    var resumeData = await $.get('/api/resumes', {}).catch((err) =>
+      console.log(err)
+    );
+    // check to see if there are more than one resume
+    if (resumeData.length > 1) {
+      // If there is a list, wait for the change from a resume selection
+      $('#selected-resume').on('change', async function (event) {
+        event.preventDefault();
+
+        // using the resume id, get the description for that resume
+        var selectedResumeData = await $.get(
+          `/api/resumes/${selectedResumeId}`,
+          {}
+        ).catch((err) => console.log(err));
+        var selectedDescription = selectedResumeData.description;
+
+        // set the value of the resume description textarea to the selected description
+        $('#resume_description-input').val(selectedDescription);
+      });
+      // there is only one resume, just go ahead and display the description
+    } else {
+      // using the resume id, get the description for that resume
+      var selectedResumeData = await $.get(
+        `/api/resumes/${selectedResumeId}`,
+        {}
+      ).catch((err) => console.log(err));
+
+      var selectedDescription = selectedResumeData.description;
+
+      // set the value of the resume description textarea to the selected description
+      $('#resume_description-input').val(selectedDescription);
+    }
+  }
+}
+
+checkResumes();
