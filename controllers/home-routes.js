@@ -138,7 +138,26 @@ router.get('/application', withAuth, async (req, res) => {
     });
 
     const user = user_data.get({ plain: true });
+
     res.render('application', { js: ['application.js'], user });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get('/resume', withAuth, async (req, res) => {
+  try {
+    // Get list of all resumes for the logged in user
+    const resume_data = await Resume.findAll({
+      attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    const resumes = resume_data.map((resume) => resume.get({ plain: true }));
+
+    res.render('resume', { js: ['resume.js'], resumes });
   } catch (err) {
     console.log(err);
   }

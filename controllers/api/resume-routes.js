@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['first_name', 'last_name'],
         },
-        order: ['created_at', 'DESC'],
+        order: ['created_at'],
       });
       res.json(resumeData);
     } else {
