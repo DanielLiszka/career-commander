@@ -5,6 +5,16 @@ $(document).ready(function () {
   // var edit_buttons = document.querySelectorAll('#editApplication');
   // for (var i = 0, len = edit_buttons.length; i < len; i++)
   //   edit_buttons[i].onclick = openModal;
+  // Select all child cards and change the Application # to descending order numbering.
+  var main_header = document.querySelectorAll('#application_id_header');
+  var modal_header = document.querySelectorAll('#application_id_modal_header');
+  i;
+  for (let i = 1; i < main_header.length + 1; i++) {
+    main_header[i - 1].innerHTML =
+      'Application # ' + (main_header.length + 1 - i);
+    modal_header[i - 1].innerHTML =
+      'Application # ' + (modal_header.length + 1 - i);
+  }
 
   var submissionForm = $('.save-application');
 
