@@ -40,6 +40,16 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const user = user_data.get({ plain: true });
 
+    const resume_data = await Resume.findAll({
+      attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
+      // only pulling back data for the logged-in user
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    var resumes = resume_data.map((resume) => resume.get({ plain: true }));
+
     const application_data = await Application.findAll({
       // only pull back applications matching the logged-in user
       where: {
@@ -118,6 +128,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     res.render('dashboard', {
       js: ['dashboard.js', 'application.js'],
       reformated_applications,
+      resumes,
       user,
     });
   } catch (err) {

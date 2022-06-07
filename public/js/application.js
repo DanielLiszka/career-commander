@@ -45,6 +45,7 @@ $(document).ready(function () {
     } else {
       // if we don't have a drop down menu for the resumes, then get the name entered in that input field
       var resumeName = $('#resume_name-input').val().trim();
+      console.log(resumeName);
     }
 
     var userData = {
@@ -141,9 +142,9 @@ $(document).ready(function () {
     //console.log(position_data);
 
     // need to check if a drop down list is present for resumes - i.e., we are using an existing resume
-    if ($('#selected-resume')) {
+    if (document.getElementById('selected-resume')) {
       // if so, set the resume id for the application to the content of the resume name field(id)
-      var resume_data_id = $('#selected-resume').val().trim();
+      var resume_data_id = $('#selected-resume').val();
       console.log(resume_data_id);
     } else {
       // else, we have a new resume and need to save it

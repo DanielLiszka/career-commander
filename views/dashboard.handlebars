@@ -222,7 +222,6 @@
 
  
 <!-- Application Modal for editing. Saved data should be automatically entered into the input fields.-->
-<!-- Need to fix Interview Dates -->
 {{#if reformated_applications.length}}
     {{#each reformated_applications as |application|}}
         <div class="modal modal-name fade" id="editApplicationModal-{{application.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -303,13 +302,24 @@
                             <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                                 <div class='form-group text-center'>
                                 <label for='resume_name'>Resume Name</label>
+                                {{!-- If resumes exist, display a dropdown menu of the resumes --}}
+                                {{#if resumes.length}}
+                                <select id="selected-resume">
+                                    {{#each resumes}}
+                                    <option value={{resumes.id}}>{{resumes.name}}</option>
+                                    {{/each}}
+                                </select>
+                                {{!-- Otherwise, get a resume name for the application --}}
+                                {{else}}
                                 <input
                                     type='text'
                                     class='form-control'
                                     id='resume_name-edit-{{application.id}}'
                                     placeholder=''
-                                    value={{application.resume.name}} 
+                                    {{!-- value={{application.resume.name}}  --}}
+                                    value={{application.resume.name}}
                                 required>
+                                {{/if}}
                                 <div class="invalid-feedback">
                                     Enter a resume name.
                                 </div>
