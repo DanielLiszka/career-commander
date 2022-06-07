@@ -33,19 +33,18 @@ $(document).ready(function () {
 
   submissionForm.on('click', async function (event) {
     event.preventDefault();
+    // if a drop down menu us present for the resumes, get the resume name from the selected resume id
     if (document.getElementById('selected-resume')) {
-      // Value is the resume id, but need the resume name.  Will use the function getResumeName to get that name
-      let resumeId = $('#selected-resume').val().trim();
-      let selectedResumeData = await $.get(
+      // Value is the resume id, but we need the resume name.
+      var resumeId = $('#selected-resume').val().trim();
+      var selectedResumeData = await $.get(
         `/api/resumes/${resumeId}`,
         {}
       ).catch((err) => console.log(err));
       var resumeName = selectedResumeData.name;
-      // var resumeName = getResumeName(resumeId);
-      console.log(resumeName);
     } else {
+      // if we don't have a drop down menu for the resumes, then get the name entered in that input field
       var resumeName = $('#resume_name-input').val().trim();
-      console.log(resumeName);
     }
 
     var userData = {
@@ -141,13 +140,23 @@ $(document).ready(function () {
     });
     //console.log(position_data);
 
-    const resume_data = await $.post('/api/resumes/', {
-      resume_name: userData.resume_name,
-      resume_description: userData.resume_description,
-    }).catch(function (err) {
-      console.log(err);
-    });
-    //console.log(resume_data);
+    // need to check if a drop down list is present for resumes - i.e., we are using an existing resume
+    if ($('#selected-resume')) {
+      // if so, set the resume id for the application to the content of the resume name field(id)
+      var resume_data_id = $('#selected-resume').val().trim();
+      console.log(resume_data_id);
+    } else {
+      // else, we have a new resume and need to save it
+      const resume_data = await $.post('/api/resumes/', {
+        resume_name: userData.resume_name,
+        resume_description: userData.resume_description,
+      }).catch(function (err) {
+        console.log(err);
+      });
+      // set the resume id for the application to the returned resume id
+      var resume_data_id = resume_data.id;
+      console.log(resume_data_id);
+    }
 
     var plain_object = {
       offer: userData.offer,
@@ -157,7 +166,7 @@ $(document).ready(function () {
       interview3_date: userData.interview3_date,
       interview4_date: userData.interview4_date,
       position_id: position_data.id,
-      resume_id: resume_data.id,
+      resume_id: resume_data_id,
       company_id: company_data.id,
       manager_id: manager_data.id,
     };
@@ -212,16 +221,6 @@ $(document).ready(function () {
         });
       }
     }
-  }
-
-  async function getResumeName(resumeId) {
-    // using the resume id, get the name for that resume
-    let selectedResumeData = await $.get(`/api/resumes/${resumeId}`, {}).catch(
-      (err) => console.log(err)
-    );
-    var selectedName = selectedResumeData.name;
-    console.log(selectedName);
-    return selectedName;
   }
 
   checkResumes();
