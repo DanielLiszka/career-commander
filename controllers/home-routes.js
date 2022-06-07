@@ -40,6 +40,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const user = user_data.get({ plain: true });
 
+    // added resume data to support drop-down menu for resumes on the appliation edit modal
     const resume_data = await Resume.findAll({
       attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
       // only pulling back data for the logged-in user

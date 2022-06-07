@@ -305,8 +305,8 @@
                                 {{!-- If resumes exist, display a dropdown menu of the resumes --}}
                                 {{#if resumes.length}}
                                 <select id="selected-resume">
-                                    {{#each resumes}}
-                                    <option value={{resumes.id}}>{{resumes.name}}</option>
+                                    {{#each resumes as |resume|}}
+                                    <option value={{resume.id}}>{{resume.name}}</option>
                                     {{/each}}
                                 </select>
                                 {{!-- Otherwise, get a resume name for the application --}}
@@ -316,8 +316,7 @@
                                     class='form-control'
                                     id='resume_name-edit-{{application.id}}'
                                     placeholder=''
-                                    {{!-- value={{application.resume.name}}  --}}
-                                    value={{application.resume.name}}
+                                    value={{application.resume.name}} 
                                 required>
                                 {{/if}}
                                 <div class="invalid-feedback">
