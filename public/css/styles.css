@@ -1,6 +1,21 @@
-.navbar {
+/* .navbar {
     display: inline-block;
     float: none;
     vertical-align: top;
-  }
+  } */
   
+  #mainLogo {
+    display: inline;
+    width: 16%;
+    height: 16%;
+  }
+ 
+  #mainHeader {
+    display: inline;
+    
+  }
+
+  .jumbotron {
+    padding: 0;
+    margin: 0;
+  }
