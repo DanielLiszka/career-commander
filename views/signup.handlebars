@@ -2,7 +2,7 @@
 <div class='row mt-5 mb-5 d-flex justify-content-center'> 
   <div class='col-md-4 center-block' id="signup">
     <h3 class='text-center'>Signup</h2>
-    <form class='signup text-center mt-3'>
+    <form class='signup text-center mt-3 needs-validation' novalidate>
         <div class='form-group'>
           <label for='signup_first_name'>First Name</label>
           <input
@@ -10,7 +10,7 @@
             class='form-control'
             id='signup_first_name-input'
             placeholder='First Name'
-          />
+          required>
         </div>
         <div class='form-group'>
           <label for='signup_first_name'>Last Name</label>
@@ -19,7 +19,7 @@
             class='form-control'
             id='signup_last_name-input'
             placeholder='Last Name'
-          />
+          required>
         </div>
       <div class='form-group'>
         <label for='signup_email'>Email address</label>
@@ -28,7 +28,7 @@
           class='form-control'
           id='signup_email-input'
           placeholder='Email'
-        />
+         required>
       </div>
       <div class='form-group mb-3'> 
         <label for='signup_password'>Password</label>
@@ -37,7 +37,7 @@
           class='form-control'
           id='signup_password-input'
           placeholder='Password' 
-        />
+        required>
       </div>
       <div class="d-flex justify-content-evenly mb-3"> 
         <button type="submit" class="btn btn-primary">Signup</button>

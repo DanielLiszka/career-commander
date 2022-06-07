@@ -303,9 +303,9 @@
                                 <div class='form-group text-center'>
                                 <label for='resume_name'>Resume Name</label>
                                 {{!-- If resumes exist, display a dropdown menu of the resumes --}}
-                                {{#if resumes.length}}
+                                {{#if ../resumes.length}}
                                 <select id="selected-resume">
-                                    {{#each resumes as |resume|}}
+                                    {{#each ../resumes as |resume|}}
                                     <option value={{resume.id}}>{{resume.name}}</option>
                                     {{/each}}
                                 </select>
