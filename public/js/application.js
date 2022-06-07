@@ -31,12 +31,21 @@ $(document).ready(function () {
   var offer_check = $('input#offer_check');
   var acceptance_check = $('input#acceptance_check');
 
-  submissionForm.on('click', function (event) {
+  submissionForm.on('click', async function (event) {
     event.preventDefault();
+    // if a drop down menu us present for the resumes, get the resume name from the selected resume id
     if (document.getElementById('selected-resume')) {
-      var resumeName = $('#selected-resume');
+      // Value is the resume id, but we need the resume name.
+      var resumeId = $('#selected-resume').val().trim();
+      var selectedResumeData = await $.get(
+        `/api/resumes/${resumeId}`,
+        {}
+      ).catch((err) => console.log(err));
+      var resumeName = selectedResumeData.name;
     } else {
-      var resumeName = $('#resume_name-input');
+      // if we don't have a drop down menu for the resumes, then get the name entered in that input field
+      var resumeName = $('#resume_name-input').val().trim();
+      console.log(resumeName);
     }
 
     var userData = {
@@ -51,7 +60,7 @@ $(document).ready(function () {
         .data('datepicker')
         .getFormattedDate('yyyy-mm-dd'),
       company_name: companyName.val().trim(),
-      resume_name: resumeName.val().trim(),
+      resume_name: resumeName,
       resume_description: resumeDescription.val().trim(),
       offer: offer_check.is(':checked'),
       accepted: acceptance_check.is(':checked'),
@@ -87,7 +96,7 @@ $(document).ready(function () {
     }
 
     //reset input fields
-    resumeName.val('');
+    // resumeName.val('');
     resumeDescription.val('');
     positionLocation.val('');
     positionName.val('');
@@ -132,13 +141,23 @@ $(document).ready(function () {
     });
     //console.log(position_data);
 
-    const resume_data = await $.post('/api/resumes/', {
-      resume_name: userData.resume_name,
-      resume_description: userData.resume_description,
-    }).catch(function (err) {
-      console.log(err);
-    });
-    //console.log(resume_data);
+    // need to check if a drop down list is present for resumes - i.e., we are using an existing resume
+    if (document.getElementById('selected-resume')) {
+      // if so, set the resume id for the application to the content of the resume name field(id)
+      var resume_data_id = $('#selected-resume').val();
+      console.log(resume_data_id);
+    } else {
+      // else, we have a new resume and need to save it
+      const resume_data = await $.post('/api/resumes/', {
+        resume_name: userData.resume_name,
+        resume_description: userData.resume_description,
+      }).catch(function (err) {
+        console.log(err);
+      });
+      // set the resume id for the application to the returned resume id
+      var resume_data_id = resume_data.id;
+      console.log(resume_data_id);
+    }
 
     var plain_object = {
       offer: userData.offer,
@@ -148,7 +167,7 @@ $(document).ready(function () {
       interview3_date: userData.interview3_date,
       interview4_date: userData.interview4_date,
       position_id: position_data.id,
-      resume_id: resume_data.id,
+      resume_id: resume_data_id,
       company_id: company_data.id,
       manager_id: manager_data.id,
     };
@@ -171,22 +190,28 @@ $(document).ready(function () {
   // get resume selection and display the description
   async function checkResumes() {
     // get the selected resume id
-    var selectedResumeId = $('#selected-resume').val();
+    let selectedResumeId = $('#selected-resume').val();
 
-    // is a resume has been selected, get all the resume data
+    // if a resume has been selected, get all the resume data
     if (selectedResumeId) {
-      var resumeData = await $.get('/api/resumes', {}).catch((err) =>
+      let resumeData = await $.get('/api/resumes', {}).catch((err) =>
         console.log(err)
       );
+      // initially set the description to the first resume in the list
+      var selectedDescription = resumeData[0].description;
+
+      // set the value of the resume description textarea to the selected description
+      $('#resume_description-input').val(selectedDescription);
+
       // check to see if there are more than one resume
       if (resumeData.length > 1) {
         // If there is a list, wait for the change from a resume selection
         $('#selected-resume').on('change', async function (event) {
           event.preventDefault();
           //Get selected-resume value after change
-          var selectedResumeId = $('#selected-resume').val();
+          selectedResumeId = $('#selected-resume').val();
           // using the resume id, get the description for that resume
-          var selectedResumeData = await $.get(
+          let selectedResumeData = await $.get(
             `/api/resumes/${selectedResumeId}`,
             {}
           ).catch((err) => console.log(err));
@@ -195,18 +220,6 @@ $(document).ready(function () {
           // set the value of the resume description textarea to the selected description
           $('#resume_description-input').val(selectedDescription);
         });
-        // there is only one resume, just go ahead and display the description
-      } else {
-        // using the resume id, get the description for that resume
-        var selectedResumeData = await $.get(
-          `/api/resumes/${selectedResumeId}`,
-          {}
-        ).catch((err) => console.log(err));
-
-        var selectedDescription = selectedResumeData.description;
-
-        // set the value of the resume description textarea to the selected description
-        $('#resume_description-input').val(selectedDescription);
       }
     }
   }
