@@ -3,6 +3,13 @@
     float: none;
     vertical-align: top;
   } */
+
+  body {
+    background-image: url(../images/background.png);
+    position: fixed;
+    background-size: cover;
+  
+  }
   
   #mainLogo {
     display: inline;
