@@ -14,7 +14,6 @@ $(document).ready(function () {
   date_input.datepicker(options);
 
   var submissionForm = $('#application_submission');
-  var resumeName = $('#resume_name-input');
   var resumeDescription = $('#resume_description-input');
   var positionLocation = $('input#position_location-input');
   var positionName = $('input#position_name-input');
@@ -32,32 +31,13 @@ $(document).ready(function () {
   var offer_check = $('input#offer_check');
   var acceptance_check = $('input#acceptance_check');
 
-  // Example JavaScript provided by Bootstrap for disabling form submissions if there are invalid fields
-  (function () {
-    'use strict';
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation');
-
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms).forEach(function (form) {
-      form.addEventListener(
-        'click',
-        function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add('was-validated');
-        },
-        false
-      );
-    });
-  })();
-
   submissionForm.on('click', function (event) {
     event.preventDefault();
+    if (document.getElementById('selected-resume')) {
+      var resumeName = $('#selected-resume');
+    } else {
+      var resumeName = $('#resume_name-input');
+    }
 
     var userData = {
       manager_phone_number: hiringManagerPhoneNumber.val().trim(),
@@ -187,48 +167,49 @@ $(document).ready(function () {
       });
     //console.log(application_data);
   }
-});
 
-// get resume selection and display the description
-async function checkResumes() {
-  // get the selected resume id
-  var selectedResumeId = $('#selected-resume').val();
+  // get resume selection and display the description
+  async function checkResumes() {
+    // get the selected resume id
+    var selectedResumeId = $('#selected-resume').val();
 
-  // is a resume has been selected, get all the resume data
-  if (selectedResumeId) {
-    var resumeData = await $.get('/api/resumes', {}).catch((err) =>
-      console.log(err)
-    );
-    // check to see if there are more than one resume
-    if (resumeData.length > 1) {
-      // If there is a list, wait for the change from a resume selection
-      $('#selected-resume').on('change', async function (event) {
-        event.preventDefault();
+    // is a resume has been selected, get all the resume data
+    if (selectedResumeId) {
+      var resumeData = await $.get('/api/resumes', {}).catch((err) =>
+        console.log(err)
+      );
+      // check to see if there are more than one resume
+      if (resumeData.length > 1) {
+        // If there is a list, wait for the change from a resume selection
+        $('#selected-resume').on('change', async function (event) {
+          event.preventDefault();
+          //Get selected-resume value after change
+          var selectedResumeId = $('#selected-resume').val();
+          // using the resume id, get the description for that resume
+          var selectedResumeData = await $.get(
+            `/api/resumes/${selectedResumeId}`,
+            {}
+          ).catch((err) => console.log(err));
+          var selectedDescription = selectedResumeData.description;
 
+          // set the value of the resume description textarea to the selected description
+          $('#resume_description-input').val(selectedDescription);
+        });
+        // there is only one resume, just go ahead and display the description
+      } else {
         // using the resume id, get the description for that resume
         var selectedResumeData = await $.get(
           `/api/resumes/${selectedResumeId}`,
           {}
         ).catch((err) => console.log(err));
+
         var selectedDescription = selectedResumeData.description;
 
         // set the value of the resume description textarea to the selected description
         $('#resume_description-input').val(selectedDescription);
-      });
-      // there is only one resume, just go ahead and display the description
-    } else {
-      // using the resume id, get the description for that resume
-      var selectedResumeData = await $.get(
-        `/api/resumes/${selectedResumeId}`,
-        {}
-      ).catch((err) => console.log(err));
-
-      var selectedDescription = selectedResumeData.description;
-
-      // set the value of the resume description textarea to the selected description
-      $('#resume_description-input').val(selectedDescription);
+      }
     }
   }
-}
 
-checkResumes();
+  checkResumes();
+});

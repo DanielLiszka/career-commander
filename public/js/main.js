@@ -1,3 +1,27 @@
+// Example JavaScript provided by Bootstrap for disabling form submissions if there are invalid fields
+(function () {
+  'use strict';
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation');
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      'click',
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+      },
+      false
+    );
+  });
+})();
+
 //execute "/logout" user route when "Logout" is clicked and redirect to login page.
 $(document).ready(function () {
   var logOut = $('#logout');

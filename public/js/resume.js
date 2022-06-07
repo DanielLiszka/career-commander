@@ -1,11 +1,31 @@
 $(document).ready(function () {
+  // Current in ascending order. May need to create a sorting-function to match the descending order of the dashboard page.
   var main_header = document.querySelectorAll('#resume_id_header');
   var modal_header = document.querySelectorAll('#resume_id_modal_header');
   i;
   for (let i = 1; i < main_header.length + 1; i++) {
-    main_header[i - 1].innerHTML = 'resume # ' + (main_header.length + 1 - i);
-    modal_header[i - 1].innerHTML = 'resume # ' + (modal_header.length + 1 - i);
+    main_header[i - 1].innerHTML = 'Resume # ' + i;
+    modal_header[i - 1].innerHTML = 'Resume # ' + i;
   }
+  // list for click on Add a New Resume button
+  var new_resume = $('#post-resume');
+
+  new_resume.on('click', function (event) {
+    event.preventDefault();
+    var resumeNamePost = $('#resume_name-post');
+    var resumeDescriptionPost = $('#resume_description-post');
+    var userData = {
+      resume_name: resumeNamePost.val().trim(),
+      resume_description: resumeDescriptionPost.val().trim(),
+    };
+    if (!userData.resume_name || !userData.resume_description) {
+      return;
+    }
+
+    PostResume(userData.resume_name, userData.resume_description);
+    resumeNamePost.val('');
+    resumeDescriptionPost.val('');
+  });
 
   // listen for click on delete buttons
   var delete_buttons = document.querySelectorAll('#deleteResume');
@@ -77,4 +97,17 @@ async function editResume(resumeData) {
 
   // Reload page after saving changes
   window.location.reload();
+}
+
+function PostResume(resume_name, resume_description) {
+  $.post('/api/resumes/', {
+    resume_name: resume_name,
+    resume_description: resume_description,
+  })
+    .then(function () {
+      window.location.replace('/resume');
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 }
