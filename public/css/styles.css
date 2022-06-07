@@ -6,8 +6,9 @@
 
   body {
     background-image: url(../images/background.png);
-    position: fixed;
+    background-position: center center;
     background-size: cover;
+    background-repeat:no-repeat;
   
   }
   
@@ -18,6 +19,7 @@
     height: 10%;
     margin: 0;
     padding: 0;
+    mix-blend-mode: multiply;
   }
  
   #mainHeader {
@@ -25,9 +27,14 @@
     font-weight: bolder;
     font-size: 4vw;
     vertical-align: middle;
+    font-family: Arial;
+    /* background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#333));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent */
   }
 
   .jumbotron {
     padding: 0;
     margin: 0;
   }
+  
