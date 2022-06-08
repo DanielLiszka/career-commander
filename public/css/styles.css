@@ -3,12 +3,19 @@
     float: none;
     vertical-align: top;
   } */
+html {
+  min-height: 100%; 
+}
 
   body {
     background-image: url(../images/background.png);
     background-position: center center;
-    background-size: cover;
+    background-size:cover;
     background-repeat:no-repeat;
+    min-height: 100%;
+    margin:0px;
+    padding: 0px; 
+    /* position: relative */
   
   }
   
