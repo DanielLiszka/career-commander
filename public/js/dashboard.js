@@ -1,7 +1,7 @@
 //global selected resume name variable
 var selectedResumeName 
 var selectedResumeId
-selection_input = false
+//selection_input = false
 
 $(document).ready(function () {
   //Default to manual resume input on page load 
@@ -45,11 +45,11 @@ $(document).ready(function () {
     event.preventDefault();
     $('#dashboard_edit_error_message').remove();
     const id = event.target.getAttribute('data-id');
-    //Change selector depending on wether a resume is already saved.
-    if (selection_input === false){
-    var resumeName = $('#resume_name-edit-' + id).val().trim();
-    } else {resumeName = selectedResumeName }
-
+    //if (selection_input === false){
+    //var resumeName = $('#resume_name-edit-' + id).val().trim();
+    //} else {resumeName = selectedResumeName }
+    resumeName = selectedResumeName
+    //console.log(resumeName)
     var resumeDescription = $('#resume_description-edit-' + id);
     var positionLocation = $('input#position_location-edit-' + id);
     var positionName = $('input#position_name-edit-' + id);
@@ -147,8 +147,8 @@ async function editApplication(userData) {
   console.log(id);
   var application_info = await $.get(`/api/applications/${id}`, {}).catch(
     function (err) {
-      appendDashboardEditErrorMessage();
       console.log(err);
+      appendDashboardEditErrorMessage();
     }
   );
 
@@ -159,8 +159,8 @@ async function editApplication(userData) {
     data: JSON.stringify({ name }),
     contentType: 'application/json',
   }).catch(function (err) {
-    appendDashboardEditErrorMessage();
     console.log(err);
+    appendDashboardEditErrorMessage();
   });
 
   var manager_first_name = userData.manager_first_name;
@@ -181,8 +181,8 @@ async function editApplication(userData) {
     }),
     contentType: 'application/json',
   }).catch(function (err) {
-    appendDashboardEditErrorMessage();
     console.log(err);
+    appendDashboardEditErrorMessage();
   });
   //console.log(manager_data);
 
@@ -206,8 +206,8 @@ async function editApplication(userData) {
     }),
     contentType: 'application/json',
   }).catch(function (err) {
-    appendDashboardEditErrorMessage();
     console.log(err);
+    appendDashboardEditErrorMessage();
   });
   //console.log(position_data);
 
@@ -269,11 +269,13 @@ async function editApplication(userData) {
     );
     if (resumeData.length == 1) {
       $("*[id^='resume_description-edit-']").val(resumeData[0].description);
-      console.log(resumeData[0].description)
+      selectedResumeName = resumeData[0].name
+      selectedResumeId = resumeData[0].id
+      //console.log(resumeData[0].description)
     } else{ 
       // check to see if there are more than one resume
-      if (resumeData.length > 0) {
-        selection_input = true 
+      if (resumeData.length > 1) {
+        //selection_input = true 
         // Select all elements with a matching portion of its ID.
         selectedResume = $("*[id^='dashboard-selected-resume-']")
         //console.log(selectedResume)
