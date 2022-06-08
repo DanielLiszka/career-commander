@@ -15,6 +15,7 @@ $(document).ready(function () {
       email: emailInput.val().trim().toLowerCase(),
       password: passwordInput.val().trim(),
     };
+    $('#signup_error_message').removeClass('show');
 
     if (
       !userData.email ||
@@ -22,6 +23,7 @@ $(document).ready(function () {
       !userData.first_name ||
       !userData.last_name
     ) {
+      $('#signup_error_message').addClass('show');
       return;
     }
 
@@ -48,6 +50,7 @@ $(document).ready(function () {
         window.location.replace('/dashboard');
       })
       .catch(function (err) {
+        $('#signup_error_message').addClass('show');
         console.log(err);
       });
   }

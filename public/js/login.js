@@ -11,7 +11,8 @@ $(document).ready(function () {
       email: emailInput.val().trim().toLowerCase(),
       password: passwordInput.val().trim(),
     };
-
+    //Hide error message
+    $('#error_message').removeClass('show');
     if (!userData.email || !userData.password) {
       return;
     }
@@ -30,6 +31,8 @@ $(document).ready(function () {
         window.location.replace('/dashboard');
       })
       .catch(function (err) {
+        //Show error message
+        $('#error_message').addClass('show');
         console.log(err);
       });
   }

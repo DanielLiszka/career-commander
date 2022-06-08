@@ -33,6 +33,7 @@ $(document).ready(function () {
 
   submissionForm.on('click', async function (event) {
     event.preventDefault();
+    $('#application_error_message').removeClass('show');
     // if a drop down menu us present for the resumes, get the resume name from the selected resume id
     if (document.getElementById('selected-resume')) {
       // Value is the resume id, but we need the resume name.
@@ -92,20 +93,12 @@ $(document).ready(function () {
       !userData.position_closing_date ||
       !userData.position_name
     ) {
+      $('#application_error_message').addClass('show')
       return;
     }
 
-    //reset input fields
+    //reseting inputs may not be ideal if a API error is encountered.
     // resumeName.val('');
-    resumeDescription.val('');
-    positionLocation.val('');
-    positionName.val('');
-    positionDescription.val('');
-    hiringManagerFirstName.val('');
-    hiringManagerLastName.val('');
-    hiringManagerEmail.val('');
-    hiringManagerPhoneNumber.val('');
-    companyName.val('');
 
     submitApplication(userData);
   });
@@ -182,6 +175,7 @@ $(document).ready(function () {
         window.location.replace('/dashboard');
       })
       .catch(function (err) {
+        $('#error_message').addClass('show')
         console.log(err);
       });
     //console.log(application_data);
