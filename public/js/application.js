@@ -33,7 +33,7 @@ $(document).ready(function () {
 
   submissionForm.on('click', async function (event) {
     event.preventDefault();
-    $('#application_error_message').removeClass('show');
+    $('#application_error_message').remove();
     // if a drop down menu us present for the resumes, get the resume name from the selected resume id
     if (document.getElementById('selected-resume')) {
       // Value is the resume id, but we need the resume name.
@@ -93,7 +93,7 @@ $(document).ready(function () {
       !userData.position_closing_date ||
       !userData.position_name
     ) {
-      $('#application_error_message').addClass('show')
+      appendApplicationErrorMessage();
       return;
     }
 
@@ -175,7 +175,7 @@ $(document).ready(function () {
         window.location.replace('/dashboard');
       })
       .catch(function (err) {
-        $('#error_message').addClass('show')
+        appendApplicationErrorMessage();
         console.log(err);
       });
     //console.log(application_data);
@@ -217,6 +217,9 @@ $(document).ready(function () {
       }
     }
   }
-
+var appendApplicationErrorMessage = function() {
+  $('#application_top_div').append("<div class='text-center alert alert-danger' id='application_error_message' role='alert'><strong>Application Submission Failed</strong></div>"
+  );
+}
   checkResumes();
 });

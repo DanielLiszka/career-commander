@@ -1,6 +1,6 @@
 <!-- stored user resumes with ability to edit or delete entries WIP-->
 {{#if resumes.length}}
-  <div class='container w-100'>
+  <div class='container w-100' id='delete_top_div'>
     <h2 class='border-bottom pb-2 text-center'>Saved Resumes</h2>
     <div class="text-center">
     <a 
@@ -68,9 +68,6 @@
     </div>
    {{/each}}
   </div>
-    <div class="text-center alert alert-danger fade" id='resume_delete_error_message' role="alert">
-     <strong>Resume Deletion Failed</strong>
-    </div>
 {{/if}}
 
 <!-- Remume Modal for editing. Saved data should be automatically entered into the input fields.-->
@@ -81,7 +78,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                     <!-- Present stored resumes in a card format -->
-                        <div class='container-fluid mt-5 mb-5 p-5 border border-secondary'>
+                        <div class='container-fluid mt-5 mb-5 p-5 border border-secondary' id='edit_top_div'>
                             <h4 class="text-center" id='resume_id_modal_header'> Resume # {{id}}</h4>
                             <form class="row gx-0 needs-validation" novalidate>
                             <div class='row mt-3 mb-3'> 
@@ -114,9 +111,6 @@
                                 Enter a resume description.
                                 </div>
                             </div>
-                            <div class="text-center alert alert-danger fade" id='resume_edit_error_message' role="alert">
-                                <strong>Resume Editing Failed</strong>
-                           </div>
                      
                         <div class='row mt-4 mb-4 d-flex justify-content-center text-center'>
                             <div class='col-md-6 col-sm-6 col-xs-12'>
@@ -145,7 +139,7 @@
         <div class="modal-content">
             <div class="modal-body">
             <!-- Present stored resumes in a card format -->
-                <div class='container-fluid mt-5 mb-5 p-5 border border-secondary'>
+                <div class='container-fluid mt-5 mb-5 p-5 border border-secondary' id="post_top_div">
                     <h4 class="text-center" id='resume_id_modal_header'> Resume</h4>
                     <form class="row gx-0 needs-validation" novalidate>
                     <div class='row mt-3 mb-3'> 
@@ -178,9 +172,6 @@
                         </div>
                     </div>
             
-                  <div class="text-center alert alert-danger fade" id='resume_post_error_message' role="alert">
-                     <strong>Resume Submission Failed</strong>
-                  </div>
 
                 <div class='row mt-4 mb-4 d-flex justify-content-center text-center'>
                     <div class='col-md-6 col-sm-6 col-xs-12'>
