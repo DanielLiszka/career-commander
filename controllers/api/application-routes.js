@@ -204,7 +204,6 @@ router.put('/:id', async (req, res) => {
 });
 
 // delete an application
-// Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
 router.delete('/:id', async (req, res) => {
   try {
     // check if user logged-in
@@ -218,6 +217,16 @@ router.delete('/:id', async (req, res) => {
         },
         attributes: ['position_id', 'manager_id', 'company_id'],
       });
+
+      // delete application
+      const applicationData = await Application.destroy({
+        // Will only delete an appliation if the passed id matches and the logged-in user matches
+        where: {
+          id: req.params.id,
+          user_id: req.session.user_id,
+        },
+      });
+
       //**** NOTE - Could not refactor the following "check" routines into a separate function because the left side of the "where" option would not take a variable. ****
       //check position_id
       const applicationArrayP = await Application.findAll({
@@ -306,15 +315,8 @@ router.delete('/:id', async (req, res) => {
             ' delete'
         );
       }
-      // delete application
-      const applicationData = await Application.destroy({
-        // Will only delete an appliation if the passed id matches and the logged-in user matches
-        where: {
-          id: req.params.id,
-          user_id: req.session.user_id,
-        },
-      });
-      res.json(applicationData);
+      // Make sure the dashboard page refreshes
+      res.redirect('/dashboard');
     } else {
       // if not logged-in, send a msg to the client and redirect to the homepage/login screen
       res.json({ message: 'A user must be logged in.' });
