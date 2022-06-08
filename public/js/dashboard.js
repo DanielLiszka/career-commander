@@ -260,15 +260,20 @@ async function editApplication(userData) {
       let resumeData = await $.get('/api/resumes', {}).catch((err) =>
       console.log(err)
     );
+    if (resumeData.length == 1) {
+      $("*[id^='resume_description-edit-']").val(resumeData[0].description);
+      console.log(resumeData[0].description)
+    } else{ 
       // check to see if there are more than one resume
-      if (resumeData.length > 1) {
+      if (resumeData.length > 0) {
         selection_input = true 
         // Select all elements with a matching portion of its ID.
         selectedResume = $("*[id^='dashboard-selected-resume-']")
         //console.log(selectedResume)
         selectedResume.on('change', async function (event) {
           event.preventDefault();
-          const id = event.target.getAttribute('data-id')
+          // if there's only one resume then use its resume description.
+          var id = event.target.getAttribute('data-id')
           //Get selected-resume value after change
           selectedResumeId = $('#dashboard-selected-resume-' + id).val();
           // using the resume id, get the description for that resume
@@ -278,9 +283,11 @@ async function editApplication(userData) {
           ).catch((err) => console.log(err));
           var selectedDescription = selectedResumeData.description;
           selectedResumeName = selectedResumeData.name
-          console.log(selectedResumeName)
+          //console.log(selectedResumeName)
           // set the value of the resume description textarea to the selected description
           $('#resume_description-edit-' + id).val(selectedDescription);
-        });
+          }
+        );
       }
+    }
   }

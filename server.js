@@ -14,6 +14,9 @@ const hbs = exphbs.create({});
 hbs.handlebars.registerHelper('eq', function (a, b) {
   if (a == b) { return (this); }
 });
+hbs.handlebars.registerHelper('greaterThan', function (a,b){
+  if (a > b) { return (this); }
+})
 
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
