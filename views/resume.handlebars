@@ -56,12 +56,14 @@
                 data-bs-target="#editResumeModal-{{id}}">
                     Edit
                 </a>
+            {{#if (greaterThan ../resumes.length 1)}}
               <a
                 id='deleteResume'
                 href=''
                 data-id={{id}}
                 class='btn btn-danger btn-sm'
               >Delete</a>
+            {{/if}}
             </div>
           </div>
         </div>
