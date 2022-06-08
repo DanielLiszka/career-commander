@@ -43,6 +43,7 @@ $(document).ready(function () {
 
   submissionForm.on('click', function (event) {
     event.preventDefault();
+    $('#dashboard_edit_error_message').remove();
     const id = event.target.getAttribute('data-id');
     //Change selector depending on wether a resume is already saved.
     if (selection_input === false){
@@ -115,6 +116,7 @@ $(document).ready(function () {
       !userData.position_closing_date ||
       !userData.position_name
     ) {
+      appendDashboardEditErrorMessage();
       return;
     }
 
@@ -145,6 +147,7 @@ async function editApplication(userData) {
   console.log(id);
   var application_info = await $.get(`/api/applications/${id}`, {}).catch(
     function (err) {
+      appendDashboardEditErrorMessage();
       console.log(err);
     }
   );
@@ -156,6 +159,7 @@ async function editApplication(userData) {
     data: JSON.stringify({ name }),
     contentType: 'application/json',
   }).catch(function (err) {
+    appendDashboardEditErrorMessage();
     console.log(err);
   });
 
@@ -177,6 +181,7 @@ async function editApplication(userData) {
     }),
     contentType: 'application/json',
   }).catch(function (err) {
+    appendDashboardEditErrorMessage();
     console.log(err);
   });
   //console.log(manager_data);
@@ -201,6 +206,7 @@ async function editApplication(userData) {
     }),
     contentType: 'application/json',
   }).catch(function (err) {
+    appendDashboardEditErrorMessage();
     console.log(err);
   });
   //console.log(position_data);
@@ -250,6 +256,7 @@ async function editApplication(userData) {
       window.location.replace('/dashboard');
     })
     .catch(function (err) {
+      appendDashboardEditErrorMessage();
       console.log(err);
     });
   //console.log(application_data);
@@ -291,3 +298,8 @@ async function editApplication(userData) {
       }
     }
   }
+
+var appendDashboardEditErrorMessage = function() {
+  $('#dashboard_top_div').append("<div class='text-center alert alert-danger' id='dashboard_edit_error_message' role='alert'><strong>Application Editing Failed</strong></div>"
+  );
+}
