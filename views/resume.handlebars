@@ -1,5 +1,4 @@
 <!-- stored user resumes with ability to edit or delete entries WIP-->
-{{#if resumes.length}}
   <div class='container w-100' id='delete_top_div'>
     <h2 class='border-bottom pb-2 text-center'>Saved Resumes</h2>
     <div class="text-center">
@@ -12,6 +11,7 @@
         Add a New Resume
     </a>
     </div>
+    {{#if resumes.length}}
       {{#each resumes }}
         <div class='row d-flex justify-content-center' id="Parent-div">
         <div
@@ -67,8 +67,8 @@
         </div>
     </div>
    {{/each}}
+   {{/if}}
   </div>
-{{/if}}
 
 <!-- Remume Modal for editing. Saved data should be automatically entered into the input fields.-->
 {{#if resumes.length}}
