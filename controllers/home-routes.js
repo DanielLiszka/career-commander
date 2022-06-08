@@ -40,6 +40,17 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const user = user_data.get({ plain: true });
 
+    // added resume data to support drop-down menu for resumes on the appliation edit modal
+    const resume_data = await Resume.findAll({
+      attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
+      // only pulling back data for the logged-in user
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    var resumes = resume_data.map((resume) => resume.get({ plain: true }));
+
     const application_data = await Application.findAll({
       // only pull back applications matching the logged-in user
       where: {
@@ -71,7 +82,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
         {
           model: Resume,
-          attributes: ['name', 'description'],
+          attributes: ['id','name', 'description'],
         },
         {
           model: User,
@@ -87,27 +98,27 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     // This reformats the application close date and interview dates to a more readable MM/DD/YYYY
     const reformated_applications = applications.map((application) => {
-      if (application.position.close_date !== null) {
+      if (application.position.close_date) {
         application.position.close_date = dayjs(
           application.position.close_date
         ).format('MM/DD/YYYY');
       }
-      if (application.interview1_date !== null) {
+      if (application.interview1_date) {
         application.interview1_date = dayjs(application.interview1_date).format(
           'MM/DD/YYYY'
         );
       }
-      if (application.interview2_date !== null) {
+      if (application.interview2_date) {
         application.interview2_date = dayjs(application.interview2_date).format(
           'MM/DD/YYYY'
         );
       }
-      if (application.interview3_date !== null) {
+      if (application.interview3_date) {
         application.interview3_date = dayjs(application.interview3_date).format(
           'MM/DD/YYYY'
         );
       }
-      if (application.interview4_date !== null) {
+      if (application.interview4_date) {
         application.interview4_date = dayjs(application.interview4_date).format(
           'MM/DD/YYYY'
         );
@@ -118,6 +129,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     res.render('dashboard', {
       js: ['dashboard.js', 'application.js'],
       reformated_applications,
+      resumes,
       user,
     });
   } catch (err) {
@@ -138,7 +150,36 @@ router.get('/application', withAuth, async (req, res) => {
     });
 
     const user = user_data.get({ plain: true });
-    res.render('application', { js: ['application.js'], user });
+
+    // Get list of all resumes for the logged in user
+    const resume_data = await Resume.findAll({
+      attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    const resumes = resume_data.map((resume) => resume.get({ plain: true }));
+
+    res.render('application', { js: ['application.js'], user, resumes });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get('/resume', withAuth, async (req, res) => {
+  try {
+    // Get list of all resumes for the logged in user
+    const resume_data = await Resume.findAll({
+      attributes: ['id', 'name', 'description', 'user_id', 'created_at'],
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+
+    const resumes = resume_data.map((resume) => resume.get({ plain: true }));
+
+    res.render('resume', { js: ['resume.js'], resumes });
   } catch (err) {
     console.log(err);
   }

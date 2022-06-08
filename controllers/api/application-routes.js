@@ -89,22 +89,23 @@ router.get('/:id', async (req, res) => {
           'interview4_date',
         ],
         order: [['created_at', 'DESC']],
+        // also include company, manager, position, and resume IDs to make put requests easier.
         include: [
           {
             model: Company,
-            attributes: ['name'],
+            attributes: ['id', 'name'],
           },
           {
             model: Manager,
-            attributes: ['first_name', 'last_name', 'email', 'phone'],
+            attributes: ['id', 'first_name', 'last_name', 'email', 'phone'],
           },
           {
             model: Position,
-            attributes: ['name', 'location', 'close_date'],
+            attributes: ['id', 'name', 'location', 'close_date'],
           },
           {
             model: Resume,
-            attributes: ['name', 'description'],
+            attributes: ['id', 'name', 'description'],
           },
           {
             model: User,
@@ -112,6 +113,8 @@ router.get('/:id', async (req, res) => {
             order: [['last_name', 'DESC']],
           },
         ],
+        raw: true,
+        nest: true,
       });
       res.json(applicationData);
     } else {
@@ -201,7 +204,6 @@ router.put('/:id', async (req, res) => {
 });
 
 // delete an application
-// Need to add code/helper to check that the user logged in owns the resume being accessed/created/updated/deleted.
 router.delete('/:id', async (req, res) => {
   try {
     // check if user logged-in
@@ -215,93 +217,12 @@ router.delete('/:id', async (req, res) => {
         },
         attributes: ['position_id', 'manager_id', 'company_id'],
       });
-      //**** NOTE - Could not refactor the following "check" routines into a separate function because the left side of the "where" option would not take a variable. ****
-      //check position_id
-      const applicationArrayP = await Application.findAll({
-        attributes: ['id'],
-        where: {
-          position_id: applicationForeignKeys.position_id,
-        },
-      });
-      if (applicationArrayP.length > 1) {
-        console.log(
-          'postion_id ' +
-            applicationForeignKeys.position_id +
-            ' was not deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
-      } else {
-        const positionData = await Position.destroy({
-          where: {
-            id: applicationForeignKeys.position_id,
-          },
+      if (!applicationForeignKeys) {
+        res.status(404).json({
+          message:
+            "The logged in user doesn't have any applications with the provided id",
         });
-        console.log(
-          'postion_id ' +
-            applicationForeignKeys.position_id +
-            ' was deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
-      }
-      //check manager_id
-      const applicationArrayM = await Application.findAll({
-        attributes: ['id'],
-        where: {
-          manager_id: applicationForeignKeys.manager_id,
-        },
-      });
-      if (applicationArrayM.length > 1) {
-        console.log(
-          'manager_id ' +
-            applicationForeignKeys.manager_id +
-            ' was not deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
-      } else {
-        const managerData = await Manager.destroy({
-          where: {
-            id: applicationForeignKeys.manager_id,
-          },
-        });
-        console.log(
-          'manager_id ' +
-            applicationForeignKeys.manager_id +
-            ' was deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
-      }
-      //check company_id
-      const applicationArrayC = await Application.findAll({
-        attributes: ['id'],
-        where: {
-          company_id: applicationForeignKeys.company_id,
-        },
-      });
-      if (applicationArrayC.length > 1) {
-        console.log(
-          'company_id ' +
-            applicationForeignKeys.company_id +
-            ' was not deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
-      } else {
-        const companyData = await Company.destroy({
-          where: {
-            id: applicationForeignKeys.company_id,
-          },
-        });
-        console.log(
-          'company_id ' +
-            applicationForeignKeys.company_id +
-            ' was deleted on application id ' +
-            req.params.id +
-            ' delete'
-        );
+        return;
       }
       // delete application
       const applicationData = await Application.destroy({
@@ -311,7 +232,149 @@ router.delete('/:id', async (req, res) => {
           user_id: req.session.user_id,
         },
       });
-      res.json(applicationData);
+      if (!applicationData) {
+        res.status(404).json({
+          message:
+            "The logged in user doesn't have any applications with the provided id",
+        });
+        return;
+      }
+      //**** NOTE - Could not refactor the following "check" routines into a separate function because the left side of the "where" option would not take a variable. ****
+
+      //check position_id
+      const applicationArrayP = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          position_id: applicationForeignKeys.position_id,
+        },
+      });
+      if (!applicationArrayP) {
+        res.status(404).json({
+          message:
+            'Could not find any applicatons with the provided position_id',
+        });
+        return;
+      } else {
+        if (applicationArrayP.length > 1) {
+          console.log(
+            'postion_id ' +
+              applicationForeignKeys.position_id +
+              ' was not deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        } else {
+          const positionData = await Position.destroy({
+            where: {
+              id: applicationForeignKeys.position_id,
+            },
+          });
+          if (!positionData) {
+            res.status(404).json({
+              message: 'Could not find any positons with the provided id',
+            });
+            return;
+          }
+          console.log(
+            'postion_id ' +
+              applicationForeignKeys.position_id +
+              ' was deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        }
+      }
+
+      //check manager_id
+      const applicationArrayM = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          manager_id: applicationForeignKeys.manager_id,
+        },
+      });
+      if (!applicationArrayM) {
+        res.status(404).json({
+          message: 'Could not find an application with the provided manager id',
+        });
+        return;
+      } else {
+        if (applicationArrayM.length > 1) {
+          console.log(
+            'manager_id ' +
+              applicationForeignKeys.manager_id +
+              ' was not deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        } else {
+          const managerData = await Manager.destroy({
+            where: {
+              id: applicationForeignKeys.manager_id,
+            },
+          });
+          if (!managerData) {
+            res
+              .status(404)
+              .json({ message: 'Could not find a manager with the given id' });
+            return;
+          }
+          console.log(
+            'manager_id ' +
+              applicationForeignKeys.manager_id +
+              ' was deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        }
+      }
+
+      //check company_id
+      const applicationArrayC = await Application.findAll({
+        attributes: ['id'],
+        where: {
+          company_id: applicationForeignKeys.company_id,
+        },
+      });
+      if (!applicationArrayC) {
+        res
+          .status(404)
+          .json({
+            message: 'There was no application with the provided company_id',
+          });
+        return;
+      } else {
+        if (applicationArrayC.length > 1) {
+          console.log(
+            'company_id ' +
+              applicationForeignKeys.company_id +
+              ' was not deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        } else {
+          const companyData = await Company.destroy({
+            where: {
+              id: applicationForeignKeys.company_id,
+            },
+          });
+          if (!companyData) {
+            res
+              .status(404)
+              .json({ message: 'There was no company with the provided id' });
+            return;
+          }
+          console.log(
+            'company_id ' +
+              applicationForeignKeys.company_id +
+              ' was deleted on application id ' +
+              req.params.id +
+              ' delete'
+          );
+        }
+      }
+
+      // Make sure the dashboard page refreshes
+      res.redirect('/dashboard');
     } else {
       // if not logged-in, send a msg to the client and redirect to the homepage/login screen
       res.json({ message: 'A user must be logged in.' });

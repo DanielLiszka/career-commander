@@ -1,4 +1,4 @@
-<div class='container-fluid mt-5 mb-5 p-5 border border-secondary'>
+<div class='container-fluid mt-5 mb-5 p-5 border border-secondary' id='application_top_div'>
   <h2 class="text-center"> Application </h3>
   <form class="row gx-0 needs-validation" novalidate>
     <div class='row mt-3 mb-3'> 
@@ -63,12 +63,22 @@
       <div class='col-lg-2 col-md-2 col-sm-6 col-xs-12'>
         <div class='form-group text-center'>
           <label for='resume_name'>Resume Name</label>
-          <input
+          {{!-- If resumes exist, display a dropdown menu of the resumes --}}
+          {{#if resumes.length}}
+           <select id="selected-resume">
+             {{#each resumes}}
+              <option value={{id}}>{{name}}</option>
+             {{/each}}
+           </select>
+           {{!-- Otherwise, get a resume name for the application --}}
+           {{else}}
+           <input
             type='text'
             class='form-control'
             id='resume_name-input'
             placeholder=''
           required>
+          {{/if}}
           <div class="invalid-feedback">
               Enter a resume name.
           </div>
@@ -92,8 +102,8 @@
         <textarea
           class='form-control form-control-lg'
           id='resume_description-input'
-          rows='5'
-        required></textarea>
+          rows='5' 
+          required></textarea>
         <div class="invalid-feedback">
           Enter a resume description.
         </div>
@@ -244,4 +254,3 @@
   </div>
 </form>
 </div>
-

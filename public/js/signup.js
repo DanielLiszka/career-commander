@@ -7,6 +7,7 @@ $(document).ready(function () {
   var emailInput = $('input#signup_email-input');
   var passwordInput = $('input#signup_password-input');
 
+  //Signup Function
   SignupForm.on('submit', function (event) {
     event.preventDefault();
     var userData = {
@@ -15,6 +16,8 @@ $(document).ready(function () {
       email: emailInput.val().trim().toLowerCase(),
       password: passwordInput.val().trim(),
     };
+    //Remove Error Message
+    $('#signup_error_message').remove();
 
     if (
       !userData.email ||
@@ -22,6 +25,7 @@ $(document).ready(function () {
       !userData.first_name ||
       !userData.last_name
     ) {
+      appendSignupErrorMessage();
       return;
     }
 
@@ -47,8 +51,13 @@ $(document).ready(function () {
       .then(function () {
         window.location.replace('/dashboard');
       })
-      .catch(function (err) {
+      .catch(function (err) {  
+        appendSignupErrorMessage();
         console.log(err);
       });
+  }
+  //Append error message 
+  var appendSignupErrorMessage = function() {
+    $('#signup').append("<div class='text-center alert alert-danger' id='signup_error_message' role='alert'><strong>Signup Failed</strong></div>")
   }
 });

@@ -10,9 +10,13 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
 
-// add handlebar helpers
-// const helpers = require('./utils/helpers');
-// const hbs = exphbs.create({ helpers });
+//Handlebar helpers
+hbs.handlebars.registerHelper('eq', function (a, b) {
+  if (a == b) { return (this); }
+});
+hbs.handlebars.registerHelper('greaterThan', function (a,b){
+  if (a > b) { return (this); }
+})
 
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
@@ -40,7 +44,7 @@ const sess = {
 };
 
 // definition for passport
-const passport = require('passport');
+// const passport = require('passport');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -60,8 +64,8 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.use(session(sess));
 
 // middleware for Passport which sits on top of Express-sessions
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Commented this out until controlers are defined
 app.use(routes);
