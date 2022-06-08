@@ -12,6 +12,7 @@ $(document).ready(function () {
 
   new_resume.on('click', function (event) {
     event.preventDefault();
+    $('#resume_post_error_message').remove();
     var resumeNamePost = $('#resume_name-post');
     var resumeDescriptionPost = $('#resume_description-post');
     var userData = {
@@ -19,6 +20,7 @@ $(document).ready(function () {
       resume_description: resumeDescriptionPost.val().trim(),
     };
     if (!userData.resume_name || !userData.resume_description) {
+      appendPostResumeErrorMessage();
       return;
     }
 
@@ -37,6 +39,7 @@ $(document).ready(function () {
 
   submissionForm.on('click', function (event) {
     event.preventDefault();
+    $('#resume_edit_error_message').remove();
     const id = event.target.getAttribute('data-id');
     var resumeName = $('#resume_name-edit-' + id);
     var resumeDescription = $('#resume_description-edit-' + id);
@@ -46,11 +49,12 @@ $(document).ready(function () {
       name: resumeName.val().trim(),
       description: resumeDescription.val().trim(),
     };
-    console.log(resumeData);
-    console.log(resumeData.name);
-    console.log(resumeData.description);
+    //console.log(resumeData);
+    //console.log(resumeData.name);
+    //console.log(resumeData.description);
     //Ensure that required fields have data
     if (!resumeData.name || !resumeData.description) {
+      appendEditResumeErrorMessage();
       return;
     }
     editResume(resumeData);
@@ -59,6 +63,7 @@ $(document).ready(function () {
 
 // Delete single application
 const deleteResume = async (event) => {
+  $('#resume_delete_error_message').remove();
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
     const response = await fetch(`/api/resumes/${id}`, {
@@ -67,6 +72,7 @@ const deleteResume = async (event) => {
     if (response.ok) {
       document.location.replace('/resume');
     } else {
+      appendDeleteResumeErrorMessage();
       console.log(response);
     }
   }
@@ -92,6 +98,7 @@ async function editResume(resumeData) {
     data: JSON.stringify({ resume_name, resume_description }),
     contentType: 'application/json',
   }).catch(function (err) {
+    appendEditResumeErrorMessage();
     console.log(err);
   });
 
@@ -108,6 +115,19 @@ function PostResume(resume_name, resume_description) {
       window.location.replace('/resume');
     })
     .catch(function (err) {
+      appendPostResumeErrorMessage();
       console.log(err);
     });
+}
+
+var appendDeleteResumeErrorMessage = function() {
+  $('#delete_top_div').append("<div class='text-center alert alert-danger' id='resume_delete_error_message' role='alert'><strong>Resume Deletion Failed</strong></div>");
+}
+
+var appendPostResumeErrorMessage = function() {
+  $('#post_top_div').append("<div class='text-center alert alert-danger' id='resume_post_error_message' role='alert'><strong>Resume Submission Failed</strong></div");
+}
+
+var appendEditResumeErrorMessage = function(){
+  $('#edit_top_div').append("<div class='text-center alert alert-danger' id='resume_edit_error_message' role='alert'><strong>Resume Editing Failed</strong></div>");
 }
