@@ -3,6 +3,21 @@
     float: none;
     vertical-align: top;
   } */
+html {
+  min-height: 100%; 
+}
+
+  body {
+    background-image: url(../images/background.png);
+    background-position: center center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    min-height: 100%;
+    margin:0px;
+    padding: 0px; 
+    /* position: relative */
+  
+  }
   
   #mainLogo {
     display: inline;
@@ -11,6 +26,7 @@
     height: 10%;
     margin: 0;
     padding: 0;
+    mix-blend-mode: multiply;
   }
  
   #mainHeader {
@@ -18,9 +34,14 @@
     font-weight: bolder;
     font-size: 4vw;
     vertical-align: middle;
+    font-family: Arial;
+    /* background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#333));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent */
   }
 
   .jumbotron {
     padding: 0;
     margin: 0;
   }
+  
