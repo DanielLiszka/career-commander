@@ -1,4 +1,11 @@
+//global selected resume name variable
+var selectedResumeName 
+var selectedResumeId
+selection_input = false
+
 $(document).ready(function () {
+  //Default to manual resume input on page load 
+
   var delete_buttons = document.querySelectorAll('#deleteApplication');
   for (var i = 0, len = delete_buttons.length; i < len; i++)
     delete_buttons[i].onclick = deleteApplication;
@@ -37,7 +44,11 @@ $(document).ready(function () {
   submissionForm.on('click', function (event) {
     event.preventDefault();
     const id = event.target.getAttribute('data-id');
-    var resumeName = $('#resume_name-edit-' + id);
+    //Change selector depending on wether a resume is already saved.
+    if (selection_input === false){
+    var resumeName = $('#resume_name-edit-' + id).val().trim();
+    } else {resumeName = selectedResumeName }
+
     var resumeDescription = $('#resume_description-edit-' + id);
     var positionLocation = $('input#position_location-edit-' + id);
     var positionName = $('input#position_name-edit-' + id);
@@ -72,7 +83,7 @@ $(document).ready(function () {
         .data('datepicker')
         .getFormattedDate('yyyy-mm-dd'),
       company_name: companyName.val().trim(),
-      resume_name: resumeName.val().trim(),
+      resume_name: resumeName,
       resume_description: resumeDescription.val().trim(),
       offer: offer_check.is(':checked'),
       accepted: acceptance_check.is(':checked'),
@@ -89,7 +100,7 @@ $(document).ready(function () {
         .data('datepicker')
         .getFormattedDate('yyyy-mm-dd'),
     };
-    console.log(userData);
+    //console.log(userData);
     //Ensure that required fields have data
     if (
       !userData.resume_name ||
@@ -109,6 +120,7 @@ $(document).ready(function () {
 
     editApplication(userData);
   });
+  ModifiedCheckResumes();
 });
 
 // Delete single application
@@ -197,14 +209,16 @@ async function editApplication(userData) {
   var resume_description = userData.resume_description;
   var resume_id = application_info.resume.id;
 
-  const resume_data = await $.ajax({
-    type: 'PUT',
-    url: `/api/resumes/${application_info.resume.id}`,
-    data: JSON.stringify({ resume_name, resume_description }),
-    contentType: 'application/json',
-  }).catch(function (err) {
-    console.log(err);
-  });
+  // no need for put requests if input field is set to read only
+
+  // const resume_data = await $.ajax({
+  //   type: 'PUT',
+  //   url: `/api/resumes/${resume_id}`,
+  //   data: JSON.stringify({ resume_name, resume_description }),
+  //   contentType: 'application/json',
+  // }).catch(function (err) {
+  //   console.log(err);
+  // });
   //console.log(resume_data);
 
   var plain_object = {
@@ -215,7 +229,7 @@ async function editApplication(userData) {
     interview3_date: userData.interview3_date,
     interview4_date: userData.interview4_date,
     position_id: application_info.position.id,
-    resume_id: application_info.resume.id,
+    resume_id: selectedResumeId,
     company_id: application_info.company.id,
     manager_id: application_info.manager.id,
   };
@@ -240,3 +254,33 @@ async function editApplication(userData) {
     });
   //console.log(application_data);
 }
+
+  // get resume selection and display the description
+  async function ModifiedCheckResumes() {
+      let resumeData = await $.get('/api/resumes', {}).catch((err) =>
+      console.log(err)
+    );
+      // check to see if there are more than one resume
+      if (resumeData.length > 1) {
+        selection_input = true 
+        // Select all elements with a matching portion of its ID.
+        selectedResume = $("*[id^='dashboard-selected-resume-']")
+        //console.log(selectedResume)
+        selectedResume.on('change', async function (event) {
+          event.preventDefault();
+          const id = event.target.getAttribute('data-id')
+          //Get selected-resume value after change
+          selectedResumeId = $('#dashboard-selected-resume-' + id).val();
+          // using the resume id, get the description for that resume
+          let selectedResumeData = await $.get(
+            `/api/resumes/${selectedResumeId}`,
+            {}
+          ).catch((err) => console.log(err));
+          var selectedDescription = selectedResumeData.description;
+          selectedResumeName = selectedResumeData.name
+          console.log(selectedResumeName)
+          // set the value of the resume description textarea to the selected description
+          $('#resume_description-edit-' + id).val(selectedDescription);
+        });
+      }
+  }

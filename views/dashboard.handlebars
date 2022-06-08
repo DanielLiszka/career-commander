@@ -304,9 +304,9 @@
                                 <label for='resume_name'>Resume Name</label>
                                 {{!-- If resumes exist, display a dropdown menu of the resumes --}}
                                 {{#if ../resumes.length}}
-                                <select id="selected-resume">
+                                <select id="dashboard-selected-resume-{{application.id}}" data-id={{application.id}}>
                                     {{#each ../resumes as |resume|}}
-                                    <option value={{resume.id}}>{{resume.name}}</option>
+                                    <option value={{resume.id}} {{#if (eq resume.name application.resume.name)}} selected {{/if}}>{{resume.name}}</option>
                                     {{/each}}
                                 </select>
                                 {{!-- Otherwise, get a resume name for the application --}}
@@ -316,8 +316,9 @@
                                     class='form-control'
                                     id='resume_name-edit-{{application.id}}'
                                     placeholder=''
+                                    required
                                     value={{application.resume.name}} 
-                                required>
+                                >
                                 {{/if}}
                                 <div class="invalid-feedback">
                                     Enter a resume name.
@@ -339,7 +340,7 @@
                             <!-- Resume Description required -->
                             <div class='form-group mt-4 text-center'>
                                 <label for='resume_description'>Resume Description</label>
-                                <textarea
+                                <textarea {{#if ../resumes.length}} readonly {{/if}}
                                 class='form-control form-control-lg'
                                 id='resume_description-edit-{{application.id}}'
                                 rows='5'
