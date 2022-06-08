@@ -31,6 +31,7 @@ $(document).ready(function () {
   var offer_check = $('input#offer_check');
   var acceptance_check = $('input#acceptance_check');
 
+  //Create Application Function
   submissionForm.on('click', async function (event) {
     event.preventDefault();
     $('#application_error_message').remove();
@@ -217,6 +218,7 @@ $(document).ready(function () {
       }
     }
   }
+//Append Error Message
 var appendApplicationErrorMessage = function() {
   $('#application_top_div').append("<div class='text-center alert alert-danger' id='application_error_message' role='alert'><strong>Application Submission Failed</strong></div>"
   );

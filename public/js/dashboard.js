@@ -1,4 +1,4 @@
-//global selected resume name variable
+//global selected resume variables
 var selectedResumeName 
 var selectedResumeId
 //selection_input = false
@@ -41,14 +41,22 @@ $(document).ready(function () {
 
   var submissionForm = $('.save-application');
 
-  submissionForm.on('click', function (event) {
+  //Edit Application Function
+  submissionForm.on('click', async function (event) {
     event.preventDefault();
+    id = event.target.getAttribute('data-id')
     $('#dashboard_edit_error_message').remove();
-    const id = event.target.getAttribute('data-id');
-    //if (selection_input === false){
-    //var resumeName = $('#resume_name-edit-' + id).val().trim();
-    //} else {resumeName = selectedResumeName }
+    const selectedResumeId = event.target.getAttribute('data-resume-id');
+    if (selectedResumeId != ''){
+    let selectedResumeData = await $.get(
+      `/api/resumes/${selectedResumeId}`,
+      {}
+    ).catch((err) => console.log(err));
+    console.log(selectedResumeId)
+    selectedResumeName = selectedResumeData.name
+    }
     resumeName = selectedResumeName
+    console.log(selectedResumeName)
     //console.log(resumeName)
     var resumeDescription = $('#resume_description-edit-' + id);
     var positionLocation = $('input#position_location-edit-' + id);
@@ -144,7 +152,7 @@ const deleteApplication = async (event) => {
 //Edit the application in a modal format and save the data WIP.
 async function editApplication(userData) {
   var id = userData.id;
-  console.log(id);
+  //console.log(id);
   var application_info = await $.get(`/api/applications/${id}`, {}).catch(
     function (err) {
       console.log(err);
@@ -168,7 +176,7 @@ async function editApplication(userData) {
   var manager_email = userData.manager_email;
   var manager_phone = userData.manager_phone_number;
   var company_id = application_info.company.id;
-
+  //console.log(selectedResumeId)
   const manager_data = await $.ajax({
     type: 'PUT',
     url: `/api/managers/${application_info.manager.id}`,
@@ -301,6 +309,7 @@ async function editApplication(userData) {
     }
   }
 
+//Append Error Message
 var appendDashboardEditErrorMessage = function() {
   $('#dashboard_top_div').append("<div class='text-center alert alert-danger' id='dashboard_edit_error_message' role='alert'><strong>Application Editing Failed</strong></div>"
   );

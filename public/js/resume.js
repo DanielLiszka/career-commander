@@ -119,7 +119,7 @@ function PostResume(resume_name, resume_description) {
       console.log(err);
     });
 }
-
+//Append Error Messages
 var appendDeleteResumeErrorMessage = function() {
   $('#delete_top_div').append("<div class='text-center alert alert-danger' id='resume_delete_error_message' role='alert'><strong>Resume Deletion Failed</strong></div>");
 }

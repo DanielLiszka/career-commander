@@ -82,7 +82,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
         {
           model: Resume,
-          attributes: ['name', 'description'],
+          attributes: ['id','name', 'description'],
         },
         {
           model: User,

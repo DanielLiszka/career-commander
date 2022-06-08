@@ -5,6 +5,7 @@ $(document).ready(function () {
   var emailInput = $('input#login_email-input');
   var passwordInput = $('input#login_password-input');
 
+  //Login Function
   loginForm.on('submit', function (event) {
     event.preventDefault();
     var userData = {

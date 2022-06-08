@@ -7,6 +7,7 @@ $(document).ready(function () {
   var emailInput = $('input#signup_email-input');
   var passwordInput = $('input#signup_password-input');
 
+  //Signup Function
   SignupForm.on('submit', function (event) {
     event.preventDefault();
     var userData = {
