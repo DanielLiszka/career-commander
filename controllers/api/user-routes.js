@@ -101,6 +101,24 @@ router.post('/logout', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  User.findOne({
+    where: {
+      id: req.params.id,
+    },
+  }).then((dbUserData) => {
+    if (!dbUserData) {
+      res.status(400).json({ message: 'No user found with that id!' });
+      return;
+    }
+    // checkPassword is a User method that compares a provided password against the hashed password in the database
+    // Check the User model for all the code around password hashing using bcrypt.
+    const validPassword = dbUserData.checkPassword(req.body.oldpassword);
+
+    if (!validPassword) {
+      res.status(400).json({ message: 'Incorrect password!' });
+      return;
+    }
+  });
   User.update(req.body, {
     individualHooks: true,
 
@@ -110,10 +128,11 @@ router.put('/:id', (req, res) => {
   })
     .then((dbUserData) => {
       if (!dbUserData[0]) {
-        res.status(404).json({ message: 'No user found with this id' });
+        res.status(404).json({ message: 'No user found with that id' });
         return;
       }
-      res.json(dbUserData);
+
+      res.json({ user: dbUserData, message: 'Password has been changed!' });
     })
     .catch((err) => {
       console.log(err);
