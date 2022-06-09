@@ -27,6 +27,10 @@ router.get('/signup', function (req, res) {
   }
 });
 
+router.get('/change', function (req, res) {
+  res.render('change', { js: ['change.js'] });
+});
+
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Get user first and last name for welcome message.
@@ -82,7 +86,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
         {
           model: Resume,
-          attributes: ['id','name', 'description'],
+          attributes: ['id', 'name', 'description'],
         },
         {
           model: User,

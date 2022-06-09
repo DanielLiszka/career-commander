@@ -100,14 +100,17 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  User.findOne({
-    where: {
-      id: req.params.id,
-    },
-  }).then((dbUserData) => {
+router.put('/change', async (req, res) => {
+  try {
+    // var failedFlag = false;
+    var dbUserData = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    console.log(dbUserData);
     if (!dbUserData) {
-      res.status(400).json({ message: 'No user found with that id!' });
+      res.status(400).json({ message: 'No user found with that email' });
       return;
     }
     // checkPassword is a User method that compares a provided password against the hashed password in the database
@@ -118,26 +121,27 @@ router.put('/:id', (req, res) => {
       res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
-  });
-  User.update(req.body, {
-    individualHooks: true,
 
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((dbUserData) => {
-      if (!dbUserData[0]) {
-        res.status(404).json({ message: 'No user found with that id' });
-        return;
-      }
-
-      res.json({ user: dbUserData, message: 'Password has been changed!' });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    console.log(dbUserData);
+    var dbUpdateUserData = await User.update(dbUserData, {
+      individualHooks: true,
+      where: {
+        id: dbUserData.id,
+      },
     });
+
+    if (!dbUpdateUserData[0]) {
+      res.status(404).json({ message: 'No user found with that id' });
+      return;
+    }
+    res.json({
+      user: dbUpdateUserData,
+      message: 'Password has been changed!',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 router.delete('/:id', (req, res) => {
