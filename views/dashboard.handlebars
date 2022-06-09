@@ -16,13 +16,29 @@
             placeholder="Search for applications"
         />
         </div>
+
+<!-- Trigger Buttons HTML -->
+{{!-- <a href="#myCollapse" data-bs-toggle="collapse">Toggle Element</a>
+<button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#myCollapse">Toggle Element</button> --}}
+
+<!-- Collapsible Element HTML -->
+{{!-- <div class="collapse show" id="myCollapse">
+    <div class="card card-body">This is a simple example of showing and hiding specific element via data attributes. Click any trigger buttons to toggle this panel.</div>
+</div> --}}
+
+
     <div class='row d-flex justify-content-center' id="parent_card_div">
       {{#each reformated_applications as |application|}}
         <div
           class='card border-secondary m-3 text-center col-12 col-lg-6 col-xl-4'
           id='child_card_div'
         >
+        
           <div class='card-body border-bottom'>
+            {{!-- <a href="#myCollapse" data-bs-toggle="collapse">Toggle Element</a> --}}
+            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#myCollapse">Toggle Element</button>
+            <div class="collapse show" id="myCollapse">
+            <div class="card card-body">
             <div class='card-title border-bottom'>
               <h4 id='application_id_header'>Application # {{application.id}}</h4> 
             </div>
@@ -213,6 +229,8 @@
               >Delete</a>
             </div>
           </div>
+        </div>
+        </div>
         </div>
       {{/each}}
     </div>

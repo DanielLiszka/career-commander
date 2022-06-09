@@ -45,3 +45,7 @@ html {
     margin: 0;
   }
   
+  .scroll-section {
+    max-height: 100px;
+    overflow-y: auto;
+  }
