@@ -2,6 +2,10 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+/* Insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
+   This will insure that a user is logged in before accessing this route  */
+const withAuth = require('../../utils/auth');
+
 router.get('/', (req, res) => {
   User.findAll({
     attributes: { exclude: ['password'] },
@@ -100,9 +104,8 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.put('/change', async (req, res) => {
+router.put('/change', withAuth, async (req, res) => {
   try {
-    // var failedFlag = false;
     var dbUserData = await User.findOne({
       where: {
         email: req.body.email,
@@ -111,14 +114,6 @@ router.put('/change', async (req, res) => {
     console.log(dbUserData);
     if (!dbUserData) {
       res.status(400).json({ message: 'No user found with that email' });
-      return;
-    }
-    // checkPassword is a User method that compares a provided password against the hashed password in the database
-    // Check the User model for all the code around password hashing using bcrypt.
-    const validPassword = dbUserData.checkPassword(req.body.oldpassword);
-
-    if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect password!' });
       return;
     }
 
@@ -144,7 +139,7 @@ router.put('/change', async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
   User.destroy({
     where: {
       id: req.params.id,

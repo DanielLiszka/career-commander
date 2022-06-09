@@ -28,11 +28,10 @@ $(document).ready(function () {
     oldPasswordInput.val('');
   });
 
-  function ChangePassword(email, password, oldpassword) {
+  function ChangePassword(email, password) {
     $.put('/api/users/change', {
       email: email,
       password: password,
-      oldpassword: oldpassword,
     })
       .then(function () {
         window.location.replace('/dashboard');
