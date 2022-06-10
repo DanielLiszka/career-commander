@@ -1,7 +1,7 @@
 $(document).ready(function () {
-  var ChangeForm = $('#change');
+  var ChangeForm = $('#change-password');
   var userId = $('#user-id');
-  var emailInput = $('input#change_email-input');
+  var emailInput = $('#change_email-input');
   var newPasswordInput = $('input#new_password-input');
 
   //Change Password Function
@@ -12,6 +12,7 @@ $(document).ready(function () {
       email: emailInput.val().trim().toLowerCase(),
       password: newPasswordInput.val().trim(),
     };
+
     //Remove Error Message
     $('#change_error_message').remove();
 
@@ -21,23 +22,25 @@ $(document).ready(function () {
     }
 
     ChangePassword(userData.id, userData.password);
-    // emailInput.val('');
     newPasswordInput.val('');
-    oldPasswordInput.val('');
   });
 
-  function ChangePassword(id, password) {
-    $.put(`/api/users/change/${id}`, {
-      password: password,
-    })
-      .then(function () {
-        window.location.replace('/dashboard');
-      })
-      .catch(function (err) {
-        appendChangeErrorMessage();
-        console.log(err);
-      });
+  async function ChangePassword(id, password) {
+    const company_data = await $.ajax({
+      type: 'PUT',
+      url: `/api/users/change/${id}`,
+      data: JSON.stringify({ password }),
+      contentType: 'application/json',
+      success: (response) => {
+        console.log(response);
+        location.replace('/dashboard');
+      },
+    }).catch(function (err) {
+      console.log(err);
+      appendChangeErrorMessage();
+    });
   }
+
   //Append error message
   var appendChangeErrorMessage = function () {
     $('#change').append(

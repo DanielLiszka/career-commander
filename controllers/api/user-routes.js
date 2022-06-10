@@ -105,8 +105,9 @@ router.post('/logout', (req, res) => {
 });
 
 router.put('/change/:id', withAuth, (req, res) => {
-  User.update({
-    // individualHooks: true,
+  User.update(req.body, {
+    individualHooks: true,
+
     where: {
       id: req.params.id,
     },
@@ -116,6 +117,7 @@ router.put('/change/:id', withAuth, (req, res) => {
         res.status(404).json({ message: 'No user found with that id' });
         return;
       } else {
+        console.log('Password changed for user ' + req.params.id);
         res.json({
           user: dbUserData,
           message: 'Password has been changed!',
