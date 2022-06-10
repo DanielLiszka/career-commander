@@ -3,11 +3,11 @@ const router = require('express').Router();
 const e = require('express');
 const { Position, Company, Manager } = require('../../models');
 /* Insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
-   This will insure that a user is logged in before accessing this route  */
+   This will insure that a user is logged in before accessing this route.  This protects against hacking with a tool like Insomnia. */
 const withAuth = require('../../utils/auth');
 
-// Get all the positions - just need for testing
-router.get('/', (req, res) => {
+// Get all the positions - just need for testing.  Not used in production.
+router.get('/', withAuth, (req, res) => {
   Position.findAll({
     attributes: [
       'id',
@@ -37,8 +37,7 @@ router.get('/', (req, res) => {
 });
 
 // Create a new position
-// Need to add code/helper to check that the user logged in owns the position being accessed/created/updated/deleted.
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   Position.create({
     // Please note the JSON field name that this route is expecting, i.e. position_name instead of just name
     name: req.body.position_name,
@@ -56,7 +55,7 @@ router.post('/', (req, res) => {
 });
 
 // Update a position
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
   Position.update(
     {
       // Please note the JSON field name that this route is expecting, i.e. position_name instead of just name
@@ -89,9 +88,8 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// delete a position
-// Need to add code/helper to check that the user logged in owns the position being accessed/created/updated/deleted.
-router.delete('/:id', (req, res) => {
+// delete a position - Not used in production.  The deletes are done through the application delete.
+router.delete('/:id', withAuth, (req, res) => {
   Position.destroy({
     where: {
       id: req.params.id,

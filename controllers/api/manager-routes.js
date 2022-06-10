@@ -2,11 +2,11 @@
 const router = require('express').Router();
 const { Manager, Company } = require('../../models');
 /* Insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
-   This will insure that a user is logged in before accessing this route  */
+   This will insure that a user is logged in before accessing this route.  This will prevent hacking using a tool like Insomnia. */
 const withAuth = require('../../utils/auth');
 
-// Get all managers for testing purposes only
-router.get('/', (req, res) => {
+// Get all managers for testing purposes only. Not used in production.
+router.get('/', withAuth, (req, res) => {
   Manager.findAll({
     attributes: [
       'id',
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 });
 
 // Create a new manager
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   Manager.create({
     // Please note the JSON field name that this route is expecting, i.e. manager_first_name instead of just first_name
     first_name: req.body.manager_first_name,
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 });
 
 // Update a manager
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
   Manager.update(
     {
       // Please note the JSON field name that this route is expecting, i.e. manager_first_name instead of just first_name
@@ -76,8 +76,8 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// delete a manager
-router.delete('/:id', (req, res) => {
+// delete a manager.  Not used in production.  The deletes are done through the application delete.
+router.delete('/:id', withAuth, (req, res) => {
   Manager.destroy({
     where: {
       id: req.params.id,
