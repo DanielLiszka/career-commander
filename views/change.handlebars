@@ -1,7 +1,9 @@
 <!-- Change Password InputFields-->
+<div class="container w-100">
 <div class='row mt-5 mb-5 d-flex justify-content-center'> 
   <div class='col-md-4 center-block' id="change">
     <h3 class='text-center'>Change Password</h2>
+    <p class="d-none" id='user-id'>{{user.id}}</p>
     <form class='change-password text-center mt-3 needs-validation' novalidate>
       <div class='form-group'>
         <label for='change_email'>Email address</label>
@@ -9,7 +11,8 @@
           type='email'
           class='form-control'
           id='change_email-input'
-          placeholder='Email'
+          {{!-- placeholder='E-mail' --}}
+          placeholder={{user.email}}
          required>
       </div>
       <div class='form-group mb-3'> 
@@ -21,21 +24,10 @@
           placeholder='New Password' 
         required>
       </div>
-         <div class='form-group mb-3'> 
-        <label for='old_password'>Old Password</label>
-        <input
-          type='password'
-          class='form-control'
-          id='old_password-input'
-          placeholder='Old Password' 
-        required>
-      </div>
       <div class="d-flex justify-content-evenly mb-3"> 
         <button type="submit" class="btn btn-primary">Change Password</button>
-        <button onclick="location.href='/'" type="button" class="btn-danger">
-            Login 
-        </button>
       </div> 
     </form>
   </div>
+</div>
 </div>

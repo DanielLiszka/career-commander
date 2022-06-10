@@ -1,36 +1,33 @@
 $(document).ready(function () {
-  $('ul').hide();
-
   var ChangeForm = $('#change');
+  var userId = $('#user-id');
   var emailInput = $('input#change_email-input');
   var newPasswordInput = $('input#new_password-input');
-  var oldPasswordInput = $('input#old_password-input');
 
   //Change Password Function
   ChangeForm.on('submit', function (event) {
     event.preventDefault();
     var userData = {
+      id: userId.val().trim(),
       email: emailInput.val().trim().toLowerCase(),
       password: newPasswordInput.val().trim(),
-      oldpassword: oldPasswordInput.val().trim(),
     };
     //Remove Error Message
     $('#change_error_message').remove();
 
-    if (!userData.email || !userData.password || !userData.oldpassword) {
+    if (!userData.id || !userData.email || !userData.password) {
       appendChangeErrorMessage();
       return;
     }
 
-    ChangePassword(userData.email, userData.password, userData.oldpassword);
-    emailInput.val('');
+    ChangePassword(userData.id, userData.password);
+    // emailInput.val('');
     newPasswordInput.val('');
     oldPasswordInput.val('');
   });
 
-  function ChangePassword(email, password) {
-    $.put('/api/users/change', {
-      email: email,
+  function ChangePassword(id, password) {
+    $.put(`/api/users/change/${id}`, {
       password: password,
     })
       .then(function () {

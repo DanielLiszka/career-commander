@@ -104,39 +104,28 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.put('/change', withAuth, async (req, res) => {
-  try {
-    var dbUserData = await User.findOne({
-      where: {
-        email: req.body.email,
-      },
+router.put('/change/:id', withAuth, (req, res) => {
+  User.update({
+    // individualHooks: true,
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbUserData) => {
+      if (!dbUserData) {
+        res.status(404).json({ message: 'No user found with that id' });
+        return;
+      } else {
+        res.json({
+          user: dbUserData,
+          message: 'Password has been changed!',
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
     });
-    console.log(dbUserData);
-    if (!dbUserData) {
-      res.status(400).json({ message: 'No user found with that email' });
-      return;
-    }
-
-    console.log(dbUserData);
-    var dbUpdateUserData = await User.update(dbUserData, {
-      individualHooks: true,
-      where: {
-        id: dbUserData.id,
-      },
-    });
-
-    if (!dbUpdateUserData[0]) {
-      res.status(404).json({ message: 'No user found with that id' });
-      return;
-    }
-    res.json({
-      user: dbUpdateUserData,
-      message: 'Password has been changed!',
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
 });
 
 router.delete('/:id', withAuth, (req, res) => {
