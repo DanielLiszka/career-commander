@@ -2,6 +2,10 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+/* Insert withAuth into routes once front-end is built - ('/', withAuth, (req,res))
+   This will insure that a user is logged in before accessing this route  */
+const withAuth = require('../../utils/auth');
+
 router.get('/', (req, res) => {
   User.findAll({
     attributes: { exclude: ['password'] },
@@ -100,25 +104,7 @@ router.post('/logout', (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  User.findOne({
-    where: {
-      id: req.params.id,
-    },
-  }).then((dbUserData) => {
-    if (!dbUserData) {
-      res.status(400).json({ message: 'No user found with that id!' });
-      return;
-    }
-    // checkPassword is a User method that compares a provided password against the hashed password in the database
-    // Check the User model for all the code around password hashing using bcrypt.
-    const validPassword = dbUserData.checkPassword(req.body.oldpassword);
-
-    if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect password!' });
-      return;
-    }
-  });
+router.put('/change/:id', withAuth, (req, res) => {
   User.update(req.body, {
     individualHooks: true,
 
@@ -127,12 +113,16 @@ router.put('/:id', (req, res) => {
     },
   })
     .then((dbUserData) => {
-      if (!dbUserData[0]) {
+      if (!dbUserData) {
         res.status(404).json({ message: 'No user found with that id' });
         return;
+      } else {
+        console.log('Password changed for user ' + req.params.id);
+        res.json({
+          user: dbUserData,
+          message: 'Password has been changed!',
+        });
       }
-
-      res.json({ user: dbUserData, message: 'Password has been changed!' });
     })
     .catch((err) => {
       console.log(err);
@@ -140,7 +130,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
   User.destroy({
     where: {
       id: req.params.id,

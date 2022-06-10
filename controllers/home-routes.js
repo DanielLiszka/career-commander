@@ -27,6 +27,27 @@ router.get('/signup', function (req, res) {
   }
 });
 
+router.get('/change', withAuth, async function (req, res) {
+  try {
+    // Get user id and e-mail
+    const user_data = await User.findOne({
+      // attributes: {
+      //   exclude: ['password'],
+      // },
+      attributes: ['id', 'email'],
+      where: {
+        id: req.session.user_id,
+      },
+    });
+    const user = user_data.get({ plain: true });
+
+    res.render('change', { js: ['change.js'], user });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Get user first and last name for welcome message.
@@ -82,7 +103,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
         {
           model: Resume,
-          attributes: ['id','name', 'description'],
+          attributes: ['id', 'name', 'description'],
         },
         {
           model: User,
