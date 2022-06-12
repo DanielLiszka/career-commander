@@ -30,7 +30,9 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
     ![alt text](assets/images/screenshot.png)
     ```
 
-## Credits
+## Contributors
+
+![GitHub contributors](https://img.shields.io/github/contributors-anon/DanielLiszka/career-commander)
 
 Harrison Daniel https://github.com/harrison-daniel
 
