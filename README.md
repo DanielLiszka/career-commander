@@ -28,7 +28,6 @@ This project is deployed on Heroku at the following URL: https://career-commande
 
 ![loginPage](https://user-images.githubusercontent.com/99782685/173249808-28254a45-b648-4159-9549-a44fd0f525e2.png)
 
-
 ## Create an Account
 
 To get started, visit the URL above. At the login screen, click the "Sign Up" button and enter your information to create an account. Please note that passwords must be atleast 8 characters long.
@@ -54,6 +53,7 @@ Once entered and all the required prompts are filled out, click the "Submit Appl
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Demo
+
 https://user-images.githubusercontent.com/99782685/173249671-83f88352-de69-4936-bc05-86a2091dc262.mp4
 
 # Usage
@@ -61,6 +61,8 @@ https://user-images.githubusercontent.com/99782685/173249671-83f88352-de69-4936-
 ## Account Information
 
 To change your password, seleect the "Change Password" page from the Navigation bar. When prompted, enter your current email address with the new password you wish to have. When ready, click the "Change Password" button to update your account.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 </br>
 
@@ -86,6 +88,8 @@ These include:
 <li>dotenv(npm i dotenv --save) bcrypt(npm i bcrypt )</li>
 <li>day.js(npm i dayjs)</li>
 </ul>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 </br>
 
