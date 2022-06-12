@@ -13,54 +13,54 @@ const {
 router.get('/', async (req, res) => {
   try {
     //check if logged in
-    // if (req.session.loggedIn) {
-    const applicationData = await Application.findAll({
-      // only pull back applications matching the logged-in user
-      // where: {
-      //   user_id: req.session.user_id,
-      // },
-      attributes: [
-        'id',
-        'created_at',
-        'offer',
-        'accepted',
-        'interview1_date',
-        'interview2_date',
-        'interview3_date',
-        'interview4_date',
-      ],
-      order: [['created_at', 'DESC']],
-      include: [
-        {
-          model: Company,
-          attributes: ['name'],
+    if (req.session.loggedIn) {
+      const applicationData = await Application.findAll({
+        // only pull back applications matching the logged-in user
+        where: {
+          user_id: req.session.user_id,
         },
-        {
-          model: Manager,
-          attributes: ['first_name', 'last_name', 'email', 'phone'],
-        },
-        {
-          model: Position,
-          attributes: ['name', 'location', 'close_date', 'description'],
-        },
-        {
-          model: Resume,
-          attributes: ['name', 'description'],
-        },
-        {
-          model: User,
-          attributes: ['first_name', 'last_name'],
-          order: [['last_name', 'DESC']],
-        },
-      ],
-    });
-    res.json(applicationData);
-    // } else {
-    //   // if not logged-in, send a msg to the client and redirect to the homepage/login screen
-    //   res.json({ message: 'A user must be logged in.' });
-    //   res.redirect('/');
-    //   return;
-    // }
+        attributes: [
+          'id',
+          'created_at',
+          'offer',
+          'accepted',
+          'interview1_date',
+          'interview2_date',
+          'interview3_date',
+          'interview4_date',
+        ],
+        order: [['created_at', 'DESC']],
+        include: [
+          {
+            model: Company,
+            attributes: ['name'],
+          },
+          {
+            model: Manager,
+            attributes: ['first_name', 'last_name', 'email', 'phone'],
+          },
+          {
+            model: Position,
+            attributes: ['name', 'location', 'close_date', 'description'],
+          },
+          {
+            model: Resume,
+            attributes: ['name', 'description'],
+          },
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            order: [['last_name', 'DESC']],
+          },
+        ],
+      });
+      res.json(applicationData);
+    } else {
+      // if not logged-in, send a msg to the client and redirect to the homepage/login screen
+      res.json({ message: 'A user must be logged in.' });
+      res.redirect('/');
+      return;
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -336,11 +336,9 @@ router.delete('/:id', async (req, res) => {
         },
       });
       if (!applicationArrayC) {
-        res
-          .status(404)
-          .json({
-            message: 'There was no application with the provided company_id',
-          });
+        res.status(404).json({
+          message: 'There was no application with the provided company_id',
+        });
         return;
       } else {
         if (applicationArrayC.length > 1) {

@@ -2,8 +2,11 @@
 const router = require('express').Router();
 const { Company } = require('../../models');
 
+// withAuth is middleware that prevents access if there is not a user logged in.  This should prevent hacking with a tool like Insomnia.
+const withAuth = require('../../utils/auth');
+
 // Pull back all companies
-router.get('/', (req, res) => {
+router.get('/', withAuth, (req, res) => {
   Company.findAll({
     attributes: ['id', 'name'],
   })
@@ -15,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // Create a new company
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
   Company.create({
     name: req.body.company_name,
   })
@@ -27,7 +30,7 @@ router.post('/', (req, res) => {
 });
 
 // Updating a specific company
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
   Company.update(
     {
       name: req.body.name,
@@ -52,8 +55,8 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// delete a company
-router.delete('/:id', (req, res) => {
+// delete a company.  Not used in production.  The deletes are done through the application delete.
+router.delete('/:id', withAuth, (req, res) => {
   Company.destroy({
     where: {
       id: req.params.id,

@@ -1,10 +1,10 @@
 //global selected resume variables
-var selectedResumeName 
-var selectedResumeId
+var selectedResumeName;
+var selectedResumeId;
 //selection_input = false
 
 $(document).ready(function () {
-  //Default to manual resume input on page load 
+  //Default to manual resume input on page load
 
   var delete_buttons = document.querySelectorAll('#deleteApplication');
   for (var i = 0, len = delete_buttons.length; i < len; i++)
@@ -44,19 +44,19 @@ $(document).ready(function () {
   //Edit Application Function
   submissionForm.on('click', async function (event) {
     event.preventDefault();
-    id = event.target.getAttribute('data-id')
+    id = event.target.getAttribute('data-id');
     $('#dashboard_edit_error_message').remove();
     const selectedResumeId = event.target.getAttribute('data-resume-id');
-    if (selectedResumeId != ''){
-    let selectedResumeData = await $.get(
-      `/api/resumes/${selectedResumeId}`,
-      {}
-    ).catch((err) => console.log(err));
-    console.log(selectedResumeId)
-    selectedResumeName = selectedResumeData.name
+    if (selectedResumeId != '') {
+      let selectedResumeData = await $.get(
+        `/api/resumes/${selectedResumeId}`,
+        {}
+      ).catch((err) => console.log(err));
+
+      selectedResumeName = selectedResumeData.name;
     }
-    resumeName = selectedResumeName
-    console.log(selectedResumeName)
+    resumeName = selectedResumeName;
+
     //console.log(resumeName)
     var resumeDescription = $('#resume_description-edit-' + id);
     var positionLocation = $('input#position_location-edit-' + id);
@@ -270,47 +270,47 @@ async function editApplication(userData) {
   //console.log(application_data);
 }
 
-  // get resume selection and display the description
-  async function ModifiedCheckResumes() {
-      let resumeData = await $.get('/api/resumes', {}).catch((err) =>
-      console.log(err)
-    );
-    if (resumeData.length == 1) {
-      $("*[id^='resume_description-edit-']").val(resumeData[0].description);
-      selectedResumeName = resumeData[0].name
-      selectedResumeId = resumeData[0].id
-      //console.log(resumeData[0].description)
-    } else{ 
-      // check to see if there are more than one resume
-      if (resumeData.length > 1) {
-        //selection_input = true 
-        // Select all elements with a matching portion of its ID.
-        selectedResume = $("*[id^='dashboard-selected-resume-']")
-        //console.log(selectedResume)
-        selectedResume.on('change', async function (event) {
-          event.preventDefault();
-          // if there's only one resume then use its resume description.
-          var id = event.target.getAttribute('data-id')
-          //Get selected-resume value after change
-          selectedResumeId = $('#dashboard-selected-resume-' + id).val();
-          // using the resume id, get the description for that resume
-          let selectedResumeData = await $.get(
-            `/api/resumes/${selectedResumeId}`,
-            {}
-          ).catch((err) => console.log(err));
-          var selectedDescription = selectedResumeData.description;
-          selectedResumeName = selectedResumeData.name
-          //console.log(selectedResumeName)
-          // set the value of the resume description textarea to the selected description
-          $('#resume_description-edit-' + id).val(selectedDescription);
-          }
-        );
-      }
+// get resume selection and display the description
+async function ModifiedCheckResumes() {
+  let resumeData = await $.get('/api/resumes', {}).catch((err) =>
+    console.log(err)
+  );
+  if (resumeData.length == 1) {
+    $("*[id^='resume_description-edit-']").val(resumeData[0].description);
+    selectedResumeName = resumeData[0].name;
+    selectedResumeId = resumeData[0].id;
+    //console.log(resumeData[0].description)
+  } else {
+    // check to see if there are more than one resume
+    if (resumeData.length > 1) {
+      //selection_input = true
+      // Select all elements with a matching portion of its ID.
+      selectedResume = $("*[id^='dashboard-selected-resume-']");
+      //console.log(selectedResume)
+      selectedResume.on('change', async function (event) {
+        event.preventDefault();
+        // if there's only one resume then use its resume description.
+        var id = event.target.getAttribute('data-id');
+        //Get selected-resume value after change
+        selectedResumeId = $('#dashboard-selected-resume-' + id).val();
+        // using the resume id, get the description for that resume
+        let selectedResumeData = await $.get(
+          `/api/resumes/${selectedResumeId}`,
+          {}
+        ).catch((err) => console.log(err));
+        var selectedDescription = selectedResumeData.description;
+        selectedResumeName = selectedResumeData.name;
+        //console.log(selectedResumeName)
+        // set the value of the resume description textarea to the selected description
+        $('#resume_description-edit-' + id).val(selectedDescription);
+      });
     }
   }
+}
 
 //Append Error Message
-var appendDashboardEditErrorMessage = function() {
-  $('#dashboard_top_div').append("<div class='text-center alert alert-danger' id='dashboard_edit_error_message' role='alert'><strong>Application Editing Failed</strong></div>"
+var appendDashboardEditErrorMessage = function () {
+  $('#dashboard_top_div').append(
+    "<div class='text-center alert alert-danger' id='dashboard_edit_error_message' role='alert'><strong>Application Editing Failed</strong></div>"
   );
-}
+};
