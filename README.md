@@ -16,7 +16,7 @@ Career Commander is a job application tracker for serious job seekers. It tracks
 # Table of Contents
 
 - [Getting Started](#getting-started)
-- [Demo}(#demo)
+- [Demo](#demo)
 - [Usage](#usage)
 - [Built With](#built-with)
 - [Contributors](#contributors)
