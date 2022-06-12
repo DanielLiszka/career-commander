@@ -1,3 +1,21 @@
+<!-- direct user to create a resume or application if they have not done so. -->
+{{#if (eq reformated_applications.length 0)}}
+    {{#if (eq resumes.length 0)}}
+        <div class='text-center p-6'>
+            {{!-- <h2 class='text-center p-3'><a class='link-success text-decoration-none' href="/resume">Create a Resume to Get Started</a></h2> --}}
+            <h3 class='text-center p-4'><em>To Get Started, Create a Resume or Application Below!</em></h3>
+            <a href='/resume' class='btn btn-success btn-sm p-2 m-4'>Create a Resume</a>
+            <a href='/application' class='btn btn-success btn-sm p-2 m-4'>Create an Application</a>
+
+        </div>
+    {{else}}
+        <div>
+            <h2 class='text-center p-3'><a class='link-success text-decoration-none' href="/application">Create an Application to Get Started</a></h2>
+        </div>
+    {{/if}}
+{{/if}}
+
+
 <!-- stored user applications with ability to edit or delete entries WIP-->
 {{#if reformated_applications.length}}
   <div class='container w-100'>
