@@ -26,7 +26,7 @@ Career Commander is a job application tracker for serious job seekers. It tracks
 
 This project is deployed on Heroku at the following URL: https://career-commander.herokuapp.com/.
 
-![loginPage](https://user-images.githubusercontent.com/99782685/173249808-28254a45-b648-4159-9549-a44fd0f525e2.png)
+![loginPage](https://user-images.githubusercontent.com/99782685/173250503-11641e87-f425-4541-909d-ee29beb5d997.png)
 
 ## Create an Account
 
