@@ -36,7 +36,7 @@ Once entered, you will be redirected to the Dashboard.
 
 </br>
 
-## Creat a Resume
+## Create a Resume
 
 After creating an account and logging in for the first time, you will need to create a Resume for your first application by clicking the "Create a Resume" button.
 
