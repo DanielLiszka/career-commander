@@ -35,19 +35,19 @@ $(document).ready(function () {
   submissionForm.on('click', async function (event) {
     event.preventDefault();
     $('#application_error_message').remove();
-    // if a drop down menu us present for the resumes, get the resume name from the selected resume id
+    // if a drop down menu is present for the resumes, get the resume name from the checkResume function
     if (document.getElementById('selected-resume')) {
-      // Value is the resume id, but we need the resume name.
-      var resumeId = $('#selected-resume').val().trim();
-      var selectedResumeData = await $.get(
-        `/api/resumes/${resumeId}`,
-        {}
-      ).catch((err) => console.log(err));
-      var resumeName = selectedResumeData.name;
+      // // Value is the resume id, but we need the resume name.
+      // var resumeId = $('#selected-resume').val().trim();
+      // var selectedResumeData = await $.get(
+      //   `/api/resumes/${resumeId}`,
+      //   {}
+      // ).catch((err) => console.log(err));
+      // // var resumeName = selectedResumeData.name;
+      var resumeName = checkResumes();
     } else {
       // if we don't have a drop down menu for the resumes, then get the name entered in that input field
       var resumeName = $('#resume_name-input').val().trim();
-      console.log(resumeName);
     }
 
     var userData = {
@@ -84,10 +84,10 @@ $(document).ready(function () {
     if (
       !userData.resume_name ||
       !userData.resume_description ||
-      !userData.manager_email ||
-      !userData.manager_first_name ||
-      !userData.manager_last_name ||
-      !userData.manager_phone_number ||
+      // !userData.manager_email ||
+      // !userData.manager_first_name ||
+      // !userData.manager_last_name ||
+      // !userData.manager_phone_number ||
       !userData.position_description ||
       !userData.position_location ||
       !userData.company_name ||
@@ -110,7 +110,6 @@ $(document).ready(function () {
     }).catch(function (err) {
       console.log(err);
     });
-    //console.log(company_data);
 
     const manager_data = await $.post('/api/managers/', {
       manager_first_name: userData.manager_first_name,
@@ -121,7 +120,6 @@ $(document).ready(function () {
     }).catch(function (err) {
       console.log(err);
     });
-    //console.log(manager_data);
 
     const position_data = await $.post('/api/positions/', {
       position_name: userData.position_name,
@@ -133,13 +131,11 @@ $(document).ready(function () {
     }).catch(function (err) {
       console.log(err);
     });
-    //console.log(position_data);
 
     // need to check if a drop down list is present for resumes - i.e., we are using an existing resume
     if (document.getElementById('selected-resume')) {
       // if so, set the resume id for the application to the content of the resume name field(id)
       var resume_data_id = $('#selected-resume').val();
-      console.log(resume_data_id);
     } else {
       // else, we have a new resume and need to save it
       const resume_data = await $.post('/api/resumes/', {
@@ -182,7 +178,7 @@ $(document).ready(function () {
     //console.log(application_data);
   }
 
-  // get resume selection and display the description
+  // get resume selection and display the description and return the name
   async function checkResumes() {
     // get the selected resume id
     let selectedResumeId = $('#selected-resume').val();
@@ -210,18 +206,21 @@ $(document).ready(function () {
             `/api/resumes/${selectedResumeId}`,
             {}
           ).catch((err) => console.log(err));
-          var selectedDescription = selectedResumeData.description;
 
+          selectedResumeDescription = selectedResumeData.description;
           // set the value of the resume description textarea to the selected description
-          $('#resume_description-input').val(selectedDescription);
+          $('#resume_description-input').val(selectedResumeDescription);
+
+          return selectedResumeData.name;
         });
       }
     }
   }
-//Append Error Message
-var appendApplicationErrorMessage = function() {
-  $('#application_top_div').append("<div class='text-center alert alert-danger' id='application_error_message' role='alert'><strong>Application Submission Failed</strong></div>"
-  );
-}
+  //Append Error Message
+  var appendApplicationErrorMessage = function () {
+    $('#application_top_div').append(
+      "<div class='text-center alert alert-danger' id='application_error_message' role='alert'><strong>Application Submission Failed</strong></div>"
+    );
+  };
   checkResumes();
 });

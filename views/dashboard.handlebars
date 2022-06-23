@@ -79,7 +79,7 @@
                 <!-- Position Closing Date-->
                 <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 p-3'>
                     <div class='text-center'>
-                        <label><strong>Position Closing Date </strong></label>
+                        <label><strong>Position Closing/Application Date </strong></label>
                         <p class='card-text text-wrap mt-2'
                             id='position_location'>
                             {{application.position.close_date}}
@@ -303,7 +303,7 @@
                             <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
                                 <form>
                                 <div class='form-group text-center'> <!-- Date input -->
-                                    <label class='control-label' for='date'>Closing Date</label>
+                                    <label class='control-label' for='date'>Closing/Application Date</label>
                                     <input class='form-control' 
                                     id='position_closing_date-edit-{{application.id}}' 
                                     name='date' 
@@ -379,7 +379,7 @@
                                     id='hiring_manager_first_name-edit-{{application.id}}'
                                     placeholder='First Name'
                                     value={{application.manager.first_name}}
-                                required>
+                                >
                                 <div class="invalid-feedback">
                                     Enter the hiring manager's first name.
                                 </div>
@@ -395,7 +395,7 @@
                                     id='hiring_manager_last_name-edit-{{application.id}}'
                                     placeholder='Last Name'
                                     value={{application.manager.last_name}}
-                                required>
+                                >
                                 <div class="invalid-feedback">
                                 Enter the hiring manager's last name.
                                 </div>
@@ -411,7 +411,7 @@
                                 id='hiring_manager_email-edit-{{application.id}}'
                                 placeholder='Email'
                                 value={{application.manager.email}}
-                                required>
+                                >
                                 <div class="invalid-feedback">
                                 Enter a valid email address.
                                 </div>
@@ -424,11 +424,11 @@
                             <input
                                 type='text'
                                 class='form-control'
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                pattern="[0-9]{10}"
                                 id='hiring_manager_phone_number-edit-{{application.id}}'
-                                placeholder='###-###-####'
+                                placeholder='##########'
                                 value={{application.manager.phone}}
-                            required>
+                            >
                             <div class="invalid-feedback">
                                 Enter a valid phone number.
                             </div>
