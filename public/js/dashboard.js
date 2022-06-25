@@ -114,10 +114,10 @@ $(document).ready(function () {
     if (
       !userData.resume_name ||
       !userData.resume_description ||
-      !userData.manager_email ||
-      !userData.manager_first_name ||
-      !userData.manager_last_name ||
-      !userData.manager_phone_number ||
+      // !userData.manager_email ||
+      // !userData.manager_first_name ||
+      // !userData.manager_last_name ||
+      // !userData.manager_phone_number ||
       !userData.position_description ||
       !userData.position_location ||
       !userData.company_name ||

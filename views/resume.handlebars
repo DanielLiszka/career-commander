@@ -50,6 +50,7 @@
             <div class='py-2 p-2' id='card-footer'>
                 <!-- Button trigger modal -->
                 <a 
+                id='editResume'
                 type="button" 
                 class="btn btn-primary btn-sm" 
                 data-bs-toggle="modal"
@@ -75,7 +76,7 @@
 <!-- Remume Modal for editing. Saved data should be automatically entered into the input fields.-->
 {{#if resumes.length}}
     {{#each resumes}}
-        <div class="modal modal-name fade" id="editResumeModal-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal modal-name fade" id="editResumeModal-{{id}}" data-resume={{id}} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -92,8 +93,8 @@
                                     type='text'
                                     class='form-control'
                                     id='resume_name-edit-{{id}}'
-                                    placeholder=''
-                                    value={{name}} 
+                                    placeholder='{{name}}'
+                                    value='{{name}}' 
                                 required>
                                 <div class="invalid-feedback">
                                     Enter a resume name.

@@ -29,6 +29,11 @@ $(document).ready(function () {
     resumeDescriptionPost.val('');
   });
 
+  // listen for click on edit buttons
+  // var edit_buttons = document.querySelectorAll('#editResume');
+  // for (var i = 0; i < edit_buttons.length; i++)
+  //   edit_buttons[i].onclick = displayEditModal;
+
   // listen for click on delete buttons
   var delete_buttons = document.querySelectorAll('#deleteResume');
   for (var i = 0; i < delete_buttons.length; i++)
@@ -36,7 +41,6 @@ $(document).ready(function () {
 
   // listen for click on save button
   var submissionForm = $('.save-resume');
-
   submissionForm.on('click', function (event) {
     event.preventDefault();
     $('#resume_edit_error_message').remove();
@@ -61,7 +65,7 @@ $(document).ready(function () {
   });
 });
 
-// Delete single application
+// Delete single resume
 const deleteResume = async (event) => {
   $('#resume_delete_error_message').remove();
   if (event.target.hasAttribute('data-id')) {
@@ -119,15 +123,34 @@ function PostResume(resume_name, resume_description) {
       console.log(err);
     });
 }
+
+async function displayEditModal() {
+  //get resume id
+  var selectedResume = $("*[id^='editResumeModal-']");
+  var selectedResumeId = selectedResume.getAttribute('data-resume');
+  // get resume info with id
+  let selectedResumeData = await $.get(
+    `/api/resumes/${selectedResumeId}`,
+    {}
+  ).catch((err) => console.log(err));
+  // display resume name
+}
+
 //Append Error Messages
-var appendDeleteResumeErrorMessage = function() {
-  $('#delete_top_div').append("<div class='text-center alert alert-danger' id='resume_delete_error_message' role='alert'><strong>Resume Deletion Failed</strong></div>");
-}
+var appendDeleteResumeErrorMessage = function () {
+  $('#delete_top_div').append(
+    "<div class='text-center alert alert-danger' id='resume_delete_error_message' role='alert'><strong>Resume Deletion Failed</strong></div>"
+  );
+};
 
-var appendPostResumeErrorMessage = function() {
-  $('#post_top_div').append("<div class='text-center alert alert-danger' id='resume_post_error_message' role='alert'><strong>Resume Submission Failed</strong></div");
-}
+var appendPostResumeErrorMessage = function () {
+  $('#post_top_div').append(
+    "<div class='text-center alert alert-danger' id='resume_post_error_message' role='alert'><strong>Resume Submission Failed</strong></div"
+  );
+};
 
-var appendEditResumeErrorMessage = function(){
-  $('#edit_top_div').append("<div class='text-center alert alert-danger' id='resume_edit_error_message' role='alert'><strong>Resume Editing Failed</strong></div>");
-}
+var appendEditResumeErrorMessage = function () {
+  $('#edit_top_div').append(
+    "<div class='text-center alert alert-danger' id='resume_edit_error_message' role='alert'><strong>Resume Editing Failed</strong></div>"
+  );
+};
